@@ -3,6 +3,7 @@ import { MainGame } from "./MainGame";
 
 window.onload = () => {
     (function(){
+      console.log("testtesttest")
       // let counter:Counter<string> = new Counter<string>();
       // counter.add("test", 5);
       // counter.add("t2", 5);

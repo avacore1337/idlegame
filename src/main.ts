@@ -11,7 +11,7 @@ class Greeter {
 
 let greeter = new Greeter("world");
 let counter = new Counter<string>();
-console.log("test")
+console.log("testtesttest")
 console.log(greeter.greet())
 counter.add("balls", 5);
 counter.add("balls", 5);

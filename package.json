@@ -4,10 +4,12 @@
   "description": "An idlegame",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "tsc && browserify build/app.js -o public/bundle.js && node index.js"
   },
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "typescript": "^2.3.4",
+    "browserify": "^14.04.0"
   },
   "engines": {
     "node": "4.0.0"
