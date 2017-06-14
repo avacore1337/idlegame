@@ -1,0 +1,6 @@
+{
+  "name": "HexIdle",
+  "description": "A hexagon based idlegame",
+  "repository": "https://github.com/avacore1337/idlegame",
+  "keywords": ["idle", "game", "phaser"]
+}
