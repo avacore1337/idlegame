@@ -117,8 +117,8 @@ export class MainGame {
       cbutton.inputEnabled = true;
       cbutton.events.onInputUp.add(function() {
         self.needsupdate = true;
-        if (self.state !== "building") {
-          self.state = "building";
+        if (self.state !== "constructions") {
+          self.state = "constructions";
           self.option = index;
         } else {
           if (self.option === index) {
@@ -153,8 +153,8 @@ export class MainGame {
       rbutton.inputEnabled = true;
       rbutton.events.onInputUp.add(function() {
         self.needsupdate = true;
-        if (self.state !== "building") {
-          self.state = "building";
+        if (self.state !== "research") {
+          self.state = "research";
           self.option = index;
         } else {
           if (self.option === index) {
@@ -173,16 +173,28 @@ export class MainGame {
     button2.inputEnabled = true;
     button3.inputEnabled = true;
     button1.events.onInputUp.add(function() {
+      self.needsupdate = true;
+      if (self.state !== "building") {
+        self.state = "";
+      }
       buildingGroup.visible = true;
       townBuildingGroup.visible = false;
       researchGroup.visible = false;
     });
     button2.events.onInputUp.add(function() {
+      self.needsupdate = true;
+      if (self.state !== "constructions") {
+        self.state = "";
+      }
       buildingGroup.visible = false;
       townBuildingGroup.visible = true;
       researchGroup.visible = false;
     });
     button3.events.onInputUp.add(function() {
+      self.needsupdate = true;
+      if (self.state !== "research") {
+        self.state = "";
+      }
       buildingGroup.visible = false;
       townBuildingGroup.visible = false;
       researchGroup.visible = true;
