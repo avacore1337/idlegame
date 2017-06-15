@@ -66,12 +66,12 @@ export class MainGame {
     let lumberbutton = this.game.add.sprite(0, 0, 'button2');
     let lumbertext:Phaser.Text = this.game.add.text(3, 3, "Lumbermill", style);
     let lumbergroup = this.game.add.group();
-    lumbergroup.y += 25
-    lumbergroup.add(lumberbutton)
-    lumbergroup.add(lumbertext)
+    lumbergroup.y += 25;
+    lumbergroup.add(lumberbutton);
+    lumbergroup.add(lumbertext);
     buildingGroup.add(lumbergroup);
     lumbergroup.visible = Lumbermill.isEnabled();
-    lumberbutton.inputEnabled = true;;
+    lumberbutton.inputEnabled = true;
     lumberbutton.events.onInputUp.add(function() {
       self.needsupdate = true;
       if (self.state !== "building") {
@@ -81,15 +81,6 @@ export class MainGame {
         self.state = "";
       }
     });
-
-
-
-
-
-
-
-
-
 
     // menu.inputEnabled = true;
     // let toggle = true;
@@ -176,10 +167,10 @@ export class MainGame {
     this.borderLayer = this.game.add.group();
     this.resourceLayer = this.game.add.group();
     this.buildingLayer = this.game.add.group();
-    this.hexagonGroup.add(this.squareLayer)
-    this.hexagonGroup.add(this.borderLayer)
-    this.hexagonGroup.add(this.resourceLayer)
-    this.hexagonGroup.add(this.buildingLayer)
+    this.hexagonGroup.add(this.squareLayer);
+    this.hexagonGroup.add(this.borderLayer);
+    this.hexagonGroup.add(this.resourceLayer);
+    this.hexagonGroup.add(this.buildingLayer);
     for (let i = 0; i < this.gridSizeY; i++) {
       for (let j = 0; j < this.gridSizeX; j++) {
         let rnd = Math.floor((Math.random() * (SQUARETYPELIST.length - 1))); //not including base
