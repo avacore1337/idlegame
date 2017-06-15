@@ -5,12 +5,13 @@ import { Counter } from "./Counter";
 
 export class Lumbermill extends Building {
   static enabled:boolean = true;
+  static title:string = "Lumbermill";
   constructor(){
     super([SQUARETYPES.Forest], []);
     // theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>
   }
 
-  static isEnabled(){
+  static isEnabled():boolean{
     return Lumbermill.enabled;
   }
 

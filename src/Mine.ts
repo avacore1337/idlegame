@@ -5,12 +5,13 @@ import { Counter } from "./Counter";
 
 export class Mine extends Building {
   static enabled:boolean = true;
+  static title:string = "Mine";
   constructor(){
     super([SQUARETYPES.Mountain], []);
     // theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>
   }
 
-  static isEnabled(){
+  static isEnabled():boolean{
     return Mine.enabled;
   }
 

@@ -58,7 +58,7 @@ export const enum RESOURCES {
   Stone,
   Horse
 }
-export const RESOURCETRINGLIST = ["stone", "horse"]
+export const RESOURCESTRINGLIST = ["stone", "horse"]
 
 // }
 

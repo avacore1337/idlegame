@@ -1,12 +1,9 @@
 import { Counter } from "./Counter";
 import { Square } from "./Square";
-import { Lumbermill } from "./Lumbermill";
-import { Quary } from "./Quary";
-import { Claypit } from "./Claypit";
-import { Mine } from "./Mine";
+import { Building } from "./Building";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
-import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST , BUILDINGS } from "./Constants";
+import { BUILDINGCLASSES, DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST , BUILDINGS } from "./Constants";
 
 export class MainGame {
 
@@ -68,102 +65,31 @@ export class MainGame {
 
     // SETUP FOR BUILDINGS
     // -------------------
-
-    // Lumbermill
-    let lumberbutton = this.game.add.sprite(0, 0, 'button2');
-    let lumbertext:Phaser.Text = this.game.add.text(3, 3, "Lumbermill", style);
-    let lumbergroup = this.game.add.group();
-    lumbergroup.y += 25;
-    lumbergroup.add(lumberbutton);
-    lumbergroup.add(lumbertext);
-    buildingGroup.add(lumbergroup);
-    lumbergroup.visible = Lumbermill.isEnabled();
-    lumberbutton.inputEnabled = true;
-    lumberbutton.events.onInputUp.add(function() {
-      self.needsupdate = true;
-      if (self.state !== "building") {
-        self.state = "building";
-        self.option = BUILDINGS.Lumbermill;
-      } else {
-        if (self.option === BUILDINGS.Lumbermill) {
-          self.state = "";
+    for (let index = 0; index < BUILDINGCLASSES.length; index++) {
+      let b = BUILDINGCLASSES[index];
+      let buildingbutton = this.game.add.sprite(0, 0, 'button2');
+      let buildingtext:Phaser.Text = this.game.add.text(3, 3, b.title, style);
+      let buildinggroup = this.game.add.group();
+      buildinggroup.y += 25 * (index + 1);
+      buildinggroup.add(buildingbutton);
+      buildinggroup.add(buildingtext);
+      buildingGroup.add(buildinggroup);
+      buildinggroup.visible = b.isEnabled();
+      buildingbutton.inputEnabled = true;
+      buildingbutton.events.onInputUp.add(function() {
+        self.needsupdate = true;
+        if (self.state !== "building") {
+          self.state = "building";
+          self.option = index;
         } else {
-          self.option = BUILDINGS.Lumbermill;
+          if (self.option === index) {
+            self.state = "";
+          } else {
+            self.option = index;
+          }
         }
-      }
-    });
-
-    // Quary
-    let quarybutton = this.game.add.sprite(0, 0, 'button2');
-    let quarytext:Phaser.Text = this.game.add.text(3, 3, "Quary", style);
-    let quarygroup = this.game.add.group();
-    quarygroup.y += 50;
-    quarygroup.add(quarybutton);
-    quarygroup.add(quarytext);
-    buildingGroup.add(quarygroup);
-    quarygroup.visible = Quary.isEnabled();
-    quarybutton.inputEnabled = true;
-    quarybutton.events.onInputUp.add(function() {
-      self.needsupdate = true;
-      if (self.state !== "building") {
-        self.state = "building";
-        self.option = BUILDINGS.Quary;
-      } else {
-        if (self.option === BUILDINGS.Quary) {
-          self.state = "";
-        } else {
-          self.option = BUILDINGS.Quary;
-        }
-      }
-    });
-
-    // Claypit
-    let claypitbutton = this.game.add.sprite(0, 0, 'button2');
-    let claypittext:Phaser.Text = this.game.add.text(3, 3, "Claypit", style);
-    let claypitgroup = this.game.add.group();
-    claypitgroup.y += 75;
-    claypitgroup.add(claypitbutton);
-    claypitgroup.add(claypittext);
-    buildingGroup.add(claypitgroup);
-    claypitgroup.visible = Claypit.isEnabled();
-    claypitbutton.inputEnabled = true;
-    claypitbutton.events.onInputUp.add(function() {
-      self.needsupdate = true;
-      if (self.state !== "building") {
-        self.state = "building";
-        self.option = BUILDINGS.Claypit;
-      } else {
-        if (self.option === BUILDINGS.Claypit) {
-          self.state = "";
-        } else {
-          self.option = BUILDINGS.Claypit;
-        }
-      }
-    });
-
-    // Mine
-    let minebutton = this.game.add.sprite(0, 0, 'button2');
-    let minetext:Phaser.Text = this.game.add.text(3, 3, "Mine", style);
-    let minegroup = this.game.add.group();
-    minegroup.y += 100;
-    minegroup.add(minebutton);
-    minegroup.add(minetext);
-    buildingGroup.add(minegroup);
-    minegroup.visible = Mine.isEnabled();
-    minebutton.inputEnabled = true;
-    minebutton.events.onInputUp.add(function() {
-      self.needsupdate = true;
-      if (self.state !== "building") {
-        self.state = "building";
-        self.option = BUILDINGS.Mine;
-      } else {
-        if (self.option === BUILDINGS.Mine) {
-          self.state = "";
-        } else {
-          self.option = BUILDINGS.Mine;
-        }
-      }
-    });
+      });
+    }
 
     // menu.inputEnabled = true;
     // let toggle = true;

@@ -4,7 +4,7 @@ import { Lumbermill } from "./Lumbermill";
 import { Quary } from "./Quary";
 import { Mine } from "./Mine";
 import { Claypit } from "./Claypit";
-import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCETRINGLIST} from "./Constants";
+import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from "./Constants";
 
 export class Square {
   borders:Phaser.Sprite[]
@@ -67,7 +67,7 @@ export class Square {
     if(this.resource != null){
       this.resource.destroy();
     }
-    this.resource = this.game.game.add.sprite(this.center.x + 28 ,this.center.y + 35, RESOURCETRINGLIST[resourceType]);
+    this.resource = this.game.game.add.sprite(this.center.x + 28 ,this.center.y + 35, RESOURCESTRINGLIST[resourceType]);
     this.game.resourceLayer.add(this.resource);
     this.resource.visible = false;
   }

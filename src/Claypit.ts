@@ -5,12 +5,13 @@ import { Counter } from "./Counter";
 
 export class Claypit extends Building {
   static enabled:boolean = true;
+  static title:string = "Claypit";
   constructor(){
     super([SQUARETYPES.Plains, SQUARETYPES.River, SQUARETYPES.Water], []);
     // theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>
   }
 
-  static isEnabled(){
+  static isEnabled():boolean{
     return Claypit.enabled;
   }
 

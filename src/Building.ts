@@ -6,13 +6,14 @@ export class Building {
   protected allowedTerrains:Array<SQUARETYPES>;
   protected neededResources:Array<number>;
   square:Square;
+  title:string;
   constructor(theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>){
     this.allowedTerrains = theAllowedTerrains;
     this.neededResources = theNeededResources;
   }
 
-  isEnabled(){
-    return true;
+  static isEnabled():boolean{
+    return false;
   }
 
   setSquare(square: Square):void{
