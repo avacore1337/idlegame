@@ -78,7 +78,6 @@ export class MainGame {
     lumbergroup.visible = Lumbermill.isEnabled();
     lumberbutton.inputEnabled = true;
     lumberbutton.events.onInputUp.add(function() {
-      console.log("Clicked Lumbermill?")
       self.needsupdate = true;
       if (self.state !== "building") {
         self.state = "building";
@@ -103,7 +102,6 @@ export class MainGame {
     quarygroup.visible = Quary.isEnabled();
     quarybutton.inputEnabled = true;
     quarybutton.events.onInputUp.add(function() {
-      console.log("Clicked Quary?")
       self.needsupdate = true;
       if (self.state !== "building") {
         self.state = "building";
