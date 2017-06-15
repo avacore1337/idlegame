@@ -1,8 +1,3 @@
-// import { Square } from "./Square";
-// import { Building } from "./Building";
-// import { SQUARETYPES, MATERIALS } from "./Constants";
-// import { Counter } from "./Counter";
-
 export class TechNode{
   name:string;
   researched:Boolean;
@@ -30,5 +25,5 @@ export class TechNode{
   run():void{
     this.effect();
   }
-
+  
 }

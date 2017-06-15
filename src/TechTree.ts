@@ -1,6 +1,6 @@
 import { TechNode } from "./TechNode";
-import { Mine } from "./Mine";
-import { Quary } from "./Quary";
+import { Mine, Quary } from "./AllBuildings";
+// import { Quary } from "./Quary";
 import { ToolWorkshop } from "./ToolWorkshop";
 import { Kiln } from "./Kiln";
 import { Steelworks } from "./Steelworks";

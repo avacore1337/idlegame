@@ -1,9 +1,5 @@
 import { MainGame } from "./MainGame";
 import { Building } from "./Building";
-import { Lumbermill } from "./Lumbermill";
-import { Quary } from "./Quary";
-import { Mine } from "./Mine";
-import { Claypit } from "./Claypit";
 import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from "./Constants";
 
 export class Square {
