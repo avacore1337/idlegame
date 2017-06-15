@@ -68,29 +68,43 @@ export class MainGame {
     let buildingGroup = this.game.add.group();
     this.menuGroup.add(buildingGroup);
     buildingGroup.visible = true;
+    let buttons1 = [];
     for (let index = 0; index < BUILDINGCLASSES.length; index++) {
       let b = BUILDINGCLASSES[index];
-      let bbutton = this.game.add.sprite(0, 0, 'button2');
+      let bbuttonRegular = this.game.add.sprite(0, 0, 'button2');
+      let bbuttonClicked = this.game.add.sprite(0, 0, 'button2clicked');
       let btext:Phaser.Text = this.game.add.text(3, 3, b.title, style);
       let bgroup = this.game.add.group();
       bgroup.y += 25 * (index + 1);
-      bgroup.add(bbutton);
+      bgroup.add(bbuttonRegular);
+      bgroup.add(bbuttonClicked);
+      buttons1.push({'regular': bbuttonRegular, 'toggled': bbuttonClicked});
+      bbuttonRegular.visible = true;
+      bbuttonClicked.visible = false;
       bgroup.add(btext);
       buildingGroup.add(bgroup);
       bgroup.visible = b.isEnabled();
-      bbutton.inputEnabled = true;
-      bbutton.events.onInputUp.add(function() {
+      bbuttonRegular.inputEnabled = true;
+      bbuttonClicked.inputEnabled = true;
+      bbuttonRegular.events.onInputUp.add(function() {
         self.needsupdate = true;
-        if (self.state !== "building") {
-          self.state = "building";
-          self.option = index;
-        } else {
-          if (self.option === index) {
-            self.state = "";
-          } else {
-            self.option = index;
-          }
+        for (let button of buttons1) {
+          button.regular.visible = true;
+          button.toggled.visible = false;
         }
+        self.option = index;
+        self.state = "building";
+        bbuttonRegular.visible = false;
+        bbuttonClicked.visible = true;
+      });
+      bbuttonClicked.events.onInputUp.add(function() {
+        self.needsupdate = true;
+        for (let button of buttons1) {
+          button.regular.visible = true;
+          button.toggled.visible = false;
+        }
+        self.option = -1;
+        self.state = "";
       });
     }
     this.menuGroup.add(button1);
@@ -104,29 +118,43 @@ export class MainGame {
     let townBuildingGroup = this.game.add.group();
     this.menuGroup.add(townBuildingGroup);
     townBuildingGroup.visible = false;
+    let buttons2 = [];
     for (let index = 0; index < CONSTRUCTIONCLASSES.length; index++) {
       let c = CONSTRUCTIONCLASSES[index];
-      let cbutton = this.game.add.sprite(0, 0, 'button2');
+      let cbuttonRegular = this.game.add.sprite(0, 0, 'button2');
+      let cbuttonClicked = this.game.add.sprite(0, 0, 'button2clicked');
       let ctext:Phaser.Text = this.game.add.text(3, 3, c.title, style);
       let cgroup = this.game.add.group();
       cgroup.y += 25 * (index + 1);
-      cgroup.add(cbutton);
+      cgroup.add(cbuttonRegular);
+      cgroup.add(cbuttonClicked);
+      buttons2.push({'regular': cbuttonRegular, 'toggled': cbuttonClicked});
+      cbuttonRegular.visible = true;
+      cbuttonClicked.visible = false;
       cgroup.add(ctext);
       townBuildingGroup.add(cgroup);
       cgroup.visible = c.isEnabled();
-      cbutton.inputEnabled = true;
-      cbutton.events.onInputUp.add(function() {
+      cbuttonRegular.inputEnabled = true;
+      cbuttonClicked.inputEnabled = true;
+      cbuttonRegular.events.onInputUp.add(function() {
         self.needsupdate = true;
-        if (self.state !== "constructions") {
-          self.state = "constructions";
-          self.option = index;
-        } else {
-          if (self.option === index) {
-            self.state = "";
-          } else {
-            self.option = index;
-          }
+        for (let button of buttons2) {
+          button.regular.visible = true;
+          button.toggled.visible = false;
         }
+        self.option = index;
+        self.state = "town";
+        cbuttonRegular.visible = false;
+        cbuttonClicked.visible = true;
+      });
+      cbuttonClicked.events.onInputUp.add(function() {
+        self.needsupdate = true;
+        for (let button of buttons2) {
+          button.regular.visible = true;
+          button.toggled.visible = false;
+        }
+        self.option = -1;
+        self.state = "";
       });
     }
     this.menuGroup.add(button2);
@@ -140,29 +168,43 @@ export class MainGame {
     let researchGroup = this.game.add.group();
     this.menuGroup.add(researchGroup);
     researchGroup.visible = false;
+    let buttons3 = [];
     for (let index = 0; index < CONSTRUCTIONCLASSES.length; index++) {
       let r = CONSTRUCTIONCLASSES[index];
-      let rbutton = this.game.add.sprite(0, 0, 'button2');
+      let rbuttonRegular = this.game.add.sprite(0, 0, 'button2');
+      let rbuttonClicked = this.game.add.sprite(0, 0, 'button2clicked');
       let rtext:Phaser.Text = this.game.add.text(3, 3, "PLACEHOLDER", style);
       let rgroup = this.game.add.group();
       rgroup.y += 25 * (index + 1);
-      rgroup.add(rbutton);
+      rgroup.add(rbuttonRegular);
+      rgroup.add(rbuttonClicked);
+      buttons3.push({'regular': rbuttonRegular, 'toggled': rbuttonClicked});
+      rbuttonRegular.visible = true;
+      rbuttonClicked.visible = false;
       rgroup.add(rtext);
       researchGroup.add(rgroup);
       rgroup.visible = r.isEnabled();
-      rbutton.inputEnabled = true;
-      rbutton.events.onInputUp.add(function() {
+      rbuttonRegular.inputEnabled = true;
+      rbuttonClicked.inputEnabled = true;
+      rbuttonRegular.events.onInputUp.add(function() {
         self.needsupdate = true;
-        if (self.state !== "research") {
-          self.state = "research";
-          self.option = index;
-        } else {
-          if (self.option === index) {
-            self.state = "";
-          } else {
-            self.option = index;
-          }
+        for (let button of buttons3) {
+          button.regular.visible = true;
+          button.toggled.visible = false;
         }
+        self.option = index;
+        self.state = "research";
+        rbuttonRegular.visible = false;
+        rbuttonClicked.visible = true;
+      });
+      rbuttonClicked.events.onInputUp.add(function() {
+        self.needsupdate = true;
+        for (let button of buttons3) {
+          button.regular.visible = true;
+          button.toggled.visible = false;
+        }
+        self.option = -1;
+        self.state = "";
       });
     }
     this.menuGroup.add(button3);
@@ -180,15 +222,31 @@ export class MainGame {
       buildingGroup.visible = true;
       townBuildingGroup.visible = false;
       researchGroup.visible = false;
+      for (let button of buttons2) {
+        button.regular.visible = true;
+        button.toggled.visible = false;
+      }
+      for (let button of buttons3) {
+        button.regular.visible = true;
+        button.toggled.visible = false;
+      }
     });
     button2.events.onInputUp.add(function() {
       self.needsupdate = true;
-      if (self.state !== "constructions") {
+      if (self.state !== "town") {
         self.state = "";
       }
       buildingGroup.visible = false;
       townBuildingGroup.visible = true;
       researchGroup.visible = false;
+      for (let button of buttons1) {
+        button.regular.visible = true;
+        button.toggled.visible = false;
+      }
+      for (let button of buttons3) {
+        button.regular.visible = true;
+        button.toggled.visible = false;
+      }
     });
     button3.events.onInputUp.add(function() {
       self.needsupdate = true;
@@ -198,6 +256,14 @@ export class MainGame {
       buildingGroup.visible = false;
       townBuildingGroup.visible = false;
       researchGroup.visible = true;
+      for (let button of buttons1) {
+        button.regular.visible = true;
+        button.toggled.visible = false;
+      }
+      for (let button of buttons2) {
+        button.regular.visible = true;
+        button.toggled.visible = false;
+      }
     });
 
 
