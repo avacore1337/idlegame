@@ -6,8 +6,11 @@ import { Counter } from "./Counter";
 export class Mine extends Building {
   static enabled:boolean = true;
   static title:string = "Mine";
+  static allowedTerrains = [SQUARETYPES.Mountain];
+  static neededResources = [];
+
   constructor(){
-    super([SQUARETYPES.Mountain], []);
+    super();
     // theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>
   }
 
@@ -27,4 +30,17 @@ export class Mine extends Building {
     counter.add(MATERIALS.Clay, 15);
     return counter;
   }
+
+  static canBuild(square:Square):boolean{
+    if (Mine.allowedTerrains.indexOf(square.squareType) !== -1) {
+      if(Mine.neededResources.length === 0){
+        return true;
+      }
+      if(Mine.allowedTerrains.indexOf(square.squareType) !== -1) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

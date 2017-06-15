@@ -6,9 +6,12 @@ import { Counter } from "./Counter";
 export class Lumbermill extends Building {
   static enabled:boolean = true;
   static title:string = "Lumbermill";
+  static allowedTerrains = [SQUARETYPES.Forest];
+  static neededResources = [];
+
   constructor(){
-    super([SQUARETYPES.Forest], []);
-    // theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>
+    super();
+    // :Array<SQUARETYPES>, theNeededResources:Array<number>
   }
 
   static isEnabled():boolean{
@@ -26,4 +29,16 @@ export class Lumbermill extends Building {
     counter.add(MATERIALS.Wood, 10);
     return counter;
   }
+  static canBuild(square:Square):boolean{
+    if (Lumbermill.allowedTerrains.indexOf(square.squareType) !== -1) {
+      if(Lumbermill.neededResources.length === 0){
+        return true;
+      }
+      if(Lumbermill.allowedTerrains.indexOf(square.squareType) !== -1) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

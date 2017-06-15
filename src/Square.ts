@@ -16,6 +16,8 @@ export class Square {
   purchased:boolean;
   revealed:boolean;
   squareType:SQUARETYPES;
+  resourceType:RESOURCES;
+
   distance:number; //for the bfs
   visited:boolean; //for the bfs
   resource:Phaser.Sprite;
@@ -68,6 +70,7 @@ export class Square {
       this.resource.destroy();
     }
     this.resource = this.game.game.add.sprite(this.center.x + 28 ,this.center.y + 35, RESOURCESTRINGLIST[resourceType]);
+    this.resourceType = resourceType;
     this.game.resourceLayer.add(this.resource);
     this.resource.visible = false;
   }
@@ -79,27 +82,9 @@ export class Square {
         highlight = true;
       }
       if(this.game.state === "building" && this.purchased){
-        if(this.game.option === BUILDINGS.Lumbermill && this.buildingType != BUILDINGS.Lumbermill){
-          let lumbermill = new Lumbermill();
-          if (lumbermill.canBuild(this)){
-            highlight = true;
-          };
-        } else if(this.game.option === BUILDINGS.Quary && this.buildingType != BUILDINGS.Quary){
-          let quary = new Quary();
-          if (quary.canBuild(this)){
-            highlight = true;
-          };
-        } else if(this.game.option === BUILDINGS.Mine && this.buildingType != BUILDINGS.Mine){
-          let mine = new Mine();
-          if (mine.canBuild(this)){
-            highlight = true;
-          };
-        } else if(this.game.option === BUILDINGS.Claypit && this.buildingType != BUILDINGS.Claypit){
-          let claypit = new Claypit();
-          if (claypit.canBuild(this)){
-            highlight = true;
-          };
-        }
+        if(BUILDINGCLASSES[this.game.option].canBuild(this)){
+          highlight = true;
+        };
       }
       if(highlight){
         // console.log("don't")

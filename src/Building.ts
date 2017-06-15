@@ -3,13 +3,13 @@ import { SQUARETYPES, MATERIALS } from "./Constants";
 import { Counter } from "./Counter";
 
 export class Building {
-  protected allowedTerrains:Array<SQUARETYPES>;
-  protected neededResources:Array<number>;
+  protected static allowedTerrains:Array<SQUARETYPES>;
+  protected static neededResources:Array<number>;
   square:Square;
   title:string;
-  constructor(theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>){
-    this.allowedTerrains = theAllowedTerrains;
-    this.neededResources = theNeededResources;
+  constructor(){
+    // this.allowedTerrains = theAllowedTerrains;
+    // this.neededResources = theNeededResources;
   }
 
   static isEnabled():boolean{
@@ -24,12 +24,7 @@ export class Building {
     return new Counter<MATERIALS>();
   }
 
-  canBuild(square:Square):boolean{
-    if (this.allowedTerrains.indexOf(square.squareType) !== -1) {
-      // if (!this.neededResources) {
-        return true;
-      // }
-    }
+  static canBuild(square:Square):boolean{
     return false;
   }
 }

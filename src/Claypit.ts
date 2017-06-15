@@ -6,9 +6,10 @@ import { Counter } from "./Counter";
 export class Claypit extends Building {
   static enabled:boolean = true;
   static title:string = "Claypit";
+  static allowedTerrains = [SQUARETYPES.River];
+  static neededResources = [];
   constructor(){
-    super([SQUARETYPES.Plains, SQUARETYPES.River, SQUARETYPES.Water], []);
-    // theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>
+    super();
   }
 
   static isEnabled():boolean{
@@ -26,4 +27,17 @@ export class Claypit extends Building {
     counter.add(MATERIALS.Wood, 10);
     return counter;
   }
+
+  static canBuild(square:Square):boolean{
+    if (Claypit.allowedTerrains.indexOf(square.squareType) !== -1) {
+      if(Claypit.neededResources.length === 0){
+        return true;
+      }
+      if(Claypit.allowedTerrains.indexOf(square.squareType) !== -1) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }
