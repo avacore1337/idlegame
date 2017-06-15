@@ -1,7 +1,7 @@
-import { Square } from "./Square";
+import { Square } from "../Square";
 import { Building } from "./Building";
-import { SQUARETYPES, MATERIALS } from "./Constants";
-import { Counter } from "./Counter";
+import { SQUARETYPES, MATERIALS } from "../Constants";
+import { Counter } from "../Counter";
 
 export class Claypit extends Building {
   static enabled:boolean = true;

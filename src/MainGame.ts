@@ -1,6 +1,6 @@
 import { Counter } from "./Counter";
 import { Square } from "./Square";
-import { Building } from "./Building";
+import { Building } from "./buildings/AllBuildings";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
 import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";

@@ -1,11 +1,5 @@
-import { Lumbermill } from "./Lumbermill";
-import { Claypit } from "./Claypit";
-import { Quary } from "./Quary";
-import { Mine } from "./Mine";
-import { Library } from "./Library";
-import { ToolWorkshop } from "./ToolWorkshop";
-import { Kiln } from "./Kiln";
-import { Steelworks } from "./Steelworks";
+import { Lumbermill, Claypit, Quary, Mine } from "./buildings/AllBuildings";
+import { ToolWorkshop, Kiln, Steelworks, Library } from "./constructions/AllConstructions";
 
 // export class Constants {
 //   static GAMESIZE: number = 15;

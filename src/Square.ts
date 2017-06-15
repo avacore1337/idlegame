@@ -1,5 +1,5 @@
 import { MainGame } from "./MainGame";
-import { Building } from "./Building";
+import { Building } from "./buildings/AllBuildings";
 import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from "./Constants";
 
 export class Square {

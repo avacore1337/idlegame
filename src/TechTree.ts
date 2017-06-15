@@ -1,9 +1,7 @@
 import { TechNode } from "./TechNode";
-import { Mine, Quary } from "./AllBuildings";
+import { Mine, Quary } from "./buildings/AllBuildings";
 // import { Quary } from "./Quary";
-import { ToolWorkshop } from "./ToolWorkshop";
-import { Kiln } from "./Kiln";
-import { Steelworks } from "./Steelworks";
+import { ToolWorkshop, Kiln, Steelworks } from "./constructions/AllConstructions";
 
 function enableQuary(){
   Quary.enabled = true;

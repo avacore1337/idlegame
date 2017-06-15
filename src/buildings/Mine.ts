@@ -1,13 +1,13 @@
-import { Square } from "./Square";
+import { Square } from "../Square";
 import { Building } from "./Building";
-import { SQUARETYPES, MATERIALS, RESOURCES } from "./Constants";
-import { Counter } from "./Counter";
+import { SQUARETYPES, MATERIALS } from "../Constants";
+import { Counter } from "../Counter";
 
-export class Quary extends Building {
+export class Mine extends Building {
   static enabled:boolean = true;
-  static title:string = "Quary";
-  static allowedTerrains = [SQUARETYPES.Forest];
-  static neededResources = [RESOURCES.Stone];
+  static title:string = "Mine";
+  static allowedTerrains = [SQUARETYPES.Mountain];
+  static neededResources = [];
 
   constructor(){
     super();
@@ -15,7 +15,7 @@ export class Quary extends Building {
   }
 
   static isEnabled():boolean{
-    return Quary.enabled;
+    return Mine.enabled;
   }
 
   generateMaterials():Counter<MATERIALS>{
@@ -32,11 +32,11 @@ export class Quary extends Building {
   }
 
   static canBuild(square:Square):boolean{
-    if (Quary.allowedTerrains.indexOf(square.squareType) !== -1) {
-      if(Quary.neededResources.length === 0){
+    if (Mine.allowedTerrains.indexOf(square.squareType) !== -1) {
+      if(Mine.neededResources.length === 0){
         return true;
       }
-      if(Quary.neededResources.indexOf(square.resourceType) !== -1) {
+      if(Mine.allowedTerrains.indexOf(square.squareType) !== -1) {
         return true;
       }
     }

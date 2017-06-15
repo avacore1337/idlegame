@@ -1,9 +1,9 @@
-import { Square } from "./Square";
-import { Constructions } from "./Constructions";
-import { SQUARETYPES, MATERIALS } from "./Constants";
-import { Counter } from "./Counter";
+import { Square } from "../Square";
+import { Construction } from "./Construction";
+import { SQUARETYPES, MATERIALS } from "../Constants";
+import { Counter } from "../Counter";
 
-export class Library extends Constructions {
+export class Library extends Construction {
   static enabled:boolean = true;
   static title:string = "Library";
   constructor(){

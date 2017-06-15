@@ -1,6 +1,6 @@
-import { Square } from "./Square";
-import { SQUARETYPES, MATERIALS } from "./Constants";
-import { Counter } from "./Counter";
+import { Square } from "../Square";
+import { SQUARETYPES, MATERIALS } from "../Constants";
+import { Counter } from "../Counter";
 
 export class Building {
   protected static allowedTerrains:Array<SQUARETYPES>;
