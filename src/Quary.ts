@@ -6,7 +6,7 @@ import { Counter } from "./Counter";
 export class Quary extends Building {
   static enabled:boolean = true;
   constructor(){
-    super([SQUARETYPES.Mountain], []);
+    super([SQUARETYPES.Forest, SQUARETYPES.Mountain], []);
     // theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>
   }
 

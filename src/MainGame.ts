@@ -2,6 +2,8 @@ import { Counter } from "./Counter";
 import { Square } from "./Square";
 import { Lumbermill } from "./Lumbermill";
 import { Quary } from "./Quary";
+import { Claypit } from "./Claypit";
+import { Mine } from "./Mine";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
 import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST , BUILDINGS } from "./Constants";
@@ -111,6 +113,54 @@ export class MainGame {
           self.state = "";
         } else {
           self.option = BUILDINGS.Quary;
+        }
+      }
+    });
+
+    // Claypit
+    let claypitbutton = this.game.add.sprite(0, 0, 'button2');
+    let claypittext:Phaser.Text = this.game.add.text(3, 3, "Claypit", style);
+    let claypitgroup = this.game.add.group();
+    claypitgroup.y += 75;
+    claypitgroup.add(claypitbutton);
+    claypitgroup.add(claypittext);
+    buildingGroup.add(claypitgroup);
+    claypitgroup.visible = Claypit.isEnabled();
+    claypitbutton.inputEnabled = true;
+    claypitbutton.events.onInputUp.add(function() {
+      self.needsupdate = true;
+      if (self.state !== "building") {
+        self.state = "building";
+        self.option = BUILDINGS.Claypit;
+      } else {
+        if (self.option === BUILDINGS.Claypit) {
+          self.state = "";
+        } else {
+          self.option = BUILDINGS.Claypit;
+        }
+      }
+    });
+
+    // Mine
+    let minebutton = this.game.add.sprite(0, 0, 'button2');
+    let minetext:Phaser.Text = this.game.add.text(3, 3, "Mine", style);
+    let minegroup = this.game.add.group();
+    minegroup.y += 100;
+    minegroup.add(minebutton);
+    minegroup.add(minetext);
+    buildingGroup.add(minegroup);
+    minegroup.visible = Mine.isEnabled();
+    minebutton.inputEnabled = true;
+    minebutton.events.onInputUp.add(function() {
+      self.needsupdate = true;
+      if (self.state !== "building") {
+        self.state = "building";
+        self.option = BUILDINGS.Mine;
+      } else {
+        if (self.option === BUILDINGS.Mine) {
+          self.state = "";
+        } else {
+          self.option = BUILDINGS.Mine;
         }
       }
     });

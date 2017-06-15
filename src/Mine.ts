@@ -4,21 +4,26 @@ import { SQUARETYPES, MATERIALS } from "./Constants";
 import { Counter } from "./Counter";
 
 export class Mine extends Building {
+  static enabled:boolean = true;
   constructor(){
-    super(null, null);
+    super([SQUARETYPES.Mountain], []);
     // theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>
+  }
+
+  static isEnabled(){
+    return Mine.enabled;
   }
 
   generateMaterials():Counter<MATERIALS>{
     let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
-    counter.add(MATERIALS.Clay, 1); // TODO : Should add either Coal or Iron depending on what tile it is built upon
+    counter.add(MATERIALS.Stone, 1);
     return counter;
   }
 
   getRequiredMaterials():Counter<MATERIALS>{
     let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
-    counter.add(MATERIALS.Stone, 30);
-    counter.add(MATERIALS.Wood, 20);
+    counter.add(MATERIALS.Wood, 30);
+    counter.add(MATERIALS.Clay, 15);
     return counter;
   }
 }
