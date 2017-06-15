@@ -1,6 +1,7 @@
 import { Counter } from "./Counter";
 import { Square } from "./Square";
 import { Lumbermill } from "./Lumbermill";
+import { Quary } from "./Quary";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
 import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST , BUILDINGS } from "./Constants";
@@ -48,7 +49,6 @@ export class MainGame {
 
     this.menuGroup = this.game.add.group();
 
-
     this.menuGroup.x = 0;
     this.menuGroup.y = 0;
 
@@ -63,6 +63,11 @@ export class MainGame {
     let buildingGroup = this.game.add.group();
     this.menuGroup.add(buildingGroup);
     let style2 = { font: "14px Arial", fill: "#000000", align: "left" };
+
+    // SETUP FOR BUILDINGS
+    // -------------------
+
+    // Lumbermill
     let lumberbutton = this.game.add.sprite(0, 0, 'button2');
     let lumbertext:Phaser.Text = this.game.add.text(3, 3, "Lumbermill", style);
     let lumbergroup = this.game.add.group();
@@ -73,12 +78,42 @@ export class MainGame {
     lumbergroup.visible = Lumbermill.isEnabled();
     lumberbutton.inputEnabled = true;
     lumberbutton.events.onInputUp.add(function() {
+      console.log("Clicked Lumbermill?")
       self.needsupdate = true;
       if (self.state !== "building") {
         self.state = "building";
         self.option = BUILDINGS.Lumbermill;
       } else {
-        self.state = "";
+        if (self.option === BUILDINGS.Lumbermill) {
+          self.state = "";
+        } else {
+          self.option = BUILDINGS.Lumbermill;
+        }
+      }
+    });
+
+    // Quary
+    let quarybutton = this.game.add.sprite(0, 0, 'button2');
+    let quarytext:Phaser.Text = this.game.add.text(3, 3, "Quary", style);
+    let quarygroup = this.game.add.group();
+    quarygroup.y += 50;
+    quarygroup.add(quarybutton);
+    quarygroup.add(quarytext);
+    buildingGroup.add(quarygroup);
+    quarygroup.visible = Quary.isEnabled();
+    quarybutton.inputEnabled = true;
+    quarybutton.events.onInputUp.add(function() {
+      console.log("Clicked Quary?")
+      self.needsupdate = true;
+      if (self.state !== "building") {
+        self.state = "building";
+        self.option = BUILDINGS.Quary;
+      } else {
+        if (self.option === BUILDINGS.Quary) {
+          self.state = "";
+        } else {
+          self.option = BUILDINGS.Quary;
+        }
       }
     });
 
@@ -110,8 +145,6 @@ export class MainGame {
     this.menuGroup.add(buildings);
     this.menuGroup.add(town);
     this.menuGroup.add(research);
-
-
 
     //Only difference to a Button constructor is the label parameter...
     // let LabelButton = function(game, x, y, key, label, callback, callbackContext, overFrame, outFrame, downFrame, upFrame){

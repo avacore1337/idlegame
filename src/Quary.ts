@@ -4,9 +4,14 @@ import { SQUARETYPES, MATERIALS } from "./Constants";
 import { Counter } from "./Counter";
 
 export class Quary extends Building {
+  static enabled:boolean = true;
   constructor(){
-    super(null, null);
+    super([SQUARETYPES.Mountain], []);
     // theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>
+  }
+
+  static isEnabled(){
+    return Quary.enabled;
   }
 
   generateMaterials():Counter<MATERIALS>{

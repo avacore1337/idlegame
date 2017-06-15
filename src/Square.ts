@@ -1,6 +1,7 @@
 import { MainGame } from "./MainGame";
 import { Building } from "./Building";
 import { Lumbermill } from "./Lumbermill";
+import { Quary } from "./Quary";
 import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCETRINGLIST} from "./Constants";
 
 export class Square {
@@ -79,6 +80,11 @@ export class Square {
         if(this.game.option === BUILDINGS.Lumbermill && this.buildingType != BUILDINGS.Lumbermill){
           let lumbermill = new Lumbermill();
           if (lumbermill.canBuild(this)){
+            highlight = true;
+          };
+        } else if(this.game.option === BUILDINGS.Quary && this.buildingType != BUILDINGS.Quary){
+          let quary = new Quary();
+          if (quary.canBuild(this)){
             highlight = true;
           };
         }
