@@ -3,7 +3,7 @@ import { Square } from "./Square";
 import { Building } from "./Building";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
-import { BUILDINGCLASSES, DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST , BUILDINGS } from "./Constants";
+import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
 
 export class MainGame {
 
@@ -58,25 +58,28 @@ export class MainGame {
     menu2.anchor.setTo(1, 1);
     this.menuGroup.add(menu2);
     let style = { font: "14px Arial", fill: "#000000", align: "center" };
-    let button1 = this.game.add.sprite(0, 0, 'button');
-    let buildingGroup = this.game.add.group();
-    this.menuGroup.add(buildingGroup);
     let style2 = { font: "14px Arial", fill: "#000000", align: "left" };
+
 
     // SETUP FOR BUILDINGS
     // -------------------
+    let button1 = this.game.add.sprite(0, 0, 'button');
+    let buildings:Phaser.Text = this.game.add.text(30, 3, "Buildings", style);
+    let buildingGroup = this.game.add.group();
+    this.menuGroup.add(buildingGroup);
+    buildingGroup.visible = true;
     for (let index = 0; index < BUILDINGCLASSES.length; index++) {
       let b = BUILDINGCLASSES[index];
-      let buildingbutton = this.game.add.sprite(0, 0, 'button2');
-      let buildingtext:Phaser.Text = this.game.add.text(3, 3, b.title, style);
-      let buildinggroup = this.game.add.group();
-      buildinggroup.y += 25 * (index + 1);
-      buildinggroup.add(buildingbutton);
-      buildinggroup.add(buildingtext);
-      buildingGroup.add(buildinggroup);
-      buildinggroup.visible = b.isEnabled();
-      buildingbutton.inputEnabled = true;
-      buildingbutton.events.onInputUp.add(function() {
+      let bbutton = this.game.add.sprite(0, 0, 'button2');
+      let btext:Phaser.Text = this.game.add.text(3, 3, b.title, style);
+      let bgroup = this.game.add.group();
+      bgroup.y += 25 * (index + 1);
+      bgroup.add(bbutton);
+      bgroup.add(btext);
+      buildingGroup.add(bgroup);
+      bgroup.visible = b.isEnabled();
+      bbutton.inputEnabled = true;
+      bbutton.events.onInputUp.add(function() {
         self.needsupdate = true;
         if (self.state !== "building") {
           self.state = "building";
@@ -90,6 +93,101 @@ export class MainGame {
         }
       });
     }
+    this.menuGroup.add(button1);
+    this.menuGroup.add(buildings);
+
+
+    // SETUP FOR TOWN BUILDINGS
+    // -------------------
+    let button2 = this.game.add.sprite(112, 0, 'button');
+    let town:Phaser.Text = this.game.add.text(120, 3, "Town buildings", style);
+    let townBuildingGroup = this.game.add.group();
+    this.menuGroup.add(townBuildingGroup);
+    townBuildingGroup.visible = false;
+    for (let index = 0; index < CONSTRUCTIONCLASSES.length; index++) {
+      let c = CONSTRUCTIONCLASSES[index];
+      let cbutton = this.game.add.sprite(0, 0, 'button2');
+      let ctext:Phaser.Text = this.game.add.text(3, 3, c.title, style);
+      let cgroup = this.game.add.group();
+      cgroup.y += 25 * (index + 1);
+      cgroup.add(cbutton);
+      cgroup.add(ctext);
+      townBuildingGroup.add(cgroup);
+      cgroup.visible = c.isEnabled();
+      cbutton.inputEnabled = true;
+      cbutton.events.onInputUp.add(function() {
+        self.needsupdate = true;
+        if (self.state !== "building") {
+          self.state = "building";
+          self.option = index;
+        } else {
+          if (self.option === index) {
+            self.state = "";
+          } else {
+            self.option = index;
+          }
+        }
+      });
+    }
+    this.menuGroup.add(button2);
+    this.menuGroup.add(town);
+
+
+    // SETUP FOR RESEARCH
+    // -------------------
+    let button3 = this.game.add.sprite(224, 0, 'button');
+    let research:Phaser.Text = this.game.add.text(250, 3, "Research", style);
+    let researchGroup = this.game.add.group();
+    this.menuGroup.add(researchGroup);
+    researchGroup.visible = false;
+    for (let index = 0; index < CONSTRUCTIONCLASSES.length; index++) {
+      let r = CONSTRUCTIONCLASSES[index];
+      let rbutton = this.game.add.sprite(0, 0, 'button2');
+      let rtext:Phaser.Text = this.game.add.text(3, 3, "PLACEHOLDER", style);
+      let rgroup = this.game.add.group();
+      rgroup.y += 25 * (index + 1);
+      rgroup.add(rbutton);
+      rgroup.add(rtext);
+      researchGroup.add(rgroup);
+      rgroup.visible = r.isEnabled();
+      rbutton.inputEnabled = true;
+      rbutton.events.onInputUp.add(function() {
+        self.needsupdate = true;
+        if (self.state !== "building") {
+          self.state = "building";
+          self.option = index;
+        } else {
+          if (self.option === index) {
+            self.state = "";
+          } else {
+            self.option = index;
+          }
+        }
+      });
+    }
+    this.menuGroup.add(button3);
+    this.menuGroup.add(research);
+
+    // Toggle between 'Buildings' / 'Town buildings' / 'Research'
+    button1.inputEnabled = true;
+    button2.inputEnabled = true;
+    button3.inputEnabled = true;
+    button1.events.onInputUp.add(function() {
+      buildingGroup.visible = true;
+      townBuildingGroup.visible = false;
+      researchGroup.visible = false;
+    });
+    button2.events.onInputUp.add(function() {
+      buildingGroup.visible = false;
+      townBuildingGroup.visible = true;
+      researchGroup.visible = false;
+    });
+    button3.events.onInputUp.add(function() {
+      buildingGroup.visible = false;
+      townBuildingGroup.visible = false;
+      researchGroup.visible = true;
+    });
+
 
     // menu.inputEnabled = true;
     // let toggle = true;
@@ -107,16 +205,10 @@ export class MainGame {
     //   }
     // });
 
-    let button2 = this.game.add.sprite(112, 0, 'button');
-    let button3 = this.game.add.sprite(224, 0, 'button');
-    this.menuGroup.add(button1);
-    this.menuGroup.add(button2);
+
     this.menuGroup.add(button3);
 
-    let buildings:Phaser.Text = this.game.add.text(30, 3, "Buildings", style);
-    let town:Phaser.Text = this.game.add.text(120, 3, "Town buildings", style);
-    let research:Phaser.Text = this.game.add.text(250, 3, "Research", style);
-    this.menuGroup.add(buildings);
+
     this.menuGroup.add(town);
     this.menuGroup.add(research);
 

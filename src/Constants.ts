@@ -2,7 +2,10 @@ import { Lumbermill } from "./Lumbermill";
 import { Claypit } from "./Claypit";
 import { Quary } from "./Quary";
 import { Mine } from "./Mine";
-
+import { Library } from "./Library";
+import { ToolWorkshop } from "./ToolWorkshop";
+import { Kiln } from "./Kiln";
+import { Steelworks } from "./Steelworks";
 
 // export class Constants {
 //   static GAMESIZE: number = 15;
@@ -51,8 +54,15 @@ export const enum BUILDINGS {
   Quary,
   Mine
 }
-
 export const BUILDINGCLASSES = [Lumbermill, Claypit, Quary, Mine]
+
+export const enum CONSTRUCTIONS {
+  Library,
+  ToolWorkshop,
+  Kiln,
+  Steelworks
+}
+export const CONSTRUCTIONCLASSES = [Library, ToolWorkshop, Kiln, Steelworks]
 
 export const enum RESOURCES {
   Stone,
