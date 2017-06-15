@@ -66,9 +66,12 @@ export const CONSTRUCTIONCLASSES = [Library, ToolWorkshop, Kiln, Steelworks]
 
 export const enum RESOURCES {
   Stone,
-  Horse
+  Horse,
+  Copper,
+  Iron,
+  Coal
 }
-export const RESOURCESTRINGLIST = ["stone", "horse"]
+export const RESOURCESTRINGLIST = ["stone", "horse", "copper", "iron", "coal" ]
 
 // }
 
