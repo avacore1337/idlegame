@@ -6,10 +6,10 @@ export class TechNode{
   effect: () => void;
 
   constructor(name:string, requires:TechNode[], researchPointCost:number, effect: () => void){
-    this.name = name
-    this.requires = requires
-    this.researchPointCost = researchPointCost
-    this.effect = effect
+    this.name = name;
+    this.requires = requires;
+    this.researchPointCost = researchPointCost;
+    this.effect = effect;
     this.researched = false;
   }
 
@@ -19,11 +19,11 @@ export class TechNode{
         return false;
       }
     }
-    return true
+    return true;
   }
 
   run():void{
     this.effect();
   }
-  
+
 }
