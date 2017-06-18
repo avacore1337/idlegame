@@ -35,8 +35,8 @@ export class Square {
     let hexagonY = (game.hexagonHeight / 4 * 3) * i;
 
     let center = game.game.add.sprite(hexagonX, hexagonY, 'tiles', SQUARESTRINGLIST[squareType] + '.png');
-    let blueborder = game.game.add.sprite(hexagonX, hexagonY, "blueborder");
-    let redborder = game.game.add.sprite(hexagonX, hexagonY, "redborder");
+    let blueborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', "blueborder.png");
+    let redborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', "redborder.png");
     this.borders = [blueborder, redborder];
     this.center = center;
     center.visible = false;
@@ -65,7 +65,7 @@ export class Square {
     if(this.resource != null){
       this.resource.destroy();
     }
-    this.resource = this.game.game.add.sprite(this.center.x + 28 ,this.center.y + 35, RESOURCESTRINGLIST[resourceType]);
+    this.resource = this.game.game.add.sprite(this.center.x + 28 ,this.center.y + 35, 'resources', RESOURCESTRINGLIST[resourceType] + '.png');
     this.resourceType = resourceType;
     this.game.resourceLayer.add(this.resource);
     this.resource.visible = false;
@@ -120,7 +120,7 @@ export class Square {
     this.building = new BUILDINGCLASSES[building]();
     this.building.setSquare(this);
 
-    this.buildingSprite = this.game.game.add.sprite(this.center.x + 22 ,this.center.y + 30, BUILDINGCLASSES[building].title.toLowerCase());
+    this.buildingSprite = this.game.game.add.sprite(this.center.x + 22 ,this.center.y + 30, 'buildings', BUILDINGCLASSES[building].title.toLowerCase() + '.png');
     this.game.buildingLayer.add(this.buildingSprite);
     this.buildingSprite.visible = true;
   }

@@ -9,7 +9,7 @@
 	"sourceSize": {"w":70,"h":80}
 },
 {
-	"filename": "blackborder.png",
+	"filename": "desert.png",
 	"frame": {"x":70,"y":0,"w":70,"h":80},
 	"rotated": false,
 	"trimmed": false,
@@ -17,7 +17,7 @@
 	"sourceSize": {"w":70,"h":80}
 },
 {
-	"filename": "blueborder.png",
+	"filename": "field.png",
 	"frame": {"x":140,"y":0,"w":70,"h":80},
 	"rotated": false,
 	"trimmed": false,
@@ -25,24 +25,8 @@
 	"sourceSize": {"w":70,"h":80}
 },
 {
-	"filename": "desert.png",
-	"frame": {"x":210,"y":0,"w":70,"h":80},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
-	"sourceSize": {"w":70,"h":80}
-},
-{
-	"filename": "field.png",
-	"frame": {"x":280,"y":0,"w":70,"h":80},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
-	"sourceSize": {"w":70,"h":80}
-},
-{
 	"filename": "forest.png",
-	"frame": {"x":350,"y":0,"w":70,"h":80},
+	"frame": {"x":0,"y":80,"w":70,"h":80},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
@@ -50,7 +34,7 @@
 },
 {
 	"filename": "mountain.png",
-	"frame": {"x":420,"y":0,"w":70,"h":80},
+	"frame": {"x":70,"y":80,"w":70,"h":80},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
@@ -58,15 +42,7 @@
 },
 {
 	"filename": "plains.png",
-	"frame": {"x":490,"y":0,"w":70,"h":80},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
-	"sourceSize": {"w":70,"h":80}
-},
-{
-	"filename": "redborder.png",
-	"frame": {"x":560,"y":0,"w":70,"h":80},
+	"frame": {"x":140,"y":80,"w":70,"h":80},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
@@ -74,7 +50,7 @@
 },
 {
 	"filename": "river.png",
-	"frame": {"x":630,"y":0,"w":70,"h":80},
+	"frame": {"x":0,"y":160,"w":70,"h":80},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
@@ -82,7 +58,7 @@
 },
 {
 	"filename": "water.png",
-	"frame": {"x":700,"y":0,"w":70,"h":80},
+	"frame": {"x":70,"y":160,"w":70,"h":80},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
@@ -93,8 +69,8 @@
 	"version": "1.0",
 	"image": "tiles.png",
 	"format": "RGBA8888",
-	"size": {"w":770,"h":80},
+	"size": {"w":210,"h":240},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:2740fc4bbc68816a197fab74e5ad8483:9826dc54675b4191a548689ecb452c5c:accbe1e7e294ded8391337fc1c446319$"
+	"smartupdate": "$TexturePacker:SmartUpdate:e4f552146d8a4b5c874f34f8c7f3d518:5bcec61cfff14dcd684ec4839ebddde9:accbe1e7e294ded8391337fc1c446319$"
 }
 }

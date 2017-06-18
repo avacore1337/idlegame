@@ -1,0 +1,36 @@
+{"frames": [
+
+{
+	"filename": "building.png",
+	"frame": {"x":0,"y":0,"w":50,"h":37},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":37},
+	"sourceSize": {"w":50,"h":37}
+},
+{
+	"filename": "factory.png",
+	"frame": {"x":50,"y":0,"w":32,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+{
+	"filename": "mine.png",
+	"frame": {"x":82,"y":0,"w":40,"h":40},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
+	"sourceSize": {"w":40,"h":40}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "buildings.png",
+	"format": "RGBA8888",
+	"size": {"w":122,"h":40},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:64218745245af9e6674abfe56d4eaa62:4da459b25c9717152fa4f40a7ba79185:8f670863a0ac9ac15291caba2801fd50$"
+}
+}

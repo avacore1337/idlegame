@@ -52,10 +52,10 @@ export class MainGame {
     this.menuGroup.x = 0;
     this.menuGroup.y = 0;
 
-    let menu = this.game.add.sprite(0, 0, 'other', 'leftpanel.png');
+    let menu = this.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
     this.menuGroup.add(menu);
 
-    let menu2 = this.game.add.sprite(336, 600, 'other', 'leftpanel.png');
+    let menu2 = this.game.add.sprite(336, 600, 'menu', 'leftpanel.png');
     menu2.anchor.setTo(1, 1);
     this.menuGroup.add(menu2);
     let style = { font: "14px Arial", fill: "#000000", align: "center" };
@@ -64,7 +64,7 @@ export class MainGame {
 
     // SETUP FOR BUILDINGS
     // -------------------
-    let button1 = this.game.add.sprite(0, 0, 'button');
+    let button1 = this.game.add.sprite(0, 0, 'menu', 'button.png');
     let buildings:Phaser.Text = this.game.add.text(30, 3, "Buildings", style);
     let buildingGroup = this.game.add.group();
     this.menuGroup.add(buildingGroup);
@@ -76,11 +76,11 @@ export class MainGame {
       let bgroup = this.game.add.group();
       buildingGroup.add(bgroup);
       bgroup.visible = false;
-      let bbuttonRegular = this.game.add.sprite(0, 0, 'button2');
+      let bbuttonRegular = this.game.add.sprite(0, 0,'menu', 'button2.png');
       bgroup.add(bbuttonRegular);
       bbuttonRegular.visible = true;
       bbuttonRegular.inputEnabled = true;
-      let bbuttonClicked = this.game.add.sprite(0, 0, 'button2clicked');
+      let bbuttonClicked = this.game.add.sprite(0, 0,'menu', 'button2clicked.png');
       bgroup.add(bbuttonClicked);
       bbuttonClicked.visible = false;
       bbuttonClicked.inputEnabled = true;
@@ -119,7 +119,7 @@ export class MainGame {
 
     // SETUP FOR TOWN BUILDINGS
     // -------------------
-    let button2 = this.game.add.sprite(112, 0, 'button');
+    let button2 = this.game.add.sprite(112, 0,'menu', 'button.png');
     let town:Phaser.Text = this.game.add.text(120, 3, "Town buildings", style);
     let townBuildingGroup = this.game.add.group();
     this.menuGroup.add(townBuildingGroup);
@@ -131,11 +131,11 @@ export class MainGame {
       let cgroup = this.game.add.group();
       cgroup.visible = false;
       townBuildingGroup.add(cgroup);
-      let cbuttonRegular = this.game.add.sprite(0, 0, 'button2');
+      let cbuttonRegular = this.game.add.sprite(0, 0,'menu', 'button2.png');
       cgroup.add(cbuttonRegular);
       cbuttonRegular.visible = true;
       cbuttonRegular.inputEnabled = true;
-      let cbuttonClicked = this.game.add.sprite(0, 0, 'button2clicked');
+      let cbuttonClicked = this.game.add.sprite(0, 0,'menu', 'button2clicked.png');
       cgroup.add(cbuttonClicked);
       cbuttonClicked.visible = false;
       cbuttonClicked.inputEnabled = true;
@@ -174,7 +174,7 @@ export class MainGame {
 
     // SETUP FOR RESEARCH
     // -------------------
-    let button3 = this.game.add.sprite(224, 0, 'button');
+    let button3 = this.game.add.sprite(224, 0,'menu', 'button.png');
     let research:Phaser.Text = this.game.add.text(250, 3, "Research", style);
     let researchGroup = this.game.add.group();
     this.menuGroup.add(researchGroup);
@@ -192,7 +192,7 @@ export class MainGame {
       }
       researchGroup.add(rgroup);
       buttons3.push(rgroup);
-      let rbutton = this.game.add.sprite(0, 0, 'button2');
+      let rbutton = this.game.add.sprite(0, 0,'menu', 'button2.png');
       rbutton.visible = true;
       rbutton.inputEnabled = true;
       rgroup.add(rbutton);
@@ -413,7 +413,7 @@ export class MainGame {
     if(centerHex.resource != null){
       centerHex.resource.destroy();
     }
-    centerHex.buildingSprite = this.game.add.sprite(centerHex.center.x + 10 ,centerHex.center.y + 20, "building");
+    centerHex.buildingSprite = this.game.add.sprite(centerHex.center.x + 10 ,centerHex.center.y + 20, 'buildings', "building.png");
     this.buildingLayer.add(centerHex.buildingSprite);
     centerHex.purchased = true;
     centerHex.reveal();
