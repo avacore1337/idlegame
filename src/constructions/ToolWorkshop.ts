@@ -4,7 +4,7 @@ import { SQUARETYPES, MATERIALS } from "../Constants";
 import { Counter } from "../Counter";
 
 export class ToolWorkshop extends Construction {
-  static enabled:boolean = true;
+  static enabled:boolean = false;
   static title:string = "Tool workshop";
   constructor(){
     super([SQUARETYPES.Base], []);

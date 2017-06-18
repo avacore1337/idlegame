@@ -4,7 +4,7 @@ import { SQUARETYPES, MATERIALS, RESOURCES } from "../Constants";
 import { Counter } from "../Counter";
 
 export class Quary extends Building {
-  static enabled:boolean = true;
+  static enabled:boolean = false;
   static title:string = "Quary";
   static allowedTerrains = [SQUARETYPES.Forest];
   static neededResources = [RESOURCES.Stone];
