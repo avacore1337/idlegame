@@ -6,6 +6,7 @@ import { Counter } from "../Counter";
 export class Claypit extends Building {
   static enabled:boolean = true;
   static title:string = "Claypit";
+  static spriteName:string = "factory";
   static allowedTerrains = [SQUARETYPES.River];
   static neededResources = [];
   constructor(){

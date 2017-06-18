@@ -7,6 +7,7 @@ export class Building {
   protected static neededResources:Array<number>;
   square:Square;
   title:string;
+  spriteName:string;
   constructor(){
     // this.allowedTerrains = theAllowedTerrains;
     // this.neededResources = theNeededResources;

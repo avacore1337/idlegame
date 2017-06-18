@@ -120,7 +120,7 @@ export class Square {
     this.building = new BUILDINGCLASSES[building]();
     this.building.setSquare(this);
 
-    this.buildingSprite = this.game.game.add.sprite(this.center.x + 22 ,this.center.y + 30, 'buildings', BUILDINGCLASSES[building].title.toLowerCase() + '.png');
+    this.buildingSprite = this.game.game.add.sprite(this.center.x + 22 ,this.center.y + 30, 'buildings', BUILDINGCLASSES[building].spriteName + '.png');
     this.game.buildingLayer.add(this.buildingSprite);
     this.buildingSprite.visible = true;
   }
