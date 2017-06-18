@@ -5,7 +5,7 @@ import { Counter } from "../Counter";
 
 export class ToolWorkshop extends Construction {
   static enabled:boolean = true;
-  static title:string = "ToolWorkshop";
+  static title:string = "Tool workshop";
   constructor(){
     super([SQUARETYPES.Base], []);
   }
