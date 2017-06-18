@@ -27,6 +27,8 @@ export class MainGame {
   needsupdate:boolean;
   resourceUpdate:number;
   resources:Counter<number>;
+  woodLabel:Phaser.Text; // TODO ; These should not be here I don't think
+  clayLabel:Phaser.Text; // TODO ; These should not be here I don't think
 
   constructor(theGame:Phaser.Game) {
     this.resources = new Counter<number>();
@@ -59,15 +61,30 @@ export class MainGame {
     this.menuGroup.x = 0;
     this.menuGroup.y = 0;
 
-    let menu = this.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
-    this.menuGroup.add(menu);
-
-    let menu2 = this.game.add.sprite(336, 600, 'menu', 'leftpanel.png');
-    menu2.anchor.setTo(1, 1);
-    this.menuGroup.add(menu2);
     let style = { font: "14px Arial", fill: "#000000", align: "center" };
     let style2 = { font: "14px Arial", fill: "#000000", align: "left" };
 
+    let topMenu = this.game.add.group();
+    let topSprite = this.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
+    topMenu.add(topSprite);
+    this.menuGroup.add(topMenu);
+
+    let botMenu = this.game.add.group();
+    let botSprite = this.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
+    botMenu.add(botSprite);
+    this.menuGroup.add(botMenu);
+
+    botMenu.y = 320;
+
+    // Display owned materials
+    // -----------------------
+    let woodLabel:Phaser.Text = this.game.add.text(3, 3, "Wood " + this.resources.get(MATERIALS.Wood), style);
+    this.woodLabel = woodLabel;
+    botMenu.add(woodLabel);
+
+    let clayLabel:Phaser.Text = this.game.add.text(3, 33, "Clay " + this.resources.get(MATERIALS.Clay), style);
+    this.clayLabel = clayLabel;
+    botMenu.add(clayLabel);
 
     // SETUP FOR BUILDINGS
     // -------------------
@@ -367,6 +384,8 @@ export class MainGame {
     if (this.resourceUpdate === 10) {
       this.resources.add(MATERIALS.Clay, 10);
       this.resources.add(MATERIALS.Wood, 10);
+      this.woodLabel.setText("Wood " + this.resources.get(MATERIALS.Wood));
+      this.clayLabel.setText("Clay " + this.resources.get(MATERIALS.Clay));
       this.resourceUpdate = 0;
     }
 
@@ -407,11 +426,12 @@ export class MainGame {
         newCenter.inputEnabled = true;
         newCenter.events.onInputUp.add(function() {
           self.needsupdate = true;
-          theSquare.purchased = true;
-          theSquare.revealNeighbours();
-          if (self.state === "building" && BUILDINGCLASSES[self.option].allowedTerrains.indexOf(theSquare.squareType) !== -1) {
+          // You own the tile, you wish to build, the tile-type is allowed, you can afford it, TODO (no other building exist on the tile)
+          if (theSquare.purchased && self.state === "building" && BUILDINGCLASSES[self.option].allowedTerrains.indexOf(theSquare.squareType) !== -1 && BUILDINGCLASSES[self.option].getRequiredMaterials().isSubset(this.resources)) {
             theSquare.addBuilding(self.option);
           }
+          theSquare.purchased = true;
+          theSquare.revealNeighbours();
         });
       }
     }
