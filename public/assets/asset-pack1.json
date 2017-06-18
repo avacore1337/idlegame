@@ -2,18 +2,6 @@
     "tiles": [
       {
         "type": "image",
-        "key": "blueborder",
-        "url": "assets/blueborder.png",
-        "overwrite": false
-      },
-      {
-        "type": "image",
-        "key": "redborder",
-        "url": "assets/redborder.png",
-        "overwrite": false
-      },
-      {
-        "type": "image",
         "key": "field",
         "url": "assets/field.png",
         "overwrite": false

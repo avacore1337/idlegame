@@ -52,10 +52,10 @@ export class MainGame {
     this.menuGroup.x = 0;
     this.menuGroup.y = 0;
 
-    let menu = this.game.add.sprite(0, 0, 'menu');
+    let menu = this.game.add.sprite(0, 0, 'other', 'leftpanel.png');
     this.menuGroup.add(menu);
 
-    let menu2 = this.game.add.sprite(336, 600, 'menu');
+    let menu2 = this.game.add.sprite(336, 600, 'other', 'leftpanel.png');
     menu2.anchor.setTo(1, 1);
     this.menuGroup.add(menu2);
     let style = { font: "14px Arial", fill: "#000000", align: "center" };

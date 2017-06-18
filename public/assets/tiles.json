@@ -1,0 +1,76 @@
+{"frames": [
+
+{
+	"filename": "base.png",
+	"frame": {"x":0,"y":0,"w":70,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
+	"sourceSize": {"w":70,"h":80}
+},
+{
+	"filename": "desert.png",
+	"frame": {"x":70,"y":0,"w":70,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
+	"sourceSize": {"w":70,"h":80}
+},
+{
+	"filename": "field.png",
+	"frame": {"x":140,"y":0,"w":70,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
+	"sourceSize": {"w":70,"h":80}
+},
+{
+	"filename": "forest.png",
+	"frame": {"x":0,"y":80,"w":70,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
+	"sourceSize": {"w":70,"h":80}
+},
+{
+	"filename": "mountain.png",
+	"frame": {"x":70,"y":80,"w":70,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
+	"sourceSize": {"w":70,"h":80}
+},
+{
+	"filename": "plains.png",
+	"frame": {"x":140,"y":80,"w":70,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
+	"sourceSize": {"w":70,"h":80}
+},
+{
+	"filename": "river.png",
+	"frame": {"x":0,"y":160,"w":70,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
+	"sourceSize": {"w":70,"h":80}
+},
+{
+	"filename": "water.png",
+	"frame": {"x":70,"y":160,"w":70,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":80},
+	"sourceSize": {"w":70,"h":80}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "tiles.png",
+	"format": "RGBA8888",
+	"size": {"w":210,"h":240},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e4f552146d8a4b5c874f34f8c7f3d518:5bcec61cfff14dcd684ec4839ebddde9:accbe1e7e294ded8391337fc1c446319$"
+}
+}

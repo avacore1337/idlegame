@@ -34,7 +34,7 @@ export class Square {
     let hexagonX = game.hexagonWidth * (j + 1/2* (i % 2));
     let hexagonY = (game.hexagonHeight / 4 * 3) * i;
 
-    let center = game.game.add.sprite(hexagonX, hexagonY, SQUARESTRINGLIST[squareType]);
+    let center = game.game.add.sprite(hexagonX, hexagonY, 'tiles', SQUARESTRINGLIST[squareType] + '.png');
     let blueborder = game.game.add.sprite(hexagonX, hexagonY, "blueborder");
     let redborder = game.game.add.sprite(hexagonX, hexagonY, "redborder");
     this.borders = [blueborder, redborder];
@@ -55,7 +55,7 @@ export class Square {
 
   setType(squareType:SQUARETYPES):void {
     let old = this.center;
-    this.center = this.game.game.add.sprite(old.x,old.y, SQUARESTRINGLIST[squareType]);
+    this.center = this.game.game.add.sprite(old.x,old.y, 'tiles', SQUARESTRINGLIST[squareType] + '.png');
     this.game.squareLayer.add(this.center);
     old.destroy();
     this.squareType = squareType;
