@@ -19,6 +19,9 @@ export function resourceLoader(game:Phaser.Game){
   game.load.image("copper", "assets/copper.png");
   game.load.image("iron", "assets/iron.png");
   game.load.image("coal", "assets/coal.png");
+  game.load.image("claypit", "assets/factory.png"); // TODO : Fix this, it is like this for testing purposes
+  game.load.image("lumbermill", "assets/factory.png"); // TODO : Fix this, it is like this for testing purposes
+  game.load.image("quary", "assets/factory.png"); // TODO : Fix this, it is like this for testing purposes
   game.load.image("factory", "assets/factory.png");
   game.load.image("mine", "assets/mine.png");
 }

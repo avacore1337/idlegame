@@ -252,6 +252,7 @@ export class MainGame {
     button1.events.onInputUp.add(function() {
       self.needsupdate = true;
       if (self.state !== "building") {
+        self.option = -1;
         self.state = "";
       }
       buildingGroup.visible = true;
@@ -261,14 +262,11 @@ export class MainGame {
         button.regular.visible = true;
         button.toggled.visible = false;
       }
-      for (let button of buttons3) {
-        button.regular.visible = true;
-        button.toggled.visible = false;
-      }
     });
     button2.events.onInputUp.add(function() {
       self.needsupdate = true;
       if (self.state !== "town") {
+        self.option = -1;
         self.state = "";
       }
       buildingGroup.visible = false;
@@ -278,15 +276,11 @@ export class MainGame {
         button.regular.visible = true;
         button.toggled.visible = false;
       }
-      for (let button of buttons3) {
-        button.regular.visible = true;
-        button.toggled.visible = false;
-      }
     });
     button3.events.onInputUp.add(function() {
       self.needsupdate = true;
       if (self.state !== "research") {
-        self.state = "";
+        self.option = -1;
       }
       buildingGroup.visible = false;
       townBuildingGroup.visible = false;
@@ -396,6 +390,9 @@ export class MainGame {
           self.needsupdate = true;
           theSquare.purchased = true;
           theSquare.revealNeighbours();
+          if (self.state === "building" && BUILDINGCLASSES[self.option].allowedTerrains.indexOf(theSquare.squareType) !== -1) {
+            theSquare.addBuilding(self.option);
+          }
         });
       }
     }

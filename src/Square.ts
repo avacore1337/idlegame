@@ -119,6 +119,10 @@ export class Square {
     this.buildingType = building;
     this.building = new BUILDINGCLASSES[building]();
     this.building.setSquare(this);
+
+    this.buildingSprite = this.game.game.add.sprite(this.center.x + 22 ,this.center.y + 30, BUILDINGCLASSES[building].title.toLowerCase());
+    this.game.buildingLayer.add(this.buildingSprite);
+    this.buildingSprite.visible = true;
   }
 
   generateMaterials(){
