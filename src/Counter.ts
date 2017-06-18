@@ -65,6 +65,14 @@ export class Counter<T> {
     return newCounter;
   }
 
+  divide(divisor:number):Counter<T>{
+    let newCounter = new Counter<T>();
+    for (let key of this.values.keys()) {
+      newCounter.values.set(key, this.values.get(key)/divisor);
+    }
+    return newCounter;
+  }
+
   negative():Counter<T>{
     let newCounter = new Counter<T>();
     for (let key of this.values.keys()) {
@@ -77,7 +85,7 @@ export class Counter<T> {
 
   isSubset(other:Counter<T>):boolean{
     for (let key of other.values.keys()) {
-      if(!this.values.has(key) || this.values.get(key) < this.values.get(key)){
+      if(!this.values.has(key) || this.values.get(key) < other.values.get(key)){
         return false;
       }
     }

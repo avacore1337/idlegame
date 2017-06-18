@@ -25,7 +25,7 @@ export class Quary extends Building {
     return counter;
   }
 
-  getRequiredMaterials():Counter<MATERIALS>{
+  static getRequiredMaterials():Counter<MATERIALS>{
     let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 30);
     counter.add(MATERIALS.Clay, 15);

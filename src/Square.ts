@@ -1,4 +1,5 @@
 import { MainGame } from "./MainGame";
+import { Counter } from "./Counter";
 import { Building } from "./buildings/AllBuildings";
 import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from "./Constants";
 
@@ -96,7 +97,7 @@ export class Square {
     }
   }
 
-  reveal(){
+  reveal():void{
     if(!this.revealed){
       this.revealed = true;
       this.center.visible = true;
@@ -121,14 +122,17 @@ export class Square {
     this.building = new BUILDINGCLASSES[building]();
     this.building.setSquare(this);
 
-    this.buildingSprite = this.game.game.add.sprite(this.center.x + 22 ,this.center.y + 30, 'buildings', BUILDINGCLASSES[building].spriteName + '.png');
+    this.buildingSprite = this.game.game.add.sprite(this.center.x + 18 ,this.center.y + 23, 'buildings', BUILDINGCLASSES[building].spriteName + '.png');
     this.game.buildingLayer.add(this.buildingSprite);
     this.buildingSprite.visible = true;
   }
 
-  generateMaterials(){
+  generateMaterials():Counter<number>{
     if(this.building != null){
       return this.building.generateMaterials();
+    }
+    else {
+      return new Counter<number>();
     }
   }
 

@@ -369,26 +369,33 @@ export class MainGame {
 
   //
   onUpdate():void {
-    // Update graphics
-    if (this.needsupdate) {
-        this.needsupdate = false;
-        for (let i = 0; i < this.hexMatrix.length; i++) {
-          for (let j = 0; j < this.hexMatrix[i].length; j++) {
-            this.hexMatrix[i][j].update();
-          }
-        }
-    }
 
     // Update resources
-    this.resourceUpdate++;
-    if (this.resourceUpdate === 10) {
-      this.resources.add(MATERIALS.Clay, 10);
-      this.resources.add(MATERIALS.Wood, 10);
-      this.woodLabel.setText("Wood " + this.resources.get(MATERIALS.Wood));
-      this.clayLabel.setText("Clay " + this.resources.get(MATERIALS.Clay));
+    this.resourceUpdate = (this.resourceUpdate + 1)% 20;
+    if (this.resourceUpdate === 0) {
+      let resourceGain = new Counter<number>();
+      resourceGain.add(MATERIALS.Clay, 0.1);
+      resourceGain.add(MATERIALS.Wood, 0.1);
+      for (let i = 0; i < this.hexMatrix.length; i++) {
+        for (let j = 0; j < this.hexMatrix[i].length; j++) {
+          resourceGain = resourceGain.addOther(this.hexMatrix[i][j].generateMaterials());
+        }
+      }
+      this.resources = this.resources.addOther(resourceGain.divide(3));
+      this.woodLabel.setText("Wood " + this.resources.get(MATERIALS.Wood).toFixed(2));
+      this.clayLabel.setText("Clay " + this.resources.get(MATERIALS.Clay).toFixed(2));
       this.resourceUpdate = 0;
     }
 
+    // Update graphics
+    if (this.needsupdate) {
+      this.needsupdate = false;
+      for (let i = 0; i < this.hexMatrix.length; i++) {
+        for (let j = 0; j < this.hexMatrix[i].length; j++) {
+          this.hexMatrix[i][j].update();
+        }
+      }
+    }
     // Update camera
     cameraControls(this.game, this.cursors, this.menuGroup);
   }
@@ -427,8 +434,9 @@ export class MainGame {
         newCenter.events.onInputUp.add(function() {
           self.needsupdate = true;
           // You own the tile, you wish to build, the tile-type is allowed, you can afford it, TODO (no other building exist on the tile)
-          if (theSquare.purchased && self.state === "building" && BUILDINGCLASSES[self.option].allowedTerrains.indexOf(theSquare.squareType) !== -1 && BUILDINGCLASSES[self.option].getRequiredMaterials().isSubset(this.resources)) {
+          if (theSquare.purchased && self.state === "building" && BUILDINGCLASSES[self.option].canBuild(theSquare) && self.resources.isSubset(BUILDINGCLASSES[self.option].getRequiredMaterials())) {
             theSquare.addBuilding(self.option);
+            self.resources = self.resources.subtractOther(BUILDINGCLASSES[self.option].getRequiredMaterials());
           }
           theSquare.purchased = true;
           theSquare.revealNeighbours();
