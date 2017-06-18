@@ -25,8 +25,15 @@ export class MainGame {
   state:string;
   option:number;
   needsupdate:boolean;
+  resourceUpdate:number;
+  resources:Counter<number>;
 
   constructor(theGame:Phaser.Game) {
+    this.resources = new Counter<number>();
+    this.resources.add(MATERIALS.Wood, 100);
+    this.resources.add(MATERIALS.Clay, 100);
+
+    this.resourceUpdate = 0;
     this.state = "";
     this.needsupdate = false;
     this.game = theGame;
@@ -344,6 +351,7 @@ export class MainGame {
 
   //
   onUpdate():void {
+    // Update graphics
     if (this.needsupdate) {
         this.needsupdate = false;
         for (let i = 0; i < this.hexMatrix.length; i++) {
@@ -352,6 +360,16 @@ export class MainGame {
           }
         }
     }
+
+    // Update resources
+    this.resourceUpdate++;
+    if (this.resourceUpdate === 10) {
+      this.resources.add(MATERIALS.Clay, 10);
+      this.resources.add(MATERIALS.Wood, 10);
+      this.resourceUpdate = 0;
+    }
+
+    // Update camera
     cameraControls(this.game, this.cursors, this.menuGroup);
   }
 
