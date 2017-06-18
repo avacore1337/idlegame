@@ -288,6 +288,7 @@ export class MainGame {
       self.needsupdate = true;
       if (self.state !== "research") {
         self.option = -1;
+        self.state = "";
       }
       buildingGroup.visible = false;
       townBuildingGroup.visible = false;
