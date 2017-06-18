@@ -23,6 +23,7 @@ export class Square {
   constructor(game:MainGame, j:number, i:number, squareType:SQUARETYPES){
     this.buildingType = -1;
     this.resource = null;
+    this.building = null;
     this.squareType = squareType;
     this.purchased = false;
     this.visited = false;
@@ -77,7 +78,7 @@ export class Square {
       if(this.game.state === "buying" && !this.purchased){
         highlight = true;
       }
-      if(this.game.state === "building" && this.purchased){
+      if(this.game.state === "building" && this.purchased && this.building === null){
         if(BUILDINGCLASSES[this.game.option].canBuild(this)){
           highlight = true;
         };
