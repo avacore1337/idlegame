@@ -70,23 +70,28 @@ export class MainGame {
     this.menuGroup.add(buildingGroup);
     buildingGroup.visible = true;
     let buttons1 = [];
+    let startingButtons = 0;
     for (let index = 0; index < BUILDINGCLASSES.length; index++) {
       let b = BUILDINGCLASSES[index];
-      let bbuttonRegular = this.game.add.sprite(0, 0, 'button2');
-      let bbuttonClicked = this.game.add.sprite(0, 0, 'button2clicked');
-      let btext:Phaser.Text = this.game.add.text(3, 3, b.title, style);
       let bgroup = this.game.add.group();
-      bgroup.y += 25 * (index + 1);
-      bgroup.add(bbuttonRegular);
-      bgroup.add(bbuttonClicked);
-      buttons1.push({'regular': bbuttonRegular, 'toggled': bbuttonClicked});
-      bbuttonRegular.visible = true;
-      bbuttonClicked.visible = false;
-      bgroup.add(btext);
       buildingGroup.add(bgroup);
-      bgroup.visible = b.isEnabled();
+      bgroup.visible = false;
+      let bbuttonRegular = this.game.add.sprite(0, 0, 'button2');
+      bgroup.add(bbuttonRegular);
+      bbuttonRegular.visible = true;
       bbuttonRegular.inputEnabled = true;
+      let bbuttonClicked = this.game.add.sprite(0, 0, 'button2clicked');
+      bgroup.add(bbuttonClicked);
+      bbuttonClicked.visible = false;
       bbuttonClicked.inputEnabled = true;
+      let btext:Phaser.Text = this.game.add.text(3, 3, b.title, style);
+      bgroup.add(btext);
+      if (b.isEnabled()) {
+        bgroup.visible = true;
+        startingButtons++;
+        bgroup.y = 25 * startingButtons;
+      }
+      buttons1.push({'group': bgroup, 'regular': bbuttonRegular, 'toggled': bbuttonClicked});
       bbuttonRegular.events.onInputUp.add(function() {
         self.needsupdate = true;
         for (let button of buttons1) {
@@ -120,23 +125,28 @@ export class MainGame {
     this.menuGroup.add(townBuildingGroup);
     townBuildingGroup.visible = false;
     let buttons2 = [];
+    startingButtons = 0;
     for (let index = 0; index < CONSTRUCTIONCLASSES.length; index++) {
       let c = CONSTRUCTIONCLASSES[index];
-      let cbuttonRegular = this.game.add.sprite(0, 0, 'button2');
-      let cbuttonClicked = this.game.add.sprite(0, 0, 'button2clicked');
-      let ctext:Phaser.Text = this.game.add.text(3, 3, c.title, style);
       let cgroup = this.game.add.group();
-      cgroup.y += 25 * (index + 1);
-      cgroup.add(cbuttonRegular);
-      cgroup.add(cbuttonClicked);
-      buttons2.push({'regular': cbuttonRegular, 'toggled': cbuttonClicked});
-      cbuttonRegular.visible = true;
-      cbuttonClicked.visible = false;
-      cgroup.add(ctext);
+      cgroup.visible = false;
       townBuildingGroup.add(cgroup);
-      cgroup.visible = c.isEnabled();
+      let cbuttonRegular = this.game.add.sprite(0, 0, 'button2');
+      cgroup.add(cbuttonRegular);
+      cbuttonRegular.visible = true;
       cbuttonRegular.inputEnabled = true;
+      let cbuttonClicked = this.game.add.sprite(0, 0, 'button2clicked');
+      cgroup.add(cbuttonClicked);
+      cbuttonClicked.visible = false;
       cbuttonClicked.inputEnabled = true;
+      let ctext:Phaser.Text = this.game.add.text(3, 3, c.title, style);
+      cgroup.add(ctext);
+      if (c.isEnabled()) {
+        cgroup.visible = true;
+        startingButtons++;
+        cgroup.y = 25 * startingButtons;
+      }
+      buttons2.push({'group': cgroup, 'regular': cbuttonRegular, 'toggled': cbuttonClicked});
       cbuttonRegular.events.onInputUp.add(function() {
         self.needsupdate = true;
         for (let button of buttons2) {
@@ -170,7 +180,7 @@ export class MainGame {
     this.menuGroup.add(researchGroup);
     researchGroup.visible = false;
     let buttons3 = [];
-    let startingButtons = 0;
+    startingButtons = 0;
     for (let index = 0; index < TechList.length; index++) {
       let r = TechList[index];
       let rgroup = this.game.add.group();
@@ -193,35 +203,33 @@ export class MainGame {
         if (canAfford) {
           self.needsupdate = true;
           r.research();
-/*
+
           // Update what building-buttons should be visible
           let visibleButtons = 0;
-          for (let index = 0; index < TechList.length; index++) {
-            if (TechList[index].researchable()) {
+          for (let index = 0; index < BUILDINGCLASSES.length; index++) {
+            if (BUILDINGCLASSES[index].isEnabled()) {
               visibleButtons++;
-              buttons1[index].y = 25 * visibleButtons;
-              buttons1[index].visible = true;
+              buttons1[index].group.y = 25 * visibleButtons;
+              buttons1[index].group.visible = true;
             } else {
-              buttons1[index].visible = false;
+              buttons1[index].group.visible = false;
             }
           }
-*/
-/*
+
           // Update what townBuilding-buttons should be visible
           visibleButtons = 0;
-          for (let index = 0; index < TechList.length; index++) {
-            if (TechList[index].researchable()) {
+          for (let index = 0; index < CONSTRUCTIONCLASSES.length; index++) {
+            if (CONSTRUCTIONCLASSES[index].isEnabled()) {
               visibleButtons++;
-              buttons2[index].y = 25 * visibleButtons;
-              buttons2[index].visible = true;
+              buttons2[index].group.y = 25 * visibleButtons;
+              buttons2[index].group.visible = true;
             } else {
-              buttons2[index].visible = false;
+              buttons2[index].group.visible = false;
             }
           }
-*/
 
           // Update what research-buttons should be visible
-          let visibleButtons = 0;
+          visibleButtons = 0;
           for (let index = 0; index < TechList.length; index++) {
             if (TechList[index].researchable()) {
               visibleButtons++;
