@@ -1,6 +1,6 @@
 export class TechNode{
   name:string;
-  researched:Boolean;
+  researched:boolean;
   requires:TechNode[];
   researchPointCost:number;
   effect: () => void;
@@ -14,6 +14,9 @@ export class TechNode{
   }
 
   researchable(): boolean{
+    if (this.researched) {
+      return false;
+    }
     for (let tech of this.requires) {
       if(!tech.researched){
         return false;
@@ -22,8 +25,9 @@ export class TechNode{
     return true;
   }
 
-  run():void{
+  research():void{
     this.effect();
+    this.researched = true;
   }
 
 }

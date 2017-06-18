@@ -1,6 +1,7 @@
 import { Counter } from "./Counter";
 import { Square } from "./Square";
 import { Building } from "./buildings/AllBuildings";
+import { TechList } from "./TechTree";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
 import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
@@ -169,42 +170,68 @@ export class MainGame {
     this.menuGroup.add(researchGroup);
     researchGroup.visible = false;
     let buttons3 = [];
-    for (let index = 0; index < CONSTRUCTIONCLASSES.length; index++) {
-      let r = CONSTRUCTIONCLASSES[index];
-      let rbuttonRegular = this.game.add.sprite(0, 0, 'button2');
-      let rbuttonClicked = this.game.add.sprite(0, 0, 'button2clicked');
-      let rtext:Phaser.Text = this.game.add.text(3, 3, "PLACEHOLDER", style);
+    let startingButtons = 0;
+    for (let index = 0; index < TechList.length; index++) {
+      let r = TechList[index];
       let rgroup = this.game.add.group();
-      rgroup.y += 25 * (index + 1);
-      rgroup.add(rbuttonRegular);
-      rgroup.add(rbuttonClicked);
-      buttons3.push({'regular': rbuttonRegular, 'toggled': rbuttonClicked});
-      rbuttonRegular.visible = true;
-      rbuttonClicked.visible = false;
-      rgroup.add(rtext);
+      rgroup.visible = false;
+      if (r.researchable()) {
+        rgroup.visible = true;
+        startingButtons++;
+        rgroup.y = 25 * startingButtons;
+      }
       researchGroup.add(rgroup);
-      rgroup.visible = r.isEnabled();
-      rbuttonRegular.inputEnabled = true;
-      rbuttonClicked.inputEnabled = true;
-      rbuttonRegular.events.onInputUp.add(function() {
-        self.needsupdate = true;
-        for (let button of buttons3) {
-          button.regular.visible = true;
-          button.toggled.visible = false;
+      buttons3.push(rgroup);
+      let rbutton = this.game.add.sprite(0, 0, 'button2');
+      rbutton.visible = true;
+      rbutton.inputEnabled = true;
+      rgroup.add(rbutton);
+      let rtext:Phaser.Text = this.game.add.text(3, 3, r.name, style);
+      rgroup.add(rtext);
+      rbutton.events.onInputUp.add(function() {
+        let canAfford = true;
+        if (canAfford) {
+          self.needsupdate = true;
+          r.research();
+/*
+          // Update what building-buttons should be visible
+          let visibleButtons = 0;
+          for (let index = 0; index < TechList.length; index++) {
+            if (TechList[index].researchable()) {
+              visibleButtons++;
+              buttons1[index].y = 25 * visibleButtons;
+              buttons1[index].visible = true;
+            } else {
+              buttons1[index].visible = false;
+            }
+          }
+*/
+/*
+          // Update what townBuilding-buttons should be visible
+          visibleButtons = 0;
+          for (let index = 0; index < TechList.length; index++) {
+            if (TechList[index].researchable()) {
+              visibleButtons++;
+              buttons2[index].y = 25 * visibleButtons;
+              buttons2[index].visible = true;
+            } else {
+              buttons2[index].visible = false;
+            }
+          }
+*/
+
+          // Update what research-buttons should be visible
+          let visibleButtons = 0;
+          for (let index = 0; index < TechList.length; index++) {
+            if (TechList[index].researchable()) {
+              visibleButtons++;
+              buttons3[index].y = 25 * visibleButtons;
+              buttons3[index].visible = true;
+            } else {
+              buttons3[index].visible = false;
+            }
+          }
         }
-        self.option = index;
-        self.state = "research";
-        rbuttonRegular.visible = false;
-        rbuttonClicked.visible = true;
-      });
-      rbuttonClicked.events.onInputUp.add(function() {
-        self.needsupdate = true;
-        for (let button of buttons3) {
-          button.regular.visible = true;
-          button.toggled.visible = false;
-        }
-        self.option = -1;
-        self.state = "";
       });
     }
     this.menuGroup.add(button3);
