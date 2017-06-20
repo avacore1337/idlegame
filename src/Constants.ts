@@ -1,4 +1,4 @@
-import { Lumbermill, Claypit, Quary, Mine } from "./buildings/AllBuildings";
+import { Lumbermill, Claypit, Quary, Mine, Farm } from "./buildings/AllBuildings";
 import { ToolWorkshop, Kiln, Steelworks, Library } from "./constructions/AllConstructions";
 
 // export class Constants {
@@ -25,9 +25,10 @@ export const enum MATERIALS {
   Brick,
   Coal,
   Copper,
-  Research
+  Research,
+  Food
 }
-export const MATERIALSTRINGLIST = ["Wood", "Clay", "Stone", "Iron", "Brick", "Coal", "Copper"]
+export const MATERIALSTRINGLIST = ["Wood", "Clay", "Stone", "Iron", "Brick", "Coal", "Copper", "Research", "Food"]
 
 export const enum SQUARETYPES {
   Plains,
@@ -54,9 +55,10 @@ export const enum BUILDINGS {
   Lumbermill,
   Claypit,
   Quary,
-  Mine
+  Mine,
+  Farm
 }
-export const BUILDINGCLASSES = [Lumbermill, Claypit, Quary, Mine]
+export const BUILDINGCLASSES = [Lumbermill, Claypit, Quary, Mine, Farm]
 
 export const enum CONSTRUCTIONS {
   Library,
@@ -73,7 +75,7 @@ export const enum RESOURCES {
   Iron,
   Coal
 }
-export const RESOURCESTRINGLIST = ["stone", "horse", "copper", "iron", "coal" ]
+export const RESOURCESTRINGLIST = ["stone", "horse", "copper", "iron", "coal"]
 
 // }
 
