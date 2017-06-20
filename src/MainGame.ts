@@ -4,7 +4,7 @@ import { Building } from "./buildings/AllBuildings";
 import { TechList } from "./TechTree";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
-import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
+import { DIRECTIONS, MATERIALS, MATERIALSTRINGLIST, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
 
 export class MainGame {
 
@@ -25,17 +25,33 @@ export class MainGame {
   state:string;
   option:number;
   needsupdate:boolean;
-  resourceUpdate:number;
-  resources:Counter<number>;
-  woodLabel:Phaser.Text; // TODO ; These should not be here I don't think
-  clayLabel:Phaser.Text; // TODO ; These should not be here I don't think
+  materialUpdate:number;
+  materials:Counter<number>;
+  materialLabels:Phaser.Text[]; // TODO ; These should not be here I don't think
 
   constructor(theGame:Phaser.Game) {
-    this.resources = new Counter<number>();
-    this.resources.add(MATERIALS.Wood, 100);
-    this.resources.add(MATERIALS.Clay, 100);
+    // Check for a previous instance of the game
+    let pre = undefined;
+    for(let c of document.cookie.split(';')) {
+        if (c.indexOf("idlegame=") !== -1) {
+            pre = JSON.parse(c.trim().substring("idlegame=".length));
+            break;
+        }
+    }
 
-    this.resourceUpdate = 0;
+    if (pre) {
+      this.materials = new Counter<number>();
+      for (var property in pre.materials) {
+        this.materials.add(parseInt(property), parseFloat(pre.materials[property]));
+      }
+    } else {
+      this.materials = new Counter<number>();
+      this.materials.add(MATERIALS.Wood, 50);
+      this.materials.add(MATERIALS.Clay, 50);
+    }
+
+    this.materialLabels = [];
+    this.materialUpdate = 0;
     this.state = "";
     this.needsupdate = false;
     this.game = theGame;
@@ -78,13 +94,18 @@ export class MainGame {
 
     // Display owned materials
     // -----------------------
-    let woodLabel:Phaser.Text = this.game.add.text(3, 3, "Wood " + this.resources.get(MATERIALS.Wood), style);
-    this.woodLabel = woodLabel;
-    botMenu.add(woodLabel);
-
-    let clayLabel:Phaser.Text = this.game.add.text(3, 33, "Clay " + this.resources.get(MATERIALS.Clay), style);
-    this.clayLabel = clayLabel;
-    botMenu.add(clayLabel);
+    let visibleLabels = -1;
+    for (var i = 0; i < MATERIALSTRINGLIST.length; i++) {
+      let label:Phaser.Text = this.game.add.text(3, 3, MATERIALSTRINGLIST[i] + " " + this.materials.get(i), style);
+      label.visible = false;
+      if (this.materials.get(i) > 0) {
+        visibleLabels++;
+        label.visible = true;
+        label.y += 30 * visibleLabels;
+      }
+      this.materialLabels.push(label);
+      botMenu.add(label);
+    }
 
     // SETUP FOR BUILDINGS
     // -------------------
@@ -371,20 +392,29 @@ export class MainGame {
   onUpdate():void {
 
     // Update resources
-    this.resourceUpdate = (this.resourceUpdate + 1)% 20;
-    if (this.resourceUpdate === 0) {
+    this.materialUpdate = (this.materialUpdate + 1) % 20;
+    if (this.materialUpdate === 0) {
       let resourceGain = new Counter<number>();
-      resourceGain.add(MATERIALS.Clay, 0.1);
-      resourceGain.add(MATERIALS.Wood, 0.1);
-      for (let i = 0; i < this.hexMatrix.length; i++) {
-        for (let j = 0; j < this.hexMatrix[i].length; j++) {
-          resourceGain = resourceGain.addOther(this.hexMatrix[i][j].generateMaterials());
+      for (let y = 0; y < this.hexMatrix.length; y++) {
+        for (let x = 0; x < this.hexMatrix[y].length; x++) {
+          resourceGain = resourceGain.addOther(this.hexMatrix[y][x].generateMaterials());
         }
       }
-      this.resources = this.resources.addOther(resourceGain.divide(3));
-      this.woodLabel.setText("Wood " + this.resources.get(MATERIALS.Wood).toFixed(2));
-      this.clayLabel.setText("Clay " + this.resources.get(MATERIALS.Clay).toFixed(2));
-      this.resourceUpdate = 0;
+      this.materials = this.materials.addOther(resourceGain.divide(3));
+
+      let visibleLabels = -1;
+      for (var i = 0; i < MATERIALSTRINGLIST.length; i++) {
+        this.materialLabels[i].setText(MATERIALSTRINGLIST[i] + " " + this.materials.get(i));
+        this.materialLabels[i].y = 3;
+        this.materialLabels[i].visible = false;
+        if (this.materials.get(i) > 0) {
+          visibleLabels++;
+          this.materialLabels[i].visible = true;
+          this.materialLabels[i].y += 30 * visibleLabels;
+        }
+      }
+
+      this.materialUpdate = 0;
     }
 
     // Update graphics
@@ -396,8 +426,15 @@ export class MainGame {
         }
       }
     }
+
     // Update camera
     cameraControls(this.game, this.cursors, this.menuGroup);
+
+    // Update cookie
+    let saveData = JSON.stringify(
+      {"materials": this.materials.toJSON()}
+    );
+    document.cookie = "idlegame=" + saveData + "; expires=Fri, 31 Dec 9999 23:59:59 UTC; path=/;";
   }
 
   linkHexes(square, i, j, index){
@@ -434,9 +471,9 @@ export class MainGame {
         newCenter.events.onInputUp.add(function() {
           self.needsupdate = true;
           // You own the tile, you wish to build, the tile-type is allowed, you can afford it, TODO (no other building exist on the tile)
-          if (theSquare.purchased && self.state === "building" && BUILDINGCLASSES[self.option].canBuild(theSquare) && self.resources.isSubset(BUILDINGCLASSES[self.option].getRequiredMaterials())) {
+          if (theSquare.purchased && self.state === "building" && BUILDINGCLASSES[self.option].canBuild(theSquare) && self.materials.isSubset(BUILDINGCLASSES[self.option].getRequiredMaterials())) {
             theSquare.addBuilding(self.option);
-            self.resources = self.resources.subtractOther(BUILDINGCLASSES[self.option].getRequiredMaterials());
+            self.materials = self.materials.subtractOther(BUILDINGCLASSES[self.option].getRequiredMaterials());
           }
           theSquare.purchased = true;
           theSquare.revealNeighbours();

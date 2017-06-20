@@ -105,9 +105,12 @@ export class Counter<T> {
     for (let key of this.values.keys()){
       ret += '"' + key + '":"' + this.values.get(key) + '", ';
     }
+    if (ret.length === 1) {
+      return JSON.parse("{}");
+    }
     return JSON.parse(ret.substring(0, ret.length - 2) + "}");
   }
-
+  
   multiply(multiplier:number):Counter<T>{
     let newCounter = new Counter<T>();
     for (let key of this.values.keys()) {
