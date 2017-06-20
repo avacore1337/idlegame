@@ -19,9 +19,9 @@ export class Kiln extends Construction {
   }
 
   doThing(game:MainGame):void {
-    if(game.resources.get(MATERIALS.Clay) > Kiln.amount*0.2){
-      game.resources.subtract(MATERIALS.Clay, Kiln.amount*0.2)
-      game.resources.add(MATERIALS.Brick, Kiln.amount*0.1)
+    if(game.materials.get(MATERIALS.Clay) > Kiln.amount*0.2){
+      game.materials.subtract(MATERIALS.Clay, Kiln.amount*0.2)
+      game.materials.add(MATERIALS.Brick, Kiln.amount*0.1)
     }
   }
 
