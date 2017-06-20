@@ -38,14 +38,15 @@ export class MainGame {
             break;
         }
     }
-
+    this.materials = new Counter<number>();
+    for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
+        this.materials.add(i, 0);
+    }
     if (pre) {
-      this.materials = new Counter<number>();
       for (var property in pre.materials) {
         this.materials.add(parseInt(property), parseFloat(pre.materials[property]));
       }
     } else {
-      this.materials = new Counter<number>();
       this.materials.add(MATERIALS.Wood, 50);
       this.materials.add(MATERIALS.Clay, 50);
     }
@@ -96,7 +97,7 @@ export class MainGame {
     // -----------------------
     let visibleLabels = -1;
     for (var i = 0; i < MATERIALSTRINGLIST.length; i++) {
-      let label:Phaser.Text = this.game.add.text(3, 3, MATERIALSTRINGLIST[i] + " " + this.materials.get(i), style);
+      let label:Phaser.Text = this.game.add.text(3, 3, MATERIALSTRINGLIST[i] + " " + this.materials.get(i).toFixed(2), style);
       label.visible = false;
       if (this.materials.get(i) > 0) {
         visibleLabels++;
@@ -404,7 +405,7 @@ export class MainGame {
 
       let visibleLabels = -1;
       for (var i = 0; i < MATERIALSTRINGLIST.length; i++) {
-        this.materialLabels[i].setText(MATERIALSTRINGLIST[i] + " " + this.materials.get(i));
+        this.materialLabels[i].setText(MATERIALSTRINGLIST[i] + " " + this.materials.get(i).toFixed(2));
         this.materialLabels[i].y = 3;
         this.materialLabels[i].visible = false;
         if (this.materials.get(i) > 0) {
