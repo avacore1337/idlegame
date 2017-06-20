@@ -30,7 +30,7 @@ export class Claypit extends Building {
     let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 10);
     // return counter;
-    return counter.multiply(Math.pow(EXPONENTS.Slow, this.amount));
+    return counter.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));
   }
 
   static canBuild(square:Square):boolean{

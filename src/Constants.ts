@@ -8,6 +8,8 @@ import { ToolWorkshop, Kiln, Steelworks, Library } from "./constructions/AllCons
 //   }
 // }
 
+export const FACTORAMOUNT = 10;
+
 export const enum DIRECTIONS {
   NW,
   NE,

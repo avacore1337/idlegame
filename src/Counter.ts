@@ -65,7 +65,7 @@ export class Counter<T> {
     return newCounter;
   }
 
-  divide(divisor:number):Counter<T>{
+  divideAll(divisor:number):Counter<T>{
     let newCounter = new Counter<T>();
     for (let key of this.values.keys()) {
       newCounter.values.set(key, this.values.get(key)/divisor);
@@ -110,13 +110,17 @@ export class Counter<T> {
     }
     return JSON.parse(ret.substring(0, ret.length - 2) + "}");
   }
-  
-  multiply(multiplier:number):Counter<T>{
+
+  multiplyAll(multiplier:number):Counter<T>{
     let newCounter = new Counter<T>();
     for (let key of this.values.keys()) {
       newCounter.values.set(key, this.values.get(key)*multiplier);
     }
     return newCounter;
+  }
+
+  multiply(key:T, multiplier:number):void{
+    this.values.set(key, this.values.get(key)*multiplier);
   }
 
 }

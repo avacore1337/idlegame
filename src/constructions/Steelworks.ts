@@ -1,6 +1,6 @@
 import { Square } from "../Square";
 import { Construction } from "./Construction";
-import { SQUARETYPES, MATERIALS } from "../Constants";
+import { SQUARETYPES, MATERIALS, EXPONENTS } from "../Constants";
 import { Counter } from "../Counter";
 import { MainGame } from "../MainGame";
 
@@ -11,7 +11,6 @@ export class Steelworks extends Construction {
 
   constructor(){
     super();
-    Steelworks.amount += 1;
   }
 
   static isEnabled():boolean{
@@ -22,14 +21,13 @@ export class Steelworks extends Construction {
   }
 
   static build(game:MainGame):void {
-    let cost:Counter<MATERIALS> = new Counter<MATERIALS>();
-    game.materials = game.materials.subtractOther(cost);
+    game.materialContainer.pay(this.getRequiredMaterials());
     Steelworks.amount += 1;
   }
 
   static getRequiredMaterials():Counter<number>{
     let cost = new Counter<number>();
     cost.add(MATERIALS.Clay, 10);
-    return cost;
+    return cost.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));
   }
 }

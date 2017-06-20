@@ -2,6 +2,7 @@ import { Counter } from "./Counter";
 import { Square } from "./Square";
 import { Building } from "./buildings/AllBuildings";
 import { TechList } from "./TechTree";
+import { MaterialContainer } from "./MaterialContainer";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
 import { DIRECTIONS, MATERIALS, MATERIALSTRINGLIST, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
@@ -26,31 +27,25 @@ export class MainGame {
   option:number;
   needsupdate:boolean;
   materialUpdate:number;
-  materials:Counter<number>;
+  // materials:Counter<number>;
+  materialContainer:MaterialContainer;
   materialLabels:Phaser.Text[]; // TODO ; These should not be here I don't think
 
   constructor(theGame:Phaser.Game) {
     // Check for a previous instance of the game
     let pre = undefined;
-    for(let c of document.cookie.split(';')) {
-        if (c.indexOf("idlegame=") !== -1) {
-            pre = JSON.parse(c.trim().substring("idlegame=".length));
-            break;
-        }
-    }
-    this.materials = new Counter<number>();
-    for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
-        this.materials.add(i, 0);
-    }
-    if (pre) {
-      for (var property in pre.materials) {
-        this.materials.add(parseInt(property), parseFloat(pre.materials[property]));
+    try{
+      for(let c of document.cookie.split(';')) {
+          if (c.indexOf("idlegame=") !== -1) {
+              pre = JSON.parse(c.trim().substring("idlegame=".length));
+              break;
+          }
       }
-    } else {
-      this.materials.add(MATERIALS.Wood, 50);
-      this.materials.add(MATERIALS.Clay, 50);
     }
-
+    catch(err){
+      console.log("Cookie was broken, Baking new ones")
+    }
+    this.materialContainer = new MaterialContainer(pre);
     this.materialLabels = [];
     this.materialUpdate = 0;
     this.state = "";
@@ -97,9 +92,9 @@ export class MainGame {
     // -----------------------
     let visibleLabels = -1;
     for (var i = 0; i < MATERIALSTRINGLIST.length; i++) {
-      let label:Phaser.Text = this.game.add.text(3, 3, MATERIALSTRINGLIST[i] + " " + this.materials.get(i).toFixed(2), style);
+      let label:Phaser.Text = this.game.add.text(3, 3, MATERIALSTRINGLIST[i] + " " + this.materialContainer.materials.get(i).toFixed(2), style);
       label.visible = false;
-      if (this.materials.get(i) > 0) {
+      if (this.materialContainer.materials.get(i) > 0) {
         visibleLabels++;
         label.visible = true;
         label.y += 30 * visibleLabels;
@@ -137,7 +132,7 @@ export class MainGame {
     saveButton.events.onInputUp.add(function() {
       // Update cookie
       let saveData = JSON.stringify(
-        {"materials": self.materials.toJSON()}
+        {"materials": self.materialContainer.materials.toJSON()}
       );
       document.cookie = "idlegame=" + saveData + "; expires=Fri, 31 Dec 9999 23:59:59 UTC; path=/;";
     });
@@ -418,20 +413,15 @@ export class MainGame {
     // Update resources
     this.materialUpdate = (this.materialUpdate + 1) % 20;
     if (this.materialUpdate === 0) {
-      let resourceGain = new Counter<number>();
-      for (let y = 0; y < this.hexMatrix.length; y++) {
-        for (let x = 0; x < this.hexMatrix[y].length; x++) {
-          resourceGain = resourceGain.addOther(this.hexMatrix[y][x].generateMaterials());
-        }
-      }
-      this.materials = this.materials.addOther(resourceGain.divide(3));
+      this.materialContainer.gainMaterialsFraction(3);
 
       let visibleLabels = -1;
+      let materials = this.materialContainer.materials;
       for (var i = 0; i < MATERIALSTRINGLIST.length; i++) {
-        this.materialLabels[i].setText(MATERIALSTRINGLIST[i] + " " + this.materials.get(i).toFixed(2));
+        this.materialLabels[i].setText(MATERIALSTRINGLIST[i] + " " + materials.get(i).toFixed(2));
         this.materialLabels[i].y = 3;
         this.materialLabels[i].visible = false;
-        if (this.materials.get(i) > 0) {
+        if (materials.get(i) > 0) {
           visibleLabels++;
           this.materialLabels[i].visible = true;
           this.materialLabels[i].y += 30 * visibleLabels;
@@ -448,6 +438,18 @@ export class MainGame {
     // Update graphics
     if (this.needsupdate) {
       this.needsupdate = false;
+
+      let resourceGain = new Counter<number>();
+      for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
+          resourceGain.add(i, 0);
+      }
+      for (let y = 0; y < this.hexMatrix.length; y++) {
+        for (let x = 0; x < this.hexMatrix[y].length; x++) {
+          resourceGain = resourceGain.addOther(this.hexMatrix[y][x].generateMaterials());
+        }
+      }
+      this.materialContainer.materialGainBase = resourceGain;
+
       for (let i = 0; i < this.hexMatrix.length; i++) {
         for (let j = 0; j < this.hexMatrix[i].length; j++) {
           this.hexMatrix[i][j].update();
@@ -493,9 +495,9 @@ export class MainGame {
         newCenter.events.onInputUp.add(function() {
           self.needsupdate = true;
           // You own the tile, you wish to build, the tile-type is allowed, you can afford it, TODO (no other building exist on the tile)
-          if (theSquare.purchased && self.state === "building" && BUILDINGCLASSES[self.option].canBuild(theSquare) && self.materials.isSubset(BUILDINGCLASSES[self.option].getRequiredMaterials())) {
+          if (theSquare.purchased && self.state === "building" && BUILDINGCLASSES[self.option].canBuild(theSquare) && self.materialContainer.materials.isSubset(BUILDINGCLASSES[self.option].getRequiredMaterials())) {
             theSquare.addBuilding(self.option);
-            self.materials = self.materials.subtractOther(BUILDINGCLASSES[self.option].getRequiredMaterials());
+            self.materialContainer.pay(BUILDINGCLASSES[self.option].getRequiredMaterials());
           }
           theSquare.purchased = true;
           theSquare.revealNeighbours();

@@ -31,7 +31,7 @@ export class Farm extends Building {
     counter.add(MATERIALS.Wood, 15);
     counter.add(MATERIALS.Clay, 5);
     // return counter;
-    return counter.multiply(Math.pow(EXPONENTS.Slow, this.amount));
+    return counter.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));
   }
 
   static canBuild(square:Square):boolean{
