@@ -177,14 +177,10 @@ export class MainGame {
       let cgroup = this.game.add.group();
       cgroup.visible = false;
       townBuildingGroup.add(cgroup);
-      let cbuttonRegular = this.game.add.sprite(0, 0,'menu', 'button2.png');
-      cgroup.add(cbuttonRegular);
-      cbuttonRegular.visible = true;
-      cbuttonRegular.inputEnabled = true;
-      let cbuttonClicked = this.game.add.sprite(0, 0,'menu', 'button2clicked.png');
-      cgroup.add(cbuttonClicked);
-      cbuttonClicked.visible = false;
-      cbuttonClicked.inputEnabled = true;
+      let cbutton = this.game.add.sprite(0, 0,'menu', 'button2.png');
+      cgroup.add(cbutton);
+      cbutton.visible = true;
+      cbutton.inputEnabled = true;
       let ctext:Phaser.Text = this.game.add.text(3, 3, c.title, style);
       cgroup.add(ctext);
       if (c.isEnabled()) {
@@ -192,26 +188,13 @@ export class MainGame {
         startingButtons++;
         cgroup.y = 25 * startingButtons;
       }
-      buttons2.push({'group': cgroup, 'regular': cbuttonRegular, 'toggled': cbuttonClicked});
-      cbuttonRegular.events.onInputUp.add(function() {
-        self.needsupdate = true;
-        for (let button of buttons2) {
-          button.regular.visible = true;
-          button.toggled.visible = false;
+      buttons2.push({'group': cgroup});
+      cbutton.events.onInputUp.add(function() {
+        let canAfford = true;
+        if (canAfford) {
+          self.needsupdate = true;
+          CONSTRUCTIONCLASSES[index].build(self);
         }
-        self.option = index;
-        self.state = "town";
-        cbuttonRegular.visible = false;
-        cbuttonClicked.visible = true;
-      });
-      cbuttonClicked.events.onInputUp.add(function() {
-        self.needsupdate = true;
-        for (let button of buttons2) {
-          button.regular.visible = true;
-          button.toggled.visible = false;
-        }
-        self.option = -1;
-        self.state = "";
       });
     }
     this.menuGroup.add(button2);
@@ -304,10 +287,6 @@ export class MainGame {
       buildingGroup.visible = true;
       townBuildingGroup.visible = false;
       researchGroup.visible = false;
-      for (let button of buttons2) {
-        button.regular.visible = true;
-        button.toggled.visible = false;
-      }
     });
     button2.events.onInputUp.add(function() {
       self.needsupdate = true;
@@ -333,10 +312,6 @@ export class MainGame {
       townBuildingGroup.visible = false;
       researchGroup.visible = true;
       for (let button of buttons1) {
-        button.regular.visible = true;
-        button.toggled.visible = false;
-      }
-      for (let button of buttons2) {
         button.regular.visible = true;
         button.toggled.visible = false;
       }
@@ -413,6 +388,10 @@ export class MainGame {
           this.materialLabels[i].visible = true;
           this.materialLabels[i].y += 30 * visibleLabels;
         }
+      }
+
+      for (let c of CONSTRUCTIONCLASSES) {
+        c.doThing(this);
       }
 
       this.materialUpdate = 0;

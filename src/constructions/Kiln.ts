@@ -18,11 +18,17 @@ export class Kiln extends Construction {
     return Kiln.enabled;
   }
 
-  doThing(game:MainGame):void {
+  static doThing(game:MainGame):void {
     if(game.materials.get(MATERIALS.Clay) > Kiln.amount*0.2){
-      game.materials.subtract(MATERIALS.Clay, Kiln.amount*0.2)
-      game.materials.add(MATERIALS.Brick, Kiln.amount*0.1)
+      game.materials.subtract(MATERIALS.Clay, Kiln.amount*0.2);
+      game.materials.add(MATERIALS.Brick, Kiln.amount*0.1);
     }
+  }
+
+  static build(game:MainGame):void {
+    let cost:Counter<MATERIALS> = new Counter<MATERIALS>();
+    game.materials = game.materials.subtractOther(cost);
+    Kiln.amount += 1;
   }
 
   static getRequiredMaterials():Counter<number>{

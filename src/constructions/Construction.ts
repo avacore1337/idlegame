@@ -11,7 +11,10 @@ export class Construction {
     return false;
   }
 
-  doThing(game:MainGame):void {
+  static doThing(game:MainGame):void {
+  }
+
+  static build(game:MainGame):void {
   }
 
   getRequiredMaterials():Counter<number>{

@@ -18,7 +18,13 @@ export class Library extends Construction {
     return Library.enabled;
   }
 
-  doThing(game:MainGame):void {
+  static doThing(game:MainGame):void {
+  }
+
+  static build(game:MainGame):void {
+    let cost:Counter<MATERIALS> = new Counter<MATERIALS>();
+    game.materials = game.materials.subtractOther(cost);
+    Library.amount += 1;
   }
 
   static getRequiredMaterials():Counter<number>{

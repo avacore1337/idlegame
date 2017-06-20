@@ -18,7 +18,13 @@ export class ToolWorkshop extends Construction {
     return ToolWorkshop.enabled;
   }
 
-  doThing(game:MainGame):void {
+  static doThing(game:MainGame):void {
+  }
+
+  static build(game:MainGame):void {
+    let cost:Counter<MATERIALS> = new Counter<MATERIALS>();
+    game.materials = game.materials.subtractOther(cost);
+    ToolWorkshop.amount += 1;
   }
 
   static getRequiredMaterials():Counter<number>{
