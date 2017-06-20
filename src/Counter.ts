@@ -100,4 +100,20 @@ export class Counter<T> {
     return ret;
   }
 
+  toJSON():string{
+    let ret:string = "{";
+    for (let key of this.values.keys()){
+      ret += '"' + key + '":"' + this.values.get(key) + '", ';
+    }
+    return JSON.parse(ret.substring(0, ret.length - 2) + "}");
+  }
+
+  multiply(multiplier:number):Counter<T>{
+    let newCounter = new Counter<T>();
+    for (let key of this.values.keys()) {
+      newCounter.values.set(key, this.values.get(key)*multiplier);
+    }
+    return newCounter;
+  }
+
 }
