@@ -24,8 +24,7 @@ export const enum MATERIALS {
   Iron,
   Brick,
   Coal,
-  Steel,
-  Concrete
+  Copper
 }
 
 export const enum SQUARETYPES {

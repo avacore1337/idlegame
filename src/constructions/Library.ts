@@ -7,8 +7,11 @@ import { MainGame } from "../MainGame";
 export class Library extends Construction {
   static enabled:boolean = true;
   static title:string = "Library";
+  static amount:number = 0;
+
   constructor(){
     super();
+    Library.amount += 1;
   }
 
   static isEnabled():boolean{

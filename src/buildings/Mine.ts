@@ -1,6 +1,6 @@
 import { Square } from "../Square";
 import { Building } from "./Building";
-import { SQUARETYPES, MATERIALS } from "../Constants";
+import { SQUARETYPES, MATERIALS, RESOURCES } from "../Constants";
 import { Counter } from "../Counter";
 
 export class Mine extends Building {
@@ -8,7 +8,7 @@ export class Mine extends Building {
   static title:string = "Mine";
   static spriteName:string = "mine";
   static allowedTerrains = [SQUARETYPES.Mountain];
-  static neededResources = [];
+  static neededResources = [RESOURCES.Copper, RESOURCES.Iron, RESOURCES.Coal];
 
   constructor(){
     super();
@@ -21,7 +21,15 @@ export class Mine extends Building {
 
   generateMaterials():Counter<MATERIALS>{
     let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
-    counter.add(MATERIALS.Stone, 1);
+    if(this.square.resourceType === RESOURCES.Copper){
+      counter.add(MATERIALS.Copper, 1);
+    }
+    if(this.square.resourceType === RESOURCES.Iron){
+      counter.add(MATERIALS.Iron, 1);
+    }
+    if(this.square.resourceType === RESOURCES.Coal){
+      counter.add(MATERIALS.Coal, 1);
+    }
     return counter;
   }
 

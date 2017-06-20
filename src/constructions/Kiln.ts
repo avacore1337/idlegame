@@ -7,8 +7,11 @@ import { MainGame } from "../MainGame";
 export class Kiln extends Construction {
   static enabled:boolean = false;
   static title:string = "Kiln";
+  static amount:number = 0;
+
   constructor(){
     super();
+    Kiln.amount += 1;
   }
 
   static isEnabled():boolean{
@@ -16,6 +19,10 @@ export class Kiln extends Construction {
   }
 
   doThing(game:MainGame):void {
+    if(game.resources.get(MATERIALS.Clay) > Kiln.amount*0.2){
+      game.resources.subtract(MATERIALS.Clay, Kiln.amount*0.2)
+      game.resources.add(MATERIALS.Brick, Kiln.amount*0.1)
+    }
   }
 
   static getRequiredMaterials():Counter<number>{

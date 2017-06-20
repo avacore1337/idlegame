@@ -7,8 +7,11 @@ import { MainGame } from "../MainGame";
 export class ToolWorkshop extends Construction {
   static enabled:boolean = false;
   static title:string = "Tool workshop";
+  static amount:number = 0;
+
   constructor(){
     super();
+    ToolWorkshop.amount += 1;
   }
 
   static isEnabled():boolean{
