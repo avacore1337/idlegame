@@ -4,7 +4,7 @@ import { Building } from "./buildings/AllBuildings";
 import { TechList } from "./TechTree";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
-import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
+import { DIRECTIONS, MATERIALS, MATERIALSTRINGLIST, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
 
 export class MainGame {
 
@@ -27,15 +27,13 @@ export class MainGame {
   needsupdate:boolean;
   materialUpdate:number;
   materials:Counter<number>;
-  woodLabel:Phaser.Text; // TODO ; These should not be here I don't think
-  clayLabel:Phaser.Text; // TODO ; These should not be here I don't think
+  materialLabels:Phaser.Text[]; // TODO ; These should not be here I don't think
 
   constructor(theGame:Phaser.Game) {
     // Check for a previous instance of the game
     let pre = undefined;
     for(let c of document.cookie.split(';')) {
         if (c.indexOf("idlegame=") !== -1) {
-            console.log(c.trim().substring("idlegame=".length));
             pre = JSON.parse(c.trim().substring("idlegame=".length));
             break;
         }
@@ -44,16 +42,15 @@ export class MainGame {
     if (pre) {
       this.materials = new Counter<number>();
       for (var property in pre.materials) {
-        console.log("Has property: " + property);
         this.materials.add(parseInt(property), parseFloat(pre.materials[property]));
       }
     } else {
       this.materials = new Counter<number>();
-      this.materials.add(MATERIALS.Wood, 100);
-      this.materials.add(MATERIALS.Clay, 100);
+      this.materials.add(MATERIALS.Wood, 50);
+      this.materials.add(MATERIALS.Clay, 50);
     }
 
-
+    this.materialLabels = [];
     this.materialUpdate = 0;
     this.state = "";
     this.needsupdate = false;
@@ -97,13 +94,18 @@ export class MainGame {
 
     // Display owned materials
     // -----------------------
-    let woodLabel:Phaser.Text = this.game.add.text(3, 3, "Wood " + this.materials.get(MATERIALS.Wood), style);
-    this.woodLabel = woodLabel;
-    botMenu.add(woodLabel);
-
-    let clayLabel:Phaser.Text = this.game.add.text(3, 33, "Clay " + this.materials.get(MATERIALS.Clay), style);
-    this.clayLabel = clayLabel;
-    botMenu.add(clayLabel);
+    let visibleLabels = -1;
+    for (var i = 0; i < MATERIALSTRINGLIST.length; i++) {
+      let label:Phaser.Text = this.game.add.text(3, 3, MATERIALSTRINGLIST[i] + " " + this.materials.get(i), style);
+      label.visible = false;
+      if (this.materials.get(i) > 0) {
+        visibleLabels++;
+        label.visible = true;
+        label.y += 30 * visibleLabels;
+      }
+      this.materialLabels.push(label);
+      botMenu.add(label);
+    }
 
     // SETUP FOR BUILDINGS
     // -------------------
@@ -390,19 +392,28 @@ export class MainGame {
   onUpdate():void {
 
     // Update resources
-    this.materialUpdate = (this.materialUpdate + 1)% 20;
+    this.materialUpdate = (this.materialUpdate + 1) % 20;
     if (this.materialUpdate === 0) {
       let resourceGain = new Counter<number>();
-      resourceGain.add(MATERIALS.Clay, 0.1);
-      resourceGain.add(MATERIALS.Wood, 0.1);
-      for (let i = 0; i < this.hexMatrix.length; i++) {
-        for (let j = 0; j < this.hexMatrix[i].length; j++) {
-          resourceGain = resourceGain.addOther(this.hexMatrix[i][j].generateMaterials());
+      for (let y = 0; y < this.hexMatrix.length; y++) {
+        for (let x = 0; x < this.hexMatrix[y].length; x++) {
+          resourceGain = resourceGain.addOther(this.hexMatrix[y][x].generateMaterials());
         }
       }
       this.materials = this.materials.addOther(resourceGain.divide(3));
-      this.woodLabel.setText("Wood " + this.materials.get(MATERIALS.Wood).toFixed(2));
-      this.clayLabel.setText("Clay " + this.materials.get(MATERIALS.Clay).toFixed(2));
+
+      let visibleLabels = -1;
+      for (var i = 0; i < MATERIALSTRINGLIST.length; i++) {
+        this.materialLabels[i].setText(MATERIALSTRINGLIST[i] + " " + this.materials.get(i));
+        this.materialLabels[i].y = 3;
+        this.materialLabels[i].visible = false;
+        if (this.materials.get(i) > 0) {
+          visibleLabels++;
+          this.materialLabels[i].visible = true;
+          this.materialLabels[i].y += 30 * visibleLabels;
+        }
+      }
+
       this.materialUpdate = 0;
     }
 

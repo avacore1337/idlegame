@@ -26,6 +26,7 @@ export const enum MATERIALS {
   Coal,
   Copper
 }
+export const MATERIALSTRINGLIST = ["Wood", "Clay", "Stone", "Iron", "Brick", "Coal", "Copper"]
 
 export const enum SQUARETYPES {
   Plains,
