@@ -38,7 +38,7 @@ export class Lumbermill extends Building {
       if(Lumbermill.neededResources.length === 0){
         return true;
       }
-      if(Lumbermill.allowedTerrains.indexOf(square.squareType) !== -1) {
+      if(Lumbermill.neededResources.indexOf(square.resourceType) !== -1) {
         return true;
       }
     }

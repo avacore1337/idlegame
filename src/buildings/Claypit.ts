@@ -38,7 +38,7 @@ export class Claypit extends Building {
       if(Claypit.neededResources.length === 0){
         return true;
       }
-      if(Claypit.allowedTerrains.indexOf(square.squareType) !== -1) {
+      if(Claypit.neededResources.indexOf(square.resourceType) !== -1) {
         return true;
       }
     }

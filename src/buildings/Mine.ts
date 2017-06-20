@@ -46,7 +46,7 @@ export class Mine extends Building {
       if(Mine.neededResources.length === 0){
         return true;
       }
-      if(Mine.allowedTerrains.indexOf(square.squareType) !== -1) {
+      if(Mine.neededResources.indexOf(square.resourceType) !== -1) {
         return true;
       }
     }

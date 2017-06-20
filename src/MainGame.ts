@@ -108,6 +108,51 @@ export class MainGame {
       botMenu.add(label);
     }
 
+    // Buttons for special things
+    // --------------------------
+    let buyGroup:Phaser.Group = this.game.add.group();
+    buyGroup.visible = true;
+    botMenu.add(buyGroup);
+    let buyButton:Phaser.Sprite = this.game.add.sprite(224, 0, 'menu', 'button.png');
+    buyButton.visible = true;
+    buyGroup.add(buyButton);
+    let buyText:Phaser.Text = this.game.add.text(250, 3, "Buy", style2);
+    buyText.visible = true;
+    buyGroup.add(buyText);
+    buyButton.events.onInputUp.add(function() {
+      this.needsupdate = true;
+    });
+
+    let saveGroup:Phaser.Group = this.game.add.group();
+    saveGroup.visible = true;
+    botMenu.add(saveGroup);
+    let saveButton:Phaser.Sprite = this.game.add.sprite(224, 30, 'menu', 'button.png');
+    saveButton.visible = true;
+    saveGroup.add(saveButton);
+    let saveText:Phaser.Text = this.game.add.text(250, 33, "Save game", style2);
+    saveText.visible = true;
+    saveGroup.add(saveText);
+    saveButton.events.onInputUp.add(function() {
+      // Update cookie
+      let saveData = JSON.stringify(
+        {"materials": this.materials.toJSON()}
+      );
+      document.cookie = "idlegame=" + saveData + "; expires=Fri, 31 Dec 9999 23:59:59 UTC; path=/;";
+    });
+
+    let resetGroup:Phaser.Group = this.game.add.group();
+    resetGroup.visible = true;
+    botMenu.add(resetGroup);
+    let resetButton:Phaser.Sprite = this.game.add.sprite(224, 60, 'menu', 'button.png');
+    resetButton.visible = true;
+    resetGroup.add(resetButton);
+    let resetText:Phaser.Text = this.game.add.text(250, 63, "Reset save", style2);
+    resetText.visible = true;
+    resetGroup.add(resetText);
+    resetButton.events.onInputUp.add(function() {
+      document.cookie = "";
+    });
+
     // SETUP FOR BUILDINGS
     // -------------------
     let button1 = this.game.add.sprite(0, 0, 'menu', 'button.png');
@@ -409,12 +454,6 @@ export class MainGame {
 
     // Update camera
     cameraControls(this.game, this.cursors, this.menuGroup);
-
-    // Update cookie
-    let saveData = JSON.stringify(
-      {"materials": this.materials.toJSON()}
-    );
-    document.cookie = "idlegame=" + saveData + "; expires=Fri, 31 Dec 9999 23:59:59 UTC; path=/;";
   }
 
   linkHexes(square, i, j, index){
