@@ -1,6 +1,6 @@
 import { Square } from "../Square";
 import { Building } from "./Building";
-import { SQUARETYPES, MATERIALS } from "../Constants";
+import { SQUARETYPES, MATERIALS, EXPONENTS } from "../Constants";
 import { Counter } from "../Counter";
 
 export class Lumbermill extends Building {
@@ -29,8 +29,10 @@ export class Lumbermill extends Building {
   static getRequiredMaterials():Counter<MATERIALS>{
     let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 10);
-    return counter;
+    // return counter;
+    return counter.multiply(Math.pow(EXPONENTS.Slow, this.amount));
   }
+
   static canBuild(square:Square):boolean{
     if (Lumbermill.allowedTerrains.indexOf(square.squareType) !== -1) {
       if(Lumbermill.neededResources.length === 0){

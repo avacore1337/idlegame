@@ -41,10 +41,10 @@ export const enum SQUARETYPES {
 }
 
 export const enum EXPONENTS {
-  Slow = 1.1,
-  Medium = 1.2,
-  Fast = 1.3,
-  VeryFast = 1.4
+  Slow = 1.20,
+  Medium = 1.35,
+  Fast = 1.50,
+  VeryFast = 1.7
 }
 
 export const SQUARETYPELIST = [SQUARETYPES.Plains, SQUARETYPES.Desert, SQUARETYPES.Forest, SQUARETYPES.River, SQUARETYPES.Water, SQUARETYPES.Field, SQUARETYPES.Mountain, SQUARETYPES.Base]

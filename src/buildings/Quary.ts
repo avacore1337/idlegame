@@ -1,6 +1,6 @@
 import { Square } from "../Square";
 import { Building } from "./Building";
-import { SQUARETYPES, MATERIALS, RESOURCES } from "../Constants";
+import { SQUARETYPES, MATERIALS, RESOURCES, EXPONENTS } from "../Constants";
 import { Counter } from "../Counter";
 
 export class Quary extends Building {
@@ -30,7 +30,7 @@ export class Quary extends Building {
     let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 30);
     counter.add(MATERIALS.Clay, 15);
-    return counter;
+    return counter.multiply(Math.pow(EXPONENTS.Medium, this.amount));
   }
 
   static canBuild(square:Square):boolean{
