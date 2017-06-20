@@ -6,13 +6,13 @@ import {FACTORAMOUNT, MATERIALSTRINGLIST, MATERIALS} from "./Constants";
 
 export class MaterialContainer {
 
-  public materials:Counter<number>;
-  public materialGainBase:Counter<number>;
+  public materials:Counter<MATERIALS>;
+  public materialGainBase:Counter<MATERIALS>;
   materialGainFactors:number[][];
 
   constructor(pre:any){
-    this.materials = new Counter<number>();
-    this.materialGainBase = new Counter<number>();
+    this.materials = new Counter<MATERIALS>();
+    this.materialGainBase = new Counter<MATERIALS>();
     for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
         this.materials.add(i, 0);
         this.materialGainBase.add(i, 0);
@@ -39,7 +39,7 @@ export class MaterialContainer {
     this.materials = this.materials.addOther(gain.divideAll(fraction));
   }
 
-  getMaterialGains():Counter<number>{
+  getMaterialGains():Counter<MATERIALS>{
     let gain = new Counter(this.materialGainBase);
     for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
       for (let j = 0; j < FACTORAMOUNT; j++) {
@@ -49,7 +49,7 @@ export class MaterialContainer {
     return gain;
   }
 
-  pay(cost:Counter<number>){
+  pay(cost:Counter<MATERIALS>){
     this.materials = this.materials.subtractOther(cost);
   }
 

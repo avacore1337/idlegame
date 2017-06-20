@@ -127,12 +127,12 @@ export class Square {
     this.buildingSprite.visible = true;
   }
 
-  generateMaterials():Counter<number>{
+  generateMaterials():Counter<MATERIALS>{
     if(this.building != null){
       return this.building.generateMaterials();
     }
     else {
-      return new Counter<number>();
+      return new Counter<MATERIALS>();
     }
   }
 

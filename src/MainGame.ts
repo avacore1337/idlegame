@@ -27,7 +27,7 @@ export class MainGame {
   option:number;
   needsupdate:boolean;
   materialUpdate:number;
-  // materials:Counter<number>;
+  // materials:Counter<MATERIALS>;
   materialContainer:MaterialContainer;
   materialLabels:Phaser.Text[]; // TODO ; These should not be here I don't think
 
@@ -360,43 +360,9 @@ export class MainGame {
       }
     });
 
-
-    // menu.inputEnabled = true;
-    // let toggle = true;
-    // let self = this;
-    // menu.events.onInputUp.add(function() {
-    //   self.needsupdate = true;
-    //   if (toggle) {
-    //     self.state = "buying";
-    //     menu.tint = 0xff00ff;
-    //     toggle = false;
-    //   } else {
-    //     self.state = "";
-    //     menu.tint = 0xffffff;
-    //     toggle = true;
-    //   }
-    // });
-
-
     this.menuGroup.add(button3);
-
-
     this.menuGroup.add(town);
     this.menuGroup.add(research);
-
-    //Only difference to a Button constructor is the label parameter...
-    // let LabelButton = function(game, x, y, key, label, callback, callbackContext, overFrame, outFrame, downFrame, upFrame){
-    //   Phaser.Button.call(this, game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame);
-    //   //Style how you wish...
-    //   this.style = {        'font': '10px Arial',        'fill': 'black'    };
-    //   this.label = new Phaser.Text(game, 0, 0, "Label", this.style);
-    //   this.addChild(this.label);    this.setLabel("Label");
-    // };
-    //   LabelButton.prototype = Object.create(Phaser.Button.prototype);
-    //   LabelButton.prototype.constructor = LabelButton;
-    //   LabelButton.prototype.setLabel = function(label){    this.label.setText(label)    this.label.x = Math.floor((this.width - this.label.width)*0.5);
-    //     this.label.y = Math.floor((this.height - this.label.height)*0.5);
-    //   };
 
     let cameraCenterX = (this.game.world.width - this.game.width)/2;
     let cameraCenterY = (this.game.world.height - this.game.height)/2;
@@ -407,18 +373,18 @@ export class MainGame {
     this.menuGroup.y = cameraCenterY;
   }
 
-  //
   onUpdate():void {
 
-    // Update resources
     this.materialUpdate = (this.materialUpdate + 1) % 20;
     if (this.materialUpdate === 0) {
       this.materialContainer.gainMaterialsFraction(3);
-
       let visibleLabels = -1;
       let materials = this.materialContainer.materials;
+      let gains = this.materialContainer.getMaterialGains();
       for (var i = 0; i < MATERIALSTRINGLIST.length; i++) {
-        this.materialLabels[i].setText(MATERIALSTRINGLIST[i] + " " + materials.get(i).toFixed(2));
+        let text = MATERIALSTRINGLIST[i] + " " + materials.get(i).toFixed(2);
+        text += "  (" + gains.get(i).toFixed(2) + "/s)";
+        this.materialLabels[i].setText(text);
         this.materialLabels[i].y = 3;
         this.materialLabels[i].visible = false;
         if (materials.get(i) > 0) {
@@ -427,19 +393,15 @@ export class MainGame {
           this.materialLabels[i].y += 30 * visibleLabels;
         }
       }
-
       for (let c of CONSTRUCTIONCLASSES) {
         c.doThing(this);
       }
-
-      this.materialUpdate = 0;
     }
 
-    // Update graphics
     if (this.needsupdate) {
       this.needsupdate = false;
 
-      let resourceGain = new Counter<number>();
+      let resourceGain = new Counter<MATERIALS>();
       for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
           resourceGain.add(i, 0);
       }
@@ -448,6 +410,10 @@ export class MainGame {
           resourceGain = resourceGain.addOther(this.hexMatrix[y][x].generateMaterials());
         }
       }
+      for (let c of CONSTRUCTIONCLASSES) {
+        resourceGain = resourceGain.addOther(c.generateMaterials());
+      }
+
       this.materialContainer.materialGainBase = resourceGain;
 
       for (let i = 0; i < this.hexMatrix.length; i++) {

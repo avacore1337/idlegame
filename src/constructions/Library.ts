@@ -17,6 +17,12 @@ export class Library extends Construction {
     return Library.enabled;
   }
 
+  static generateMaterials():Counter<MATERIALS>{
+    let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
+    counter.add(MATERIALS.Research, 0.2*this.amount);
+    return counter;
+  }
+
   static doThing(game:MainGame):void {
   }
 
@@ -25,8 +31,8 @@ export class Library extends Construction {
     Library.amount += 1;
   }
 
-  static getRequiredMaterials():Counter<number>{
-    let cost = new Counter<number>();
+  static getRequiredMaterials():Counter<MATERIALS>{
+    let cost = new Counter<MATERIALS>();
     cost.add(MATERIALS.Wood, 10);
     cost.add(MATERIALS.Clay, 10);
     return cost.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));

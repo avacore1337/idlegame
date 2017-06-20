@@ -24,13 +24,17 @@ export class Kiln extends Construction {
     }
   }
 
+  static generateMaterials():Counter<MATERIALS>{
+    return new Counter<MATERIALS>();
+  }
+
   static build(game:MainGame):void {
     game.materialContainer.pay(this.getRequiredMaterials());
     Kiln.amount += 1;
   }
 
-  static getRequiredMaterials():Counter<number>{
-    let cost = new Counter<number>();
+  static getRequiredMaterials():Counter<MATERIALS>{
+    let cost = new Counter<MATERIALS>();
     cost.add(MATERIALS.Clay, 10);
     return cost.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));
   }

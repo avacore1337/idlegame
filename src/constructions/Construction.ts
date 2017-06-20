@@ -17,7 +17,7 @@ export class Construction {
   static build(game:MainGame):void {
   }
 
-  getRequiredMaterials():Counter<number>{
-    return new Counter<number>();
+  getRequiredMaterials():Counter<MATERIALS>{
+    return new Counter<MATERIALS>();
   }
 }

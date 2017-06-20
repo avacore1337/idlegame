@@ -1,6 +1,6 @@
 import { Square } from "../Square";
 import { Construction } from "./Construction";
-import { SQUARETYPES, MATERIALS, EXPONENTS } from "../Constants";
+import { SQUARETYPES, MATERIALS, EXPONENTS, MATERIALMULITIPLIERINDEXES } from "../Constants";
 import { Counter } from "../Counter";
 import { MainGame } from "../MainGame";
 
@@ -18,6 +18,13 @@ export class ToolWorkshop extends Construction {
   }
 
   static doThing(game:MainGame):void {
+    game.materialContainer.materialGainFactors[MATERIALS.Wood][MATERIALMULITIPLIERINDEXES.ToolWorkshop] = 1 + this.amount*0.02;
+    game.materialContainer.materialGainFactors[MATERIALS.Stone][MATERIALMULITIPLIERINDEXES.ToolWorkshop] = 1 + this.amount*0.02;
+    game.materialContainer.materialGainFactors[MATERIALS.Clay][MATERIALMULITIPLIERINDEXES.ToolWorkshop] = 1 + this.amount*0.02;
+  }
+
+  static generateMaterials():Counter<MATERIALS>{
+    return new Counter<MATERIALS>();
   }
 
   static build(game:MainGame):void {
@@ -25,8 +32,8 @@ export class ToolWorkshop extends Construction {
     ToolWorkshop.amount += 1;
   }
 
-  static getRequiredMaterials():Counter<number>{
-    let cost = new Counter<number>();
+  static getRequiredMaterials():Counter<MATERIALS>{
+    let cost = new Counter<MATERIALS>();
     cost.add(MATERIALS.Stone, 15);
     return cost.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));
   }
