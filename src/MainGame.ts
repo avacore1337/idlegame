@@ -116,7 +116,13 @@ export class MainGame {
     buyText.visible = true;
     buyGroup.add(buyText);
     buyButton.events.onInputUp.add(function() {
-      this.needsupdate = true;
+      if(self.state != "buying"){
+        self.state = "buying";
+      }
+      else{
+        self.state = "";
+      }
+      self.needsupdate = true;
     });
 
     let saveGroup:Phaser.Group = this.game.add.group();
@@ -233,7 +239,7 @@ export class MainGame {
       }
       buttons2.push({'group': cgroup});
       cbutton.events.onInputUp.add(function() {
-        let canAfford = true;
+        let canAfford = self.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
         if (canAfford) {
           self.needsupdate = true;
           CONSTRUCTIONCLASSES[index].build(self);
@@ -462,11 +468,17 @@ export class MainGame {
           self.needsupdate = true;
           // You own the tile, you wish to build, the tile-type is allowed, you can afford it, TODO (no other building exist on the tile)
           if (theSquare.purchased && self.state === "building" && BUILDINGCLASSES[self.option].canBuild(theSquare) && self.materialContainer.materials.isSubset(BUILDINGCLASSES[self.option].getRequiredMaterials())) {
-            theSquare.addBuilding(self.option);
+            console.log(self.materialContainer.materials)
+            console.log(BUILDINGCLASSES[self.option].getRequiredMaterials())
             self.materialContainer.pay(BUILDINGCLASSES[self.option].getRequiredMaterials());
+            theSquare.addBuilding(self.option);
+            console.log(self.materialContainer.materials)
           }
-          theSquare.purchased = true;
-          theSquare.revealNeighbours();
+          if(self.state ==="buying" && !theSquare.purchased && self.materialContainer.materials.get(MATERIALS.Food) > 10){
+            self.materialContainer.materials.subtract(MATERIALS.Food, 10);
+            theSquare.purchased = true;
+            theSquare.revealNeighbours();
+          }
         });
       }
     }
