@@ -9,10 +9,11 @@ export class Mine extends Building {
   static spriteName:string = "mine";
   static allowedTerrains = [SQUARETYPES.Mountain];
   static neededResources = [RESOURCES.Copper, RESOURCES.Iron, RESOURCES.Coal];
+  static amount:number = 0;
 
   constructor(){
     super();
-    // theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>
+    Mine.amount += 1;
   }
 
   static isEnabled():boolean{

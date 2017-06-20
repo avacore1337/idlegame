@@ -9,10 +9,11 @@ export class Lumbermill extends Building {
   static spriteName:string = "factory";
   static allowedTerrains = [SQUARETYPES.Forest];
   static neededResources = [];
+  static amount:number = 0;
 
   constructor(){
     super();
-    // :Array<SQUARETYPES>, theNeededResources:Array<number>
+    Lumbermill.amount += 1;
   }
 
   static isEnabled():boolean{

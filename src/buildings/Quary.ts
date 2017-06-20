@@ -9,10 +9,11 @@ export class Quary extends Building {
   static spriteName:string = "factory";
   static allowedTerrains = [SQUARETYPES.Forest];
   static neededResources = [RESOURCES.Stone];
+  static amount:number = 0;
 
   constructor(){
     super();
-    // theAllowedTerrains:Array<SQUARETYPES>, theNeededResources:Array<number>
+    Quary.amount += 1;
   }
 
   static isEnabled():boolean{

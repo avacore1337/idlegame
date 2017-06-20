@@ -1,6 +1,6 @@
 import { Square } from "../Square";
 import { Building } from "./Building";
-import { SQUARETYPES, MATERIALS } from "../Constants";
+import { SQUARETYPES, MATERIALS, EXPONENTS} from "../Constants";
 import { Counter } from "../Counter";
 
 export class Claypit extends Building {
@@ -9,8 +9,11 @@ export class Claypit extends Building {
   static spriteName:string = "factory";
   static allowedTerrains = [SQUARETYPES.River];
   static neededResources = [];
+  static amount:number = 0;
+
   constructor(){
     super();
+    Claypit.amount += 1;
   }
 
   static isEnabled():boolean{
@@ -27,6 +30,7 @@ export class Claypit extends Building {
     let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 10);
     return counter;
+    // return counter.multiply(Math.pow(EXPONENTS.Slow, ));
   }
 
   static canBuild(square:Square):boolean{
