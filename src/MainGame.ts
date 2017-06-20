@@ -115,6 +115,7 @@ export class MainGame {
     botMenu.add(buyGroup);
     let buyButton:Phaser.Sprite = this.game.add.sprite(224, 0, 'menu', 'button.png');
     buyButton.visible = true;
+    buyButton.inputEnabled = true;
     buyGroup.add(buyButton);
     let buyText:Phaser.Text = this.game.add.text(250, 3, "Buy", style2);
     buyText.visible = true;
@@ -128,6 +129,7 @@ export class MainGame {
     botMenu.add(saveGroup);
     let saveButton:Phaser.Sprite = this.game.add.sprite(224, 30, 'menu', 'button.png');
     saveButton.visible = true;
+    saveButton.inputEnabled = true;
     saveGroup.add(saveButton);
     let saveText:Phaser.Text = this.game.add.text(250, 33, "Save game", style2);
     saveText.visible = true;
@@ -135,7 +137,7 @@ export class MainGame {
     saveButton.events.onInputUp.add(function() {
       // Update cookie
       let saveData = JSON.stringify(
-        {"materials": this.materials.toJSON()}
+        {"materials": self.materials.toJSON()}
       );
       document.cookie = "idlegame=" + saveData + "; expires=Fri, 31 Dec 9999 23:59:59 UTC; path=/;";
     });
@@ -145,12 +147,13 @@ export class MainGame {
     botMenu.add(resetGroup);
     let resetButton:Phaser.Sprite = this.game.add.sprite(224, 60, 'menu', 'button.png');
     resetButton.visible = true;
+    resetButton.inputEnabled = true;
     resetGroup.add(resetButton);
     let resetText:Phaser.Text = this.game.add.text(250, 63, "Reset save", style2);
     resetText.visible = true;
     resetGroup.add(resetText);
     resetButton.events.onInputUp.add(function() {
-      document.cookie = "";
+      document.cookie = "idlegame=; expires=Wed; 01 Jan 1970;";
     });
 
     // SETUP FOR BUILDINGS
