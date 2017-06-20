@@ -474,7 +474,7 @@ export class MainGame {
             theSquare.addBuilding(self.option);
             console.log(self.materialContainer.materials)
           }
-          if(self.state ==="buying" && !theSquare.purchased && self.materialContainer.materials.get(MATERIALS.Food) > 10){
+          if(self.state ==="buying" && !theSquare.purchased && self.materialContainer.materials.get(MATERIALS.Food) >= 10){
             self.materialContainer.materials.subtract(MATERIALS.Food, 10);
             theSquare.purchased = true;
             theSquare.revealNeighbours();
