@@ -115,15 +115,6 @@ export class MainGame {
     let buyText:Phaser.Text = this.game.add.text(250, 3, "Buy", style2);
     buyText.visible = true;
     buyGroup.add(buyText);
-    buyButton.events.onInputUp.add(function() {
-      if(self.state != "buying"){
-        self.state = "buying";
-      }
-      else{
-        self.state = "";
-      }
-      self.needsupdate = true;
-    });
 
     let saveGroup:Phaser.Group = this.game.add.group();
     saveGroup.visible = true;
@@ -369,6 +360,21 @@ export class MainGame {
     this.menuGroup.add(button3);
     this.menuGroup.add(town);
     this.menuGroup.add(research);
+
+    // Add functionality to the 'Buy'-button
+    buyButton.events.onInputUp.add(function() {
+      if(self.state != "buying"){
+        self.state = "buying";
+        for (let button of buttons1) {
+          button.regular.visible = true;
+          button.toggled.visible = false;
+        }
+      }
+      else{
+        self.state = "";
+      }
+      self.needsupdate = true;
+    });
 
     let cameraCenterX = (this.game.world.width - this.game.width)/2;
     let cameraCenterY = (this.game.world.height - this.game.height)/2;
