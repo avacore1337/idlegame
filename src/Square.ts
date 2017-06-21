@@ -21,6 +21,8 @@ export class Square {
   buildingSprite:Phaser.Sprite;
   building:Building;
   buildingType:BUILDINGS;
+
+  // distanceLabel:Phaser.Text;
   constructor(game:MainGame, j:number, i:number, squareType:SQUARETYPES){
     this.buildingType = -1;
     this.resource = null;
@@ -66,6 +68,10 @@ export class Square {
         this.setResource(RESOURCES.Iron);
       }
     }
+
+    /*this.distanceLabel = game.game.add.text(hexagonX + 30, hexagonY + 30, "-1", { font: "14px Arial", fill: "#FF0000", align: "center" });
+    this.distanceLabel.visible = true;
+    game.squareLayer.add(this.distanceLabel);*/
   }
 
   setType(squareType:SQUARETYPES):void {
@@ -147,6 +153,18 @@ export class Square {
     else {
       return new Counter<MATERIALS>();
     }
+  }
+
+  setDistance(newDistance:number):Array<Square>{
+    if (this.visited) {
+      return [];
+    }
+    this.visited = true;
+    this.distance = newDistance;
+
+    //this.distanceLabel.setText("" + newDistance);
+
+    return this.neighbours;
   }
 
 

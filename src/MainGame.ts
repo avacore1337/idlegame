@@ -518,6 +518,20 @@ export class MainGame {
     if (this.gridSizeY % 2 === 0) {
       this.hexagonGroup.y -= this.hexagonHeight / 8;
     }
+
+    let distance = 0;
+    let currentTiles = centerHex.setDistance(distance);
+    let nextTiles = [];
+    while (currentTiles.length > 0) {
+      distance++;
+      for (let currentTile of currentTiles) {
+        if (currentTile !== null) {
+          nextTiles = nextTiles.concat(currentTile.setDistance(distance));
+        }
+      }
+      currentTiles = nextTiles;
+      nextTiles = [];
+    }
   }
 
   onRender():void {
