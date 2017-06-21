@@ -5,6 +5,7 @@ import { TechList } from "./TechTree";
 import { MaterialContainer } from "./MaterialContainer";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
+import { loadGame, saveGame, resetSave } from "./CookieManager";
 import { DIRECTIONS, MATERIALS, MATERIALSTRINGLIST, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
 
 export class MainGame {
@@ -33,19 +34,7 @@ export class MainGame {
 
   constructor(theGame:Phaser.Game) {
     // Check for a previous instance of the game
-    let pre = undefined;
-    try{
-      for(let c of document.cookie.split(';')) {
-          if (c.indexOf("idlegame=") !== -1) {
-              pre = JSON.parse(c.trim().substring("idlegame=".length));
-              break;
-          }
-      }
-    }
-    catch(err){
-      console.log("Cookie was broken, Baking new ones")
-    }
-    this.materialContainer = new MaterialContainer(pre);
+    loadGame(this);
     this.materialLabels = [];
     this.materialUpdate = 0;
     this.state = "";
@@ -127,11 +116,7 @@ export class MainGame {
     saveText.visible = true;
     saveGroup.add(saveText);
     saveButton.events.onInputUp.add(function() {
-      // Update cookie
-      let saveData = JSON.stringify(
-        {"materials": self.materialContainer.materials.toJSON()}
-      );
-      document.cookie = "idlegame=" + saveData + "; expires=Fri, 31 Dec 9999 23:59:59 UTC; path=/;";
+      saveGame(self);
     });
 
     let resetGroup:Phaser.Group = this.game.add.group();
@@ -145,7 +130,7 @@ export class MainGame {
     resetText.visible = true;
     resetGroup.add(resetText);
     resetButton.events.onInputUp.add(function() {
-      document.cookie = "idlegame=; expires=Wed; 01 Jan 1970;";
+      resetSave();
     });
 
     // SETUP FOR BUILDINGS
