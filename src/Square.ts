@@ -22,6 +22,8 @@ export class Square {
   building:Building;
   buildingType:BUILDINGS;
 
+  static buildDistance:number = 2;
+
   // distanceLabel:Phaser.Text;
   constructor(game:MainGame, j:number, i:number, squareType:SQUARETYPES){
     this.buildingType = -1;
@@ -96,7 +98,9 @@ export class Square {
     if(this.revealed){
       let highlight = false;
       if(this.game.state === "buying" && !this.purchased){
-        highlight = true;
+        if (this.distance <= Square.buildDistance) {
+          highlight = true;
+        }
       }
       if(this.game.state === "building" && this.purchased && this.building === null){
         if(BUILDINGCLASSES[this.game.option].canBuild(this)){
