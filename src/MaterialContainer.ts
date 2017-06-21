@@ -18,8 +18,8 @@ export class MaterialContainer {
         this.materialGainBase.add(i, 0);
     }
     if (pre) {
-      for (var property in pre.materials) {
-        this.materials.add(parseInt(property), parseFloat(pre.materials[property]));
+      for (var property in pre) {
+        this.materials.add(parseInt(property), parseFloat(pre[property]));
       }
     } else {
       this.materials.add(MATERIALS.Wood, 50);
@@ -33,6 +33,7 @@ export class MaterialContainer {
         this.materialGainFactors[i].push(1);
       }
     }
+
   }
 
   gainMaterialsFraction(fraction:number):void{

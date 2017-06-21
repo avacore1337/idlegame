@@ -4,10 +4,10 @@ import { Building } from "./buildings/AllBuildings";
 import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from "./Constants";
 
 export class Square {
-  borders:Phaser.Sprite[]
-  center:Phaser.Sprite
-  x:number
-  y:number
+  borders:Phaser.Sprite[];
+  center:Phaser.Sprite;
+  x:number;
+  y:number;
   neighbours:Array<Square>;
   game:MainGame;
   purchased:boolean;
@@ -171,6 +171,33 @@ export class Square {
     return this.neighbours;
   }
 
+  toJSON():object {
+    return {
+      "purchased": this.purchased, // boolean
+      "revealed": this.revealed, // boolean
+      "squareType": this.squareType, // SQUARETYPES (enum)
+      "resourceType": this.resourceType, // RESOURCES (enum)
+      "building": this.building, // Building
+      "buildingType": this.buildingType // BUILDINGS (enum)
+    };
+  }
 
+  set(data:object):void {
+    this.squareType = data["squareType"];
+    console.log(SQUARESTRINGLIST[data["squareType"]] + '.png');
+    this.center.loadTexture(SQUARESTRINGLIST[data["squareType"]] + '.png');
+    if (data["purchased"]) {
+      this.purchased = true;
+      this.revealNeighbours();
+    }
+    if (data["revealed"]) {
+      this.reveal();
+    }
+    if (data["resourceType"] !== -1) {
+      this.setResource(data["resourceType"]);
+    }
+    this.building = data["building"];
+    this.buildingType = data["buildingType"];
+  }
 
 }

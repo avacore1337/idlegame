@@ -5,7 +5,7 @@ import { TechList } from "./TechTree";
 import { MaterialContainer } from "./MaterialContainer";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
-import { loadGame, saveGame, resetSave } from "./CookieManager";
+import { loadMap, loadMaterials, saveGame, resetSave } from "./SaveHandler";
 import { DIRECTIONS, MATERIALS, MATERIALSTRINGLIST, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
 
 export class MainGame {
@@ -33,8 +33,7 @@ export class MainGame {
   materialLabels:Phaser.Text[]; // TODO ; These should not be here I don't think
 
   constructor(theGame:Phaser.Game) {
-    // Check for a previous instance of the game
-    loadGame(this);
+    loadMaterials(this);
     this.materialLabels = [];
     this.materialUpdate = 0;
     this.state = "";
@@ -459,11 +458,8 @@ export class MainGame {
           self.needsupdate = true;
           // You own the tile, you wish to build, the tile-type is allowed, you can afford it, TODO (no other building exist on the tile)
           if (theSquare.purchased && self.state === "building" && BUILDINGCLASSES[self.option].canBuild(theSquare) && self.materialContainer.materials.isSubset(BUILDINGCLASSES[self.option].getRequiredMaterials())) {
-            console.log(self.materialContainer.materials)
-            console.log(BUILDINGCLASSES[self.option].getRequiredMaterials())
             self.materialContainer.pay(BUILDINGCLASSES[self.option].getRequiredMaterials());
             theSquare.addBuilding(self.option);
-            console.log(self.materialContainer.materials)
           }
           if(self.state ==="buying" && !theSquare.purchased && self.materialContainer.materials.get(MATERIALS.Food) >= 10*Math.pow(1.4, theSquare.distance) && theSquare.distance <= Square.buildDistance){
             self.materialContainer.materials.subtract(MATERIALS.Food, 10*Math.pow(1.4, theSquare.distance));
@@ -517,6 +513,8 @@ export class MainGame {
       currentTiles = nextTiles;
       nextTiles = [];
     }
+
+    //loadMap(this);
   }
 
   onRender():void {

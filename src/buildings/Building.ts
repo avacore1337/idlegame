@@ -28,4 +28,8 @@ export class Building {
   static canBuild(square:Square):boolean{
     return false;
   }
+
+  toJSON():object {
+    return {"type": this.title};
+  }
 }
