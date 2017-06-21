@@ -1,0 +1,99 @@
+|  Stone age | Iron age
+|------------|--------
+| Wood       | Lumber
+|------------|--------
+| Stone      |
+|------------|--------
+| Clay       | Bricks
+|------------|--------
+| Gold       |
+|------------|--------
+| Copper     | Iron
+|------------|--------
+| Coal       |
+|------------|--------
+| Hunting    | Farming
+
+range: the range you can explore
+
+
+Buildings:
+Logging camp: Wood
+Farm: Food
+Hunting camp: Food
+Mine: Copper/Iron/Gold/Coal
+Claypit: Clay
+Quary: Stone
+Port: Gold
+Trading Post: Gold
+
+
+Constructions:
+Lumbermill: gives lumber
+Kiln: gives bricks
+Roads (Roads): cost stone, improves base gain of most things
+Copper smith: requires copper/s gives high gain/s
+Iron smith: requires iron/s gives high gain/s
+Smelters: requires coal/s increases copper/iron /s
+Shrine: gives base research/s
+Library: improves research
+Granary: improves food
+Market: Gold
+
+
+Techs:
+Torch: range +1
+Mining (Torch): enables Quary
+Oven: Food + 30%
+Masonry (Oven): enables kiln (bricks)
+Roads (mining): range +2
+Farming: enables farms
+Writing (Torch): Library
+Tools (Writing): enable Tool Workshop
+Sailing(Writing, Masonry): can build fishing boats
+Wheel (Roads, Tools): range +2
+Copper working: enables copper, coppersmith
+Irrigation (farming): farms +50% food
+Animal Husbandry (Irrigation): enable pasture
+Construction (Tools, Wheel, Masonry): Water mill
+Education (Writing) improves research
+Math (Writing): Enabling tech
+Taxation (Math): every owned tiles give gold
+Metalworking (Copper): enables smelters
+Iron working (Metalworking): enables iron smith
+
+
+
+
+
+Stone age
+---------
+Fire -> Flint -> Torch ->
+
+Tools -> Hatchet ->
+         Weapons -> Bow n' arrow ->
+         Pickaxe ->
+         Shovel  ->
+
+Curiosity -> Emigration -> Roads ->
+
+Creativity -> Potter's wheel ->
+
+Iron age
+--------
+Saw -> Sawmill ->
+
+Bonfire -> Furnace -> Kiln ->
+
+Taming animal -> Carriage -> Trade networks ->
+
+Writing system -> Slavery     ->
+                  Medicine    ->
+                  Religion    ->
+                  Mathematics ->
+
+Bronze -> Iron -> Reinforced edges ->
+
+Farming -> Year-round agriculture ->
+
+Nations -> Organized warfare ->
