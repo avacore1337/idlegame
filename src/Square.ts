@@ -53,6 +53,19 @@ export class Square {
     if(this.squareType === SQUARETYPES.Forest){
       this.setResource(RESOURCES.Stone);
     }
+    if(this.squareType === SQUARETYPES.Mountain){
+      let rnd = Math.floor(Math.random() * 100);
+      let coalPercentage = 10;
+      let copperPercentage = 10;
+      let ironPercentage = 10;
+      if (rnd < coalPercentage) {
+        this.setResource(RESOURCES.Coal);
+      } else if (rnd < coalPercentage + copperPercentage) {
+        this.setResource(RESOURCES.Copper);
+      } else if (rnd < coalPercentage + copperPercentage + ironPercentage) {
+        this.setResource(RESOURCES.Iron);
+      }
+    }
   }
 
   setType(squareType:SQUARETYPES):void {
