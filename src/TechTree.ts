@@ -41,3 +41,9 @@ function enableTorch(){
 }
 let torch = new TechNode("Torch", [burning, tooling], 100, enableTorch);
 TechList.push(torch);
+
+function enableRoads(){
+  Square.buildDistance += 2;
+}
+let roads = new TechNode("Roads", [mining], 100, enableRoads);
+TechList.push(roads);
