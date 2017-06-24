@@ -7,7 +7,7 @@ export class Quary extends Building {
   static enabled:boolean = false;
   static title:string = "Quary";
   static spriteName:string = "factory";
-  static allowedTerrains = [SQUARETYPES.Forest];
+  static allowedTerrains = [SQUARETYPES.Forest, SQUARETYPES.Desert];
   static neededResources = [RESOURCES.Stone];
   static amount:number = 0;
 
