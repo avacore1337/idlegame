@@ -1,4 +1,4 @@
-import { Lumbermill, Claypit, Quary, Mine, Farm, HuntingCamp } from "./buildings/AllBuildings";
+import { Lumbermill, Claypit, Quary, Mine, Farm, HuntingCamp, Base } from "./buildings/AllBuildings";
 import { ToolWorkshop, Kiln, Steelworks, Library } from "./constructions/AllConstructions";
 
 // export class Constants {
@@ -59,9 +59,10 @@ export const enum BUILDINGS {
   Quary,
   Mine,
   Farm,
-  HuntingCamp
+  HuntingCamp,
+  Base
 }
-export const BUILDINGCLASSES = [Lumbermill, Claypit, Quary, Mine, Farm, HuntingCamp]
+export const BUILDINGCLASSES = [Lumbermill, Claypit, Quary, Mine, Farm, HuntingCamp, Base]
 
 export const enum CONSTRUCTIONS {
   Library,

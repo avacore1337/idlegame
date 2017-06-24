@@ -5,3 +5,4 @@ export * from "./Mine";
 export * from "./Quary";
 export * from "./Farm";
 export * from "./HuntingCamp";
+export * from "./Base";

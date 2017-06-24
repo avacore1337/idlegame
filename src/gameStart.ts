@@ -1,4 +1,4 @@
-import { SQUARETYPES, SQUARETYPELIST ,RESOURCES } from "./Constants";
+import { SQUARETYPES, SQUARETYPELIST ,RESOURCES, BUILDINGS, BUILDINGCLASSES } from "./Constants";
 import { MainGame } from "./MainGame";
 
 export function newGame(game:MainGame){
@@ -35,14 +35,21 @@ export function newGame(game:MainGame){
   let centerY = Math.floor(game.gridSizeY/2);
   let centerHex = game.hexMatrix[centerX][centerY];
 
+  centerHex.reset();
   centerHex.setType(SQUARETYPES.Base);
   if(centerHex.resource != null){
     centerHex.resource.destroy();
   }
-  centerHex.buildingSprite = game.game.add.sprite(centerHex.center.x + 10 ,centerHex.center.y + 20, 'buildings', "building.png");
+  centerHex.addBuilding(BUILDINGS.Base)
   game.buildingLayer.add(centerHex.buildingSprite);
   centerHex.purchased = true;
   centerHex.reveal();
+  for (let i = 0; i < centerHex.neighbours.length; i++) {
+      let hex = centerHex.neighbours[i];
+      hex.purchased = true;
+      hex.reveal();
+      hex.revealNeighbours();
+  }
   centerHex.revealNeighbours();
   let distance = 0;
   let currentTiles = centerHex.setDistance(distance);

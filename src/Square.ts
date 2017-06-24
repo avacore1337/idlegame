@@ -128,10 +128,14 @@ export class Square {
     this.buildingType = building;
     this.building = new BUILDINGCLASSES[building]();
     this.building.setSquare(this);
-
-    this.buildingSprite = this.game.game.add.sprite(this.center.x + 18 ,this.center.y + 23, 'buildings', BUILDINGCLASSES[building].spriteName + '.png');
+    if(building === BUILDINGS.Base){
+      this.buildingSprite = this.game.game.add.sprite(this.center.x + 10 ,this.center.y + 20, 'buildings', BUILDINGCLASSES[building].spriteName + '.png');
+    }
+    else{
+      this.buildingSprite = this.game.game.add.sprite(this.center.x + 18 ,this.center.y + 23, 'buildings', BUILDINGCLASSES[building].spriteName + '.png');
+    }
     this.game.buildingLayer.add(this.buildingSprite);
-    this.buildingSprite.visible = true;
+    // this.buildingSprite.visible = true;
   }
 
   generateMaterials():Counter<MATERIALS>{
