@@ -161,7 +161,7 @@ export class Square {
       "revealed": this.revealed, // boolean
       "squareType": this.squareType, // SQUARETYPES (enum)
       "resourceType": this.resourceType, // RESOURCES (enum)
-      // "building": this.building, // Building
+      "distance": this.distance, // Building
       "buildingType": this.buildingType // BUILDINGS (enum)
     };
   }
@@ -194,6 +194,7 @@ export class Square {
     if (data["revealed"]) {
       this.reveal();
     }
+    this.distance = data["distance"]
   }
 
 }

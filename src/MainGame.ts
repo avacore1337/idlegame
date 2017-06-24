@@ -65,6 +65,7 @@ export class MainGame {
     this.game.camera.y = cameraCenterY;
     this.menuGroup.x = cameraCenterX;
     this.menuGroup.y = cameraCenterY;
+    this.needsupdate = true;
   }
 
   onUpdate():void {

@@ -3,26 +3,11 @@ import { DIRECTIONS, MATERIALS, MATERIALSTRINGLIST, SQUARETYPES, SQUARETYPELIST 
 import { loadMap, loadMaterials, saveGame, resetSave } from "./SaveHandler";
 import { TechList } from "./TechTree";
 
-
-
-export function createMenu(game:MainGame){
-  game.menuGroup = game.game.add.group();
-
-  game.menuGroup.x = 0;
-  game.menuGroup.y = 0;
-
+function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any{
   let style = { font: "14px Arial", fill: "#000000", align: "center" };
   let style2 = { font: "14px Arial", fill: "#000000", align: "left" };
-
-  let topMenu = game.game.add.group();
-  let topSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
-  topMenu.add(topSprite);
-  game.menuGroup.add(topMenu);
-
-  let botMenu = game.game.add.group();
   let botSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
   botMenu.add(botSprite);
-  game.menuGroup.add(botMenu);
 
   botMenu.y = 320;
 
@@ -53,6 +38,20 @@ export function createMenu(game:MainGame){
   let buyText:Phaser.Text = game.game.add.text(250, 3, "Buy", style2);
   buyText.visible = true;
   buyGroup.add(buyText);
+  // Add functionality to the 'Buy'-button
+  buyButton.events.onInputUp.add(function() {
+    if(game.state != "buying"){
+      game.state = "buying";
+      for (let button of buttons1) {
+        button.regular.visible = true;
+        button.toggled.visible = false;
+      }
+    }
+    else{
+      game.state = "";
+    }
+    game.needsupdate = true;
+  });
 
   let saveGroup:Phaser.Group = game.game.add.group();
   saveGroup.visible = true;
@@ -81,6 +80,26 @@ export function createMenu(game:MainGame){
   resetButton.events.onInputUp.add(function() {
     resetSave();
   });
+}
+
+export function createMenu(game:MainGame):void{
+  game.menuGroup = game.game.add.group();
+
+  game.menuGroup.x = 0;
+  game.menuGroup.y = 0;
+
+  let style = { font: "14px Arial", fill: "#000000", align: "center" };
+  let style2 = { font: "14px Arial", fill: "#000000", align: "left" };
+
+  let topMenu = game.game.add.group();
+  let topSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
+  topMenu.add(topSprite);
+  game.menuGroup.add(topMenu);
+  let buttons1:any = [];
+  let botMenu = game.game.add.group();
+  game.menuGroup.add(botMenu);
+  createBottomMenu(game,botMenu, buttons1);
+
 
   // SETUP FOR BUILDINGS
   // -------------------
@@ -89,7 +108,6 @@ export function createMenu(game:MainGame){
   let buildingGroup = game.game.add.group();
   game.menuGroup.add(buildingGroup);
   buildingGroup.visible = true;
-  let buttons1 = [];
   let startingButtons = 0;
   for (let index = 0; index < BUILDINGCLASSES.length; index++) {
     let b = BUILDINGCLASSES[index];
@@ -294,19 +312,4 @@ export function createMenu(game:MainGame){
   game.menuGroup.add(button3);
   game.menuGroup.add(town);
   game.menuGroup.add(research);
-
-  // Add functionality to the 'Buy'-button
-  buyButton.events.onInputUp.add(function() {
-    if(game.state != "buying"){
-      game.state = "buying";
-      for (let button of buttons1) {
-        button.regular.visible = true;
-        button.toggled.visible = false;
-      }
-    }
-    else{
-      game.state = "";
-    }
-    game.needsupdate = true;
-  });
 }

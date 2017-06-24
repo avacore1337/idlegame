@@ -30,4 +30,31 @@ export function newGame(game:MainGame){
       }
     }
   }
+
+  let centerX = Math.floor(game.gridSizeX/2);
+  let centerY = Math.floor(game.gridSizeY/2);
+  let centerHex = game.hexMatrix[centerX][centerY];
+
+  centerHex.setType(SQUARETYPES.Base);
+  if(centerHex.resource != null){
+    centerHex.resource.destroy();
+  }
+  centerHex.buildingSprite = game.game.add.sprite(centerHex.center.x + 10 ,centerHex.center.y + 20, 'buildings', "building.png");
+  game.buildingLayer.add(centerHex.buildingSprite);
+  centerHex.purchased = true;
+  centerHex.reveal();
+  centerHex.revealNeighbours();
+  let distance = 0;
+  let currentTiles = centerHex.setDistance(distance);
+  let nextTiles = [];
+  while (currentTiles.length > 0) {
+    distance++;
+    for (let currentTile of currentTiles) {
+      if (currentTile !== null) {
+        nextTiles = nextTiles.concat(currentTile.setDistance(distance));
+      }
+    }
+    currentTiles = nextTiles;
+    nextTiles = [];
+  }
 }
