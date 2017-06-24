@@ -1,7 +1,21 @@
 import { SQUARETYPES, SQUARETYPELIST ,RESOURCES, BUILDINGS, BUILDINGCLASSES } from "./Constants";
 import { MainGame } from "./MainGame";
+import { Square } from "./Square";
+import { shuffle } from "./util";
+
+let start:Array<[SQUARETYPES, number]> = [
+  [SQUARETYPES.Forest, RESOURCES.Stone],
+  [SQUARETYPES.Forest, -1],
+  [SQUARETYPES.River, -1],
+  [SQUARETYPES.River, RESOURCES.Stone],
+  [SQUARETYPES.Plains, RESOURCES.Horse],
+  [SQUARETYPES.Field, -1],]
 
 export function newGame(game:MainGame){
+  let centerX = Math.floor(game.gridSizeX/2);
+  let centerY = Math.floor(game.gridSizeY/2);
+  let centerHex = game.hexMatrix[centerX][centerY];
+  shuffle(start);
   for (let i = 0; i < game.gridSizeY; i++) {
     for (let j = 0; j < game.gridSizeX; j++) {
       let theSquare = game.hexMatrix[i][j];
@@ -31,10 +45,6 @@ export function newGame(game:MainGame){
     }
   }
 
-  let centerX = Math.floor(game.gridSizeX/2);
-  let centerY = Math.floor(game.gridSizeY/2);
-  let centerHex = game.hexMatrix[centerX][centerY];
-
   centerHex.reset();
   centerHex.setType(SQUARETYPES.Base);
   if(centerHex.resource != null){
@@ -51,6 +61,10 @@ export function newGame(game:MainGame){
       hex.revealNeighbours();
   }
   centerHex.revealNeighbours();
+  calculateDistances(game, centerHex);
+}
+
+function calculateDistances(game:MainGame, centerHex:Square):void {
   let distance = 0;
   let currentTiles = centerHex.setDistance(distance);
   let nextTiles = [];

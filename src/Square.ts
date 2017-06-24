@@ -29,6 +29,7 @@ export class Square {
   // distanceLabel:Phaser.Text;
   constructor(game:MainGame, j:number, i:number){
     this.buildingType = -1;
+    this.resourceType = -1;
     this.resource = null;
     this.building = null;
     this.squareType = -1;
