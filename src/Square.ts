@@ -6,6 +6,8 @@ import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST, SQUARESTRINGLIST, B
 export class Square {
   borders:Phaser.Sprite[];
   center:Phaser.Sprite;
+  i:number;
+  j:number;
   x:number;
   y:number;
   neighbours:Array<Square>;
@@ -25,51 +27,30 @@ export class Square {
   static buildDistance:number = 2;
 
   // distanceLabel:Phaser.Text;
-  constructor(game:MainGame, j:number, i:number, squareType:SQUARETYPES){
+  constructor(game:MainGame, j:number, i:number){
     this.buildingType = -1;
     this.resource = null;
     this.building = null;
-    this.squareType = squareType;
+    this.squareType = -1;
     this.purchased = false;
     this.visited = false;
     this.revealed = false;
     this.game = game;
-    this.x = j;
-    this.y = i;
+    this.j = j;
+    this.i = i;
     this.neighbours = [null, null, null, null, null, null];
     let hexagonX = game.hexagonWidth * (j + 1/2* (i % 2));
     let hexagonY = (game.hexagonHeight / 4 * 3) * i;
+    this.x = hexagonX;
+    this.y = hexagonY;
 
-    let center = game.game.add.sprite(hexagonX, hexagonY, 'tiles', SQUARESTRINGLIST[squareType] + '.png');
     let blueborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', "blueborder.png");
     let redborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', "redborder.png");
     this.borders = [blueborder, redborder];
-    this.center = center;
-    center.visible = false;
     blueborder.visible = false;
     redborder.visible = false;
-    game.squareLayer.add(center);
     game.borderLayer.add(blueborder);
     game.borderLayer.add(redborder);
-    if(this.squareType === SQUARETYPES.Plains){
-      this.setResource(RESOURCES.Horse);
-    }
-    if(this.squareType === SQUARETYPES.Forest){
-      this.setResource(RESOURCES.Stone);
-    }
-    if(this.squareType === SQUARETYPES.Mountain){
-      let rnd = Math.floor(Math.random() * 100);
-      let coalPercentage = 10;
-      let copperPercentage = 10;
-      let ironPercentage = 10;
-      if (rnd < coalPercentage) {
-        this.setResource(RESOURCES.Coal);
-      } else if (rnd < coalPercentage + copperPercentage) {
-        this.setResource(RESOURCES.Copper);
-      } else if (rnd < coalPercentage + copperPercentage + ironPercentage) {
-        this.setResource(RESOURCES.Iron);
-      }
-    }
 
     /*this.distanceLabel = game.game.add.text(hexagonX + 30, hexagonY + 30, "-1", { font: "14px Arial", fill: "#FF0000", align: "center" });
     this.distanceLabel.visible = true;
@@ -78,9 +59,12 @@ export class Square {
 
   setType(squareType:SQUARETYPES):void {
     let old = this.center;
-    this.center = this.game.game.add.sprite(old.x,old.y, 'tiles', SQUARESTRINGLIST[squareType] + '.png');
+    this.center = this.game.game.add.sprite(this.x,this.y, 'tiles', SQUARESTRINGLIST[squareType] + '.png');
+    this.center.visible = this.revealed;
     this.game.squareLayer.add(this.center);
-    old.destroy();
+    if(old){
+      old.destroy();
+    }
     this.squareType = squareType;
   }
 
@@ -121,7 +105,7 @@ export class Square {
   }
 
   reveal():void{
-    if(!this.revealed){
+    // if(!this.revealed){
       this.revealed = true;
       this.center.visible = true;
       this.borders[0].visible = true;
@@ -131,7 +115,7 @@ export class Square {
       if(this.buildingSprite != null){
         this.buildingSprite.visible = true;
       }
-    }
+    // }
   }
 
   revealNeighbours(){
@@ -177,27 +161,39 @@ export class Square {
       "revealed": this.revealed, // boolean
       "squareType": this.squareType, // SQUARETYPES (enum)
       "resourceType": this.resourceType, // RESOURCES (enum)
-      "building": this.building, // Building
+      // "building": this.building, // Building
       "buildingType": this.buildingType // BUILDINGS (enum)
     };
   }
 
+  reset():void{
+    this.buildingType = -1;
+    this.squareType = -1;
+    this.resource = null;
+    this.building = null;
+  }
+
   set(data:object):void {
     this.squareType = data["squareType"];
-    console.log(SQUARESTRINGLIST[data["squareType"]] + '.png');
-    this.center.loadTexture(SQUARESTRINGLIST[data["squareType"]] + '.png');
+    this.setType(data["squareType"]);
+
+    this.center.visible = false;
+    // this.center.loadTexture(SQUARESTRINGLIST[data["squareType"]] + '.png');
+    if (data["resourceType"] !== undefined && data["resourceType"] !== -1) {
+      this.setResource(data["resourceType"]);
+    }
+    // this.building = data["building"];
+    // this.buildingType = data["buildingType"];
+    if(data["buildingType"] !== -1){
+      this.addBuilding(data["buildingType"]);
+    }
     if (data["purchased"]) {
       this.purchased = true;
-      this.revealNeighbours();
+      // this.revealNeighbours();
     }
     if (data["revealed"]) {
       this.reveal();
     }
-    if (data["resourceType"] !== -1) {
-      this.setResource(data["resourceType"]);
-    }
-    this.building = data["building"];
-    this.buildingType = data["buildingType"];
   }
 
 }

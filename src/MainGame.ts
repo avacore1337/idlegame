@@ -5,8 +5,9 @@ import { TechList } from "./TechTree";
 import { MaterialContainer } from "./MaterialContainer";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
+import { newGame } from "./gameStart"
 import { loadMap, loadMaterials, saveGame, resetSave } from "./SaveHandler";
-import { DIRECTIONS, MATERIALS, MATERIALSTRINGLIST, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
+import { DIRECTIONS, MATERIALS, MATERIALSTRINGLIST, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES, RESOURCES } from "./Constants";
 
 export class MainGame {
 
@@ -447,14 +448,37 @@ export class MainGame {
     this.hexagonGroup.add(this.buildingLayer);
     for (let i = 0; i < this.gridSizeY; i++) {
       for (let j = 0; j < this.gridSizeX; j++) {
-        let rnd = Math.floor((Math.random() * (SQUARETYPELIST.length - 1))); //not including base
-        let square:Square = new Square(this, j, i, SQUARETYPELIST[rnd]);
+        let square:Square = new Square(this, j, i);
         this.hexMatrix[i].push(square);
         let theSquare = square;
         let newCenter = square.center;
-        let toggled = true;
-        newCenter.inputEnabled = true;
-        newCenter.events.onInputUp.add(function() {
+      }
+    }
+
+    for (let i = 0; i < this.gridSizeX; i++) {
+      for (let j = 0; j < this.gridSizeY; j++) {
+          let offset = (i)%2;
+          this.linkHexes(this.hexMatrix[i][j], i - 1, j - 1 + offset, 0);
+          this.linkHexes(this.hexMatrix[i][j], i - 1, j + offset, 1);
+          this.linkHexes(this.hexMatrix[i][j], i, j + 1, 2);
+      }
+    }
+
+    this.needsupdate = true;
+    if (localStorage.getItem("map") !== null) {
+      console.log("Loading old game")
+      loadMap(this);
+    }
+    else{
+      console.log("making new game")
+      newGame(this);
+    }
+
+    for (let i = 0; i < this.gridSizeY; i++) {
+      for (let j = 0; j < this.gridSizeX; j++) {
+        let theSquare = this.hexMatrix[i][j];
+        theSquare.center.inputEnabled = true;
+        theSquare.center.events.onInputUp.add(function() {
           self.needsupdate = true;
           // You own the tile, you wish to build, the tile-type is allowed, you can afford it, TODO (no other building exist on the tile)
           if (theSquare.purchased && self.state === "building" && BUILDINGCLASSES[self.option].canBuild(theSquare) && self.materialContainer.materials.isSubset(BUILDINGCLASSES[self.option].getRequiredMaterials())) {
@@ -467,15 +491,6 @@ export class MainGame {
             theSquare.revealNeighbours();
           }
         });
-      }
-    }
-
-    for (let i = 0; i < this.gridSizeX; i++) {
-      for (let j = 0; j < this.gridSizeY; j++) {
-          let offset = (i)%2;
-          this.linkHexes(this.hexMatrix[i][j], i - 1, j - 1 + offset, 0);
-          this.linkHexes(this.hexMatrix[i][j], i - 1, j + offset, 1);
-          this.linkHexes(this.hexMatrix[i][j], i, j + 1, 2);
       }
     }
     let centerX = Math.floor(this.gridSizeX/2);
@@ -513,8 +528,6 @@ export class MainGame {
       currentTiles = nextTiles;
       nextTiles = [];
     }
-
-    //loadMap(this);
   }
 
   onRender():void {

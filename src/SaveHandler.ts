@@ -22,6 +22,7 @@ export function loadMap(game:MainGame):void{
       let tmp:Array<Array<object>> = JSON.parse(map);
       for (var y = 0; y < tmp.length; y++) {
         for (var x = 0; x < tmp[y].length; x++) {
+          game.hexMatrix[y][x].reset();
           game.hexMatrix[y][x].set(tmp[y][x]);
         }
       }
