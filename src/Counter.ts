@@ -18,7 +18,7 @@ export class Counter<T> {
     else{
       this.values.set(key, amount);
     }
-    return this
+    return this;
   }
 
   get(key:T):number{
@@ -32,7 +32,7 @@ export class Counter<T> {
     else{
       this.values.set(key, -amount);
     }
-    return this
+    return this;
   }
 
   has(key:T):boolean{

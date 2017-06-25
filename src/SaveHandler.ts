@@ -4,7 +4,7 @@ import { CONSTRUCTIONCLASSES, CONSTRUCTIONS } from "./Constants";
 
 export function loadMaterials(game:MainGame):void{
   if (typeof(Storage) !== "undefined") {
-    let materials = localStorage.getItem("materials")
+    let materials = localStorage.getItem("materials");
     if (materials !== null) {
       materials = JSON.parse(materials);
       game.materialContainer = new MaterialContainer(materials);
@@ -18,7 +18,7 @@ export function loadMaterials(game:MainGame):void{
 
 export function loadMap(game:MainGame):void{
   if (typeof(Storage) !== "undefined") {
-    let map = localStorage.getItem("map")
+    let map = localStorage.getItem("map");
     if (map !== null) {
       let tmp:Array<Array<object>> = JSON.parse(map);
       for (var y = 0; y < tmp.length; y++) {

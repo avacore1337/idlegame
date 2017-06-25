@@ -3,8 +3,8 @@ import { Square } from "./Square";
 import { MaterialContainer } from "./MaterialContainer";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
-import { createMenu } from "./menu"
-import { generateHexGroup } from "./hexes"
+import { createMenu } from "./menu";
+import { generateHexGroup } from "./hexes";
 import { loadMaterials } from "./SaveHandler";
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from "./Constants";
 
@@ -74,7 +74,7 @@ export class MainGame {
       let visibleLabels = -1;
       let materials = this.materialContainer.materials;
       let gains = this.materialContainer.getMaterialGains();
-      for (var i = 0; i < MATERIALSTRINGLIST.length; i++) {
+      for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
         let text = MATERIALSTRINGLIST[i] + " " + materials.get(i).toFixed(2);
         text += "  (" + gains.get(i).toFixed(2) + "/s)";
         this.materialLabels[i].setText(text);

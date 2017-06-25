@@ -31,7 +31,7 @@ export const enum MATERIALS {
   Food,
   Length
 }
-export const MATERIALSTRINGLIST = ["Wood", "Clay", "Stone", "Iron", "Brick", "Coal", "Copper", "Research", "Food"]
+export const MATERIALSTRINGLIST = ["Wood", "Clay", "Stone", "Iron", "Brick", "Coal", "Copper", "Research", "Food"];
 
 export const enum SQUARETYPES {
   Plains,
@@ -52,8 +52,8 @@ export const enum EXPONENTS {
   VeryFast = 1.7
 }
 
-export const SQUARETYPELIST = [SQUARETYPES.Plains, SQUARETYPES.Desert, SQUARETYPES.Forest, SQUARETYPES.River, SQUARETYPES.Water, SQUARETYPES.Field, SQUARETYPES.Mountain, SQUARETYPES.Base]
-export const SQUARESTRINGLIST = ["plains", "desert", "forest", "river", "water", "field", "mountain", "base"]
+export const SQUARETYPELIST = [SQUARETYPES.Plains, SQUARETYPES.Desert, SQUARETYPES.Forest, SQUARETYPES.River, SQUARETYPES.Water, SQUARETYPES.Field, SQUARETYPES.Mountain, SQUARETYPES.Base];
+export const SQUARESTRINGLIST = ["plains", "desert", "forest", "river", "water", "field", "mountain", "base"];
 
 export const enum BUILDINGS {
   Lumbermill,
@@ -65,7 +65,7 @@ export const enum BUILDINGS {
   Base,
   Length
 }
-export const BUILDINGCLASSES = [Lumbermill, Claypit, Quary, Mine, Farm, HuntingCamp, Base]
+export const BUILDINGCLASSES = [Lumbermill, Claypit, Quary, Mine, Farm, HuntingCamp, Base];
 
 export const enum CONSTRUCTIONS {
   Library,
@@ -74,7 +74,7 @@ export const enum CONSTRUCTIONS {
   Steelworks,
   Length
 }
-export const CONSTRUCTIONCLASSES = [Library, ToolWorkshop, Kiln, Steelworks]
+export const CONSTRUCTIONCLASSES = [Library, ToolWorkshop, Kiln, Steelworks];
 
 export const enum RESOURCES {
   Stone,
@@ -84,7 +84,7 @@ export const enum RESOURCES {
   Coal,
   Length
 }
-export const RESOURCESTRINGLIST = ["stone", "horse", "copper", "iron", "coal"]
+export const RESOURCESTRINGLIST = ["stone", "horse", "copper", "iron", "coal"];
 
 export const enum MATERIALMULITIPLIERINDEXES {
   ToolWorkshop

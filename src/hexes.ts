@@ -1,6 +1,6 @@
 import { MainGame } from "./MainGame";
 import { Square } from "./Square";
-import { newGame } from "./gameStart"
+import { newGame } from "./gameStart";
 import { loadMap } from "./SaveHandler";
 import { MATERIALS, BUILDINGCLASSES } from "./Constants";
 
@@ -71,11 +71,11 @@ export function generateHexGroup(game:MainGame):void {
   linkAllHexes(game);
 
   if (localStorage.getItem("map") !== null) {
-    console.log("Loading old game")
+    console.log("Loading old game");
     loadMap(game);
   }
   else{
-    console.log("making new game")
+    console.log("making new game");
     newGame(game);
   }
   placeHexes(game);

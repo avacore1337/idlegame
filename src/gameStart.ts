@@ -9,45 +9,45 @@ let start:Array<[SQUARETYPES, number]> = [
   [SQUARETYPES.River, -1],
   [SQUARETYPES.River, RESOURCES.Stone],
   [SQUARETYPES.Plains, RESOURCES.Horse],
-  [SQUARETYPES.Field, -1],]
-let second:Array<[SQUARETYPES, number]> = [] // 6*2 + 6*3 == 30
+  [SQUARETYPES.Field, -1],];
+let second:Array<[SQUARETYPES, number]> = []; // 6*2 + 6*3 == 30
 
 function generateSecond():void {
   for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Forest, RESOURCES.Stone])
+    second.push([SQUARETYPES.Forest, RESOURCES.Stone]);
   }
   for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Forest, -1])
+    second.push([SQUARETYPES.Forest, -1]);
   }
   for (let i = 0; i < 4; i++) {
-    second.push([SQUARETYPES.River, -1])
+    second.push([SQUARETYPES.River, -1]);
   }
   for (let i = 0; i < 4; i++) {
-    second.push([SQUARETYPES.Water, -1])
+    second.push([SQUARETYPES.Water, -1]);
   }
   for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Desert, RESOURCES.Stone])
+    second.push([SQUARETYPES.Desert, RESOURCES.Stone]);
   }
   for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Desert, -1])
+    second.push([SQUARETYPES.Desert, -1]);
   }
   for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Plains, -1])
+    second.push([SQUARETYPES.Plains, -1]);
   }
   for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Plains, RESOURCES.Horse])
+    second.push([SQUARETYPES.Plains, RESOURCES.Horse]);
   }
   for (let i = 0; i < 4; i++) {
-    second.push([SQUARETYPES.Field, -1])
+    second.push([SQUARETYPES.Field, -1]);
   }
   for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Mountain, RESOURCES.Copper])
+    second.push([SQUARETYPES.Mountain, RESOURCES.Copper]);
   }
   for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Mountain, RESOURCES.Iron])
+    second.push([SQUARETYPES.Mountain, RESOURCES.Iron]);
   }
   for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Mountain, RESOURCES.Coal])
+    second.push([SQUARETYPES.Mountain, RESOURCES.Coal]);
   }
   shuffle(second);
 }
@@ -66,7 +66,7 @@ export function newGame(game:MainGame):void {
       square.reset();
       if(square.distance === 0){
         square.setType(SQUARETYPES.Base);
-        square.addBuilding(BUILDINGS.Base)
+        square.addBuilding(BUILDINGS.Base);
       }
       else if(square.distance <= 1){
         setSquare(square, start.pop());

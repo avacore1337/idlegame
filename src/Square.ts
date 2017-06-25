@@ -85,7 +85,7 @@ export class Square {
       if(this.game.state === "building" && this.purchased && this.building === null){
         if(BUILDINGCLASSES[this.game.option].canBuild(this)){
           highlight = true;
-        };
+        }
       }
       if(highlight){
         this.borders[0].visible = false;
@@ -184,7 +184,7 @@ export class Square {
     if (data["revealed"]) {
       this.reveal();
     }
-    this.distance = data["distance"]
+    this.distance = data["distance"];
   }
 /* tslint:enable:no-string-literal */
 
