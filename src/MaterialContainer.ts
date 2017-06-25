@@ -1,6 +1,4 @@
 import { Counter } from "./Counter";
-// import { Building } from "./buildings/AllBuildings";
-// import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from "./Constants";
 import {FACTORAMOUNT, MATERIALSTRINGLIST, MATERIALS} from "./Constants";
 
 export class MaterialContainer {
@@ -17,7 +15,7 @@ export class MaterialContainer {
         this.materialGainBase.add(i, 0);
     }
     if (pre) {
-      for (var property in pre) {
+      for (const property in pre) {
         this.materials.add(parseInt(property), parseFloat(pre[property]));
       }
     } else {
@@ -36,12 +34,12 @@ export class MaterialContainer {
   }
 
   gainMaterialsFraction(fraction:number):void{
-    let gain = this.getMaterialGains();
+    const gain = this.getMaterialGains();
     this.materials = this.materials.addOther(gain.divideAll(fraction));
   }
 
   getMaterialGains():Counter<MATERIALS>{
-    let gain = new Counter(this.materialGainBase);
+    const gain = new Counter(this.materialGainBase);
     for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
       for (let j = 0; j < FACTORAMOUNT; j++) {
         gain.multiply(i, this.materialGainFactors[i][j]);

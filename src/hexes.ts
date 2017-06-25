@@ -9,7 +9,7 @@ function linkHexes(game:MainGame, square:Square, i:number, j:number, index:numbe
     return;
   }
   else{
-    let otherSquare = game.hexMatrix[i][j];
+    const otherSquare = game.hexMatrix[i][j];
     square.neighbours[index] = otherSquare;
     otherSquare.neighbours[(index + 3) % 6] = square;
   }
@@ -18,7 +18,7 @@ function linkHexes(game:MainGame, square:Square, i:number, j:number, index:numbe
 function generateSquares(game:MainGame){
   for (let i = 0; i < game.gridSizeY; i++) {
     for (let j = 0; j < game.gridSizeX; j++) {
-      let square:Square = new Square(game, j, i);
+      const square:Square = new Square(game, j, i);
       game.hexMatrix[i].push(square);
     }
   }
@@ -27,7 +27,7 @@ function generateSquares(game:MainGame){
 function linkAllHexes(game:MainGame){
   for (let i = 0; i < game.gridSizeX; i++) {
     for (let j = 0; j < game.gridSizeY; j++) {
-        let offset = (i)%2;
+        const offset = (i)%2;
         linkHexes(game, game.hexMatrix[i][j], i - 1, j - 1 + offset, 0);
         linkHexes(game, game.hexMatrix[i][j], i - 1, j + offset, 1);
         linkHexes(game, game.hexMatrix[i][j], i, j + 1, 2);
@@ -38,7 +38,7 @@ function linkAllHexes(game:MainGame){
 function placeHexes(game:MainGame){
   for (let i = 0; i < game.gridSizeY; i++) {
     for (let j = 0; j < game.gridSizeX; j++) {
-      let theSquare = game.hexMatrix[i][j];
+      const theSquare = game.hexMatrix[i][j];
       theSquare.center.inputEnabled = true;
       theSquare.center.events.onInputUp.add(function() {
         game.needsupdate = true;

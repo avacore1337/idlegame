@@ -9,41 +9,41 @@ export let TechList = [];
 function enableQuary(){
   Quary.enabled = true;
 }
-let quaring = new TechNode("Quaring", [], 15, enableQuary);
+const quaring = new TechNode("Quaring", [], 15, enableQuary);
 TechList.push(quaring);
 
 function enableMine(){
   Mine.enabled = true;
 }
-let mining = new TechNode("Mining", [quaring], 50, enableMine);
+const mining = new TechNode("Mining", [quaring], 50, enableMine);
 TechList.push(mining);
 
 function enableToolWorkshop(){
   ToolWorkshop.enabled = true;
 }
-let tooling = new TechNode("Tooling", [quaring], 50, enableToolWorkshop);
+const tooling = new TechNode("Tooling", [quaring], 50, enableToolWorkshop);
 TechList.push(tooling);
 
 function enableKiln(){
   Kiln.enabled = true;
 }
-let burning = new TechNode("Burning", [quaring], 50, enableKiln);
+const burning = new TechNode("Burning", [quaring], 50, enableKiln);
 TechList.push(burning);
 
 function enableSteelworks(){
   Steelworks.enabled = true;
 }
-let steelmaking = new TechNode("Steelmaking", [mining, burning], 100, enableSteelworks);
+const steelmaking = new TechNode("Steelmaking", [mining, burning], 100, enableSteelworks);
 TechList.push(steelmaking);
 
 function enableTorch(){
   Square.buildDistance++;
 }
-let torch = new TechNode("Torch", [burning, tooling], 100, enableTorch);
+const torch = new TechNode("Torch", [burning, tooling], 100, enableTorch);
 TechList.push(torch);
 
 function enableRoads(){
   Square.buildDistance += 2;
 }
-let roads = new TechNode("Roads", [mining], 100, enableRoads);
+const roads = new TechNode("Roads", [mining], 100, enableRoads);
 TechList.push(roads);

@@ -21,7 +21,7 @@ export class Mine extends Building {
   }
 
   generateMaterials():Counter<MATERIALS>{
-    let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
+    const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     if(this.square.resourceType === RESOURCES.Copper){
       counter.add(MATERIALS.Copper, 1);
     }
@@ -35,7 +35,7 @@ export class Mine extends Building {
   }
 
   static getRequiredMaterials():Counter<MATERIALS>{
-    let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
+    const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 30);
     counter.add(MATERIALS.Clay, 15);
     return counter.multiplyAll(Math.pow(EXPONENTS.Medium, this.amount));

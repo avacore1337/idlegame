@@ -17,7 +17,7 @@ export class TechNode{
     if (this.researched) {
       return false;
     }
-    for (let tech of this.requires) {
+    for (const tech of this.requires) {
       if(!tech.researched){
         return false;
       }

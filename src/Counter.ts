@@ -5,7 +5,7 @@ export class Counter<T> {
   constructor(other?:Counter<T>) {
     this.values = new Map<T, number>();
     if(other){
-      for (let key of other.values.keys()) {
+      for (const key of other.values.keys()) {
         this.values.set(key, other.values.get(key));
       }
     }
@@ -40,24 +40,24 @@ export class Counter<T> {
   }
 
   addOther(other:Counter<T>):Counter<T>{
-    let newCounter = new Counter<T>(this);
-    for (let key of other.values.keys()) {
+    const newCounter = new Counter<T>(this);
+    for (const key of other.values.keys()) {
       newCounter.add(key, other.values.get(key));
     }
     return newCounter;
   }
 
   subtractOther(other:Counter<T>):Counter<T>{
-    let newCounter = new Counter<T>(this);
-    for (let key of other.values.keys()) {
+    const newCounter = new Counter<T>(this);
+    for (const key of other.values.keys()) {
       newCounter.subtract(key, other.values.get(key));
     }
     return newCounter;
   }
 
   positive():Counter<T>{
-    let newCounter = new Counter<T>();
-    for (let key of this.values.keys()) {
+    const newCounter = new Counter<T>();
+    for (const key of this.values.keys()) {
       if(this.values.get(key) > 0){
         newCounter.values.set(key, this.values.get(key));
       }
@@ -66,16 +66,16 @@ export class Counter<T> {
   }
 
   divideAll(divisor:number):Counter<T>{
-    let newCounter = new Counter<T>();
-    for (let key of this.values.keys()) {
+    const newCounter = new Counter<T>();
+    for (const key of this.values.keys()) {
       newCounter.values.set(key, this.values.get(key)/divisor);
     }
     return newCounter;
   }
 
   negative():Counter<T>{
-    let newCounter = new Counter<T>();
-    for (let key of this.values.keys()) {
+    const newCounter = new Counter<T>();
+    for (const key of this.values.keys()) {
       if(this.values.get(key) < 0){
         newCounter.values.set(key, this.values.get(key));
       }
@@ -84,7 +84,7 @@ export class Counter<T> {
   }
 
   isSubset(other:Counter<T>):boolean{
-    for (let key of other.values.keys()) {
+    for (const key of other.values.keys()) {
       if(!this.values.has(key) || this.values.get(key) < other.values.get(key)){
         return false;
       }
@@ -94,7 +94,7 @@ export class Counter<T> {
 
   toString():string{
     let ret:string = "";
-    for (let key of this.values.keys()){
+    for (const key of this.values.keys()){
       ret += key + ": " + this.values.get(key) + "\n";
     }
     return ret;
@@ -102,7 +102,7 @@ export class Counter<T> {
 
   toJSON():string{
     let ret:string = "{";
-    for (let key of this.values.keys()){
+    for (const key of this.values.keys()){
       ret += '"' + key + '":"' + this.values.get(key) + '", ';
     }
     if (ret.length === 1) {
@@ -112,8 +112,8 @@ export class Counter<T> {
   }
 
   multiplyAll(multiplier:number):Counter<T>{
-    let newCounter = new Counter<T>();
-    for (let key of this.values.keys()) {
+    const newCounter = new Counter<T>();
+    for (const key of this.values.keys()) {
       newCounter.values.set(key, this.values.get(key)*multiplier);
     }
     return newCounter;

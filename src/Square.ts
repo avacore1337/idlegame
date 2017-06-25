@@ -39,13 +39,13 @@ export class Square {
     this.j = j;
     this.i = i;
     this.neighbours = [null, null, null, null, null, null];
-    let hexagonX = game.hexagonWidth * (j + 1/2* (i % 2));
-    let hexagonY = (game.hexagonHeight / 4 * 3) * i;
+    const hexagonX = game.hexagonWidth * (j + 1/2* (i % 2));
+    const hexagonY = (game.hexagonHeight / 4 * 3) * i;
     this.x = hexagonX;
     this.y = hexagonY;
 
-    let blueborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', "blueborder.png");
-    let redborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', "redborder.png");
+    const blueborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', "blueborder.png");
+    const redborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', "redborder.png");
     this.borders = [blueborder, redborder];
     blueborder.visible = false;
     redborder.visible = false;
@@ -54,7 +54,7 @@ export class Square {
   }
 
   setType(squareType:SQUARETYPES):void {
-    let old = this.center;
+    const old = this.center;
     this.center = this.game.game.add.sprite(this.x,this.y, 'tiles', SQUARESTRINGLIST[squareType] + '.png');
     this.center.visible = this.revealed;
     this.game.squareLayer.add(this.center);

@@ -21,13 +21,13 @@ export class HuntingCamp extends Building {
   }
 
   generateMaterials():Counter<MATERIALS>{
-    let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
+    const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Food, 0.1);
     return counter;
   }
 
   static getRequiredMaterials():Counter<MATERIALS>{
-    let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
+    const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 1);
     // return counter;
     return counter.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));

@@ -17,7 +17,7 @@ export class Library extends Construction {
   }
 
   static generateMaterials():Counter<MATERIALS>{
-    let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
+    const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Research, 0.2*this.amount);
     return counter;
   }
@@ -31,7 +31,7 @@ export class Library extends Construction {
   }
 
   static getRequiredMaterials():Counter<MATERIALS>{
-    let cost = new Counter<MATERIALS>();
+    const cost = new Counter<MATERIALS>();
     cost.add(MATERIALS.Wood, 10);
     cost.add(MATERIALS.Clay, 10);
     return cost.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));

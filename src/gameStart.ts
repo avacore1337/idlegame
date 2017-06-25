@@ -3,14 +3,14 @@ import { MainGame } from "./MainGame";
 import { Square } from "./Square";
 import { shuffle } from "./util";
 
-let start:Array<[SQUARETYPES, number]> = [
+const start:Array<[SQUARETYPES, number]> = [
   [SQUARETYPES.Forest, RESOURCES.Stone],
   [SQUARETYPES.Forest, -1],
   [SQUARETYPES.River, -1],
   [SQUARETYPES.River, RESOURCES.Stone],
   [SQUARETYPES.Plains, RESOURCES.Horse],
-  [SQUARETYPES.Field, -1],];
-let second:Array<[SQUARETYPES, number]> = []; // 6*2 + 6*3 == 30
+  [SQUARETYPES.Field, -1]];
+const second:Array<[SQUARETYPES, number]> = []; // 6*2 + 6*3 == 30
 
 function generateSecond():void {
   for (let i = 0; i < 2; i++) {
@@ -54,15 +54,15 @@ function generateSecond():void {
 
 export function newGame(game:MainGame):void {
   generateSecond();
-  let centerX = Math.floor(game.gridSizeX/2);
-  let centerY = Math.floor(game.gridSizeY/2);
-  let centerHex = game.hexMatrix[centerX][centerY];
+  const centerX = Math.floor(game.gridSizeX/2);
+  const centerY = Math.floor(game.gridSizeY/2);
+  const centerHex = game.hexMatrix[centerX][centerY];
   calculateDistances(game, centerHex);
 
   shuffle(start);
   for (let i = 0; i < game.gridSizeY; i++) {
     for (let j = 0; j < game.gridSizeX; j++) {
-      let square = game.hexMatrix[i][j];
+      const square = game.hexMatrix[i][j];
       square.reset();
       if(square.distance === 0){
         square.setType(SQUARETYPES.Base);
@@ -82,7 +82,7 @@ export function newGame(game:MainGame):void {
   centerHex.purchased = true;
   centerHex.reveal();
   for (let i = 0; i < centerHex.neighbours.length; i++) {
-      let hex = centerHex.neighbours[i];
+      const hex = centerHex.neighbours[i];
       hex.purchased = true;
       hex.reveal();
       hex.revealNeighbours();
@@ -95,7 +95,7 @@ function calculateDistances(game:MainGame, centerHex:Square):void {
   let nextTiles = [];
   while (currentTiles.length > 0) {
     distance++;
-    for (let currentTile of currentTiles) {
+    for (const currentTile of currentTiles) {
       if (currentTile !== null) {
         nextTiles = nextTiles.concat(currentTile.setDistance(distance));
       }
@@ -106,7 +106,7 @@ function calculateDistances(game:MainGame, centerHex:Square):void {
 }
 
 function randomizeHex(square:Square):void {
-  let squareType:SQUARETYPES = Math.floor((Math.random() * (SQUARETYPES.Length - 1))); //not including base
+  const squareType:SQUARETYPES = Math.floor((Math.random() * (SQUARETYPES.Length - 1))); //not including base
   square.squareType = squareType;
   square.setType(squareType);
   if(square.squareType === SQUARETYPES.Plains){
@@ -116,10 +116,10 @@ function randomizeHex(square:Square):void {
     square.setResource(RESOURCES.Stone);
   }
   if(square.squareType === SQUARETYPES.Mountain){
-    let rnd = Math.floor(Math.random() * 100);
-    let coalPercentage = 10;
-    let copperPercentage = 10;
-    let ironPercentage = 10;
+    const rnd = Math.floor(Math.random() * 100);
+    const coalPercentage = 10;
+    const copperPercentage = 10;
+    const ironPercentage = 10;
     if (rnd < coalPercentage) {
       square.setResource(RESOURCES.Coal);
     } else if (rnd < coalPercentage + copperPercentage) {
@@ -132,7 +132,7 @@ function randomizeHex(square:Square):void {
 
 function setSquare(square:Square, data:[SQUARETYPES, number]):void{
   square.setType(data[0]);
-  if(data[1] != -1){
+  if(data[1] !== -1){
     square.setResource(data[1]);
   }
 }

@@ -18,11 +18,11 @@ export function loadMaterials(game:MainGame):void{
 
 export function loadMap(game:MainGame):void{
   if (typeof(Storage) !== "undefined") {
-    let map = localStorage.getItem("map");
+    const map = localStorage.getItem("map");
     if (map !== null) {
-      let tmp:Array<Array<object>> = JSON.parse(map);
-      for (var y = 0; y < tmp.length; y++) {
-        for (var x = 0; x < tmp[y].length; x++) {
+      const tmp:Array<Array<object>> = JSON.parse(map);
+      for (let y = 0; y < tmp.length; y++) {
+        for (let x = 0; x < tmp[y].length; x++) {
           game.hexMatrix[y][x].reset();
           game.hexMatrix[y][x].set(tmp[y][x]);
         }
@@ -40,7 +40,7 @@ export function saveGame(game:MainGame):void{
 }
 
 function getConstructionJSON():string{
-  let constructionData:Array<[CONSTRUCTIONS, number]> = [];
+  const constructionData:Array<[CONSTRUCTIONS, number]> = [];
   for (let construction:CONSTRUCTIONS = 0; construction < CONSTRUCTIONS.Length; construction++) {
     constructionData.push([construction, CONSTRUCTIONCLASSES[construction].amount]);
   }

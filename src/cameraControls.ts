@@ -1,6 +1,6 @@
 export function cameraControls(game:Phaser.Game, cursors:Phaser.CursorKeys, menuGroup:Phaser.Group){
-  let cameramaxX = game.world.width - game.width;
-  let cameramaxY = game.world.height - game.height;
+  const cameramaxX = game.world.width - game.width;
+  const cameramaxY = game.world.height - game.height;
   if (cursors.up.isDown) {
     game.camera.y -= 4;
     menuGroup.y -= 4;

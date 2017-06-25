@@ -29,7 +29,7 @@ export class Steelworks extends Construction {
   }
 
   static getRequiredMaterials():Counter<MATERIALS>{
-    let cost = new Counter<MATERIALS>();
+    const cost = new Counter<MATERIALS>();
     cost.add(MATERIALS.Clay, 10);
     return cost.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));
   }

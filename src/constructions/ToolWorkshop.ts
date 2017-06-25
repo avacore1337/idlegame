@@ -32,7 +32,7 @@ export class ToolWorkshop extends Construction {
   }
 
   static getRequiredMaterials():Counter<MATERIALS>{
-    let cost = new Counter<MATERIALS>();
+    const cost = new Counter<MATERIALS>();
     cost.add(MATERIALS.Stone, 15);
     return cost.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));
   }

@@ -56,8 +56,8 @@ export class MainGame {
     generateHexGroup(this);
     createMenu(this);
 
-    let cameraCenterX = (this.game.world.width - this.game.width)/2;
-    let cameraCenterY = (this.game.world.height - this.game.height)/2;
+    const cameraCenterX = (this.game.world.width - this.game.width)/2;
+    const cameraCenterY = (this.game.world.height - this.game.height)/2;
 
     this.game.camera.x = cameraCenterX;
     this.game.camera.y = cameraCenterY;
@@ -72,8 +72,8 @@ export class MainGame {
     if (this.materialUpdate === 0) {
       this.materialContainer.gainMaterialsFraction(3);
       let visibleLabels = -1;
-      let materials = this.materialContainer.materials;
-      let gains = this.materialContainer.getMaterialGains();
+      const materials = this.materialContainer.materials;
+      const gains = this.materialContainer.getMaterialGains();
       for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
         let text = MATERIALSTRINGLIST[i] + " " + materials.get(i).toFixed(2);
         text += "  (" + gains.get(i).toFixed(2) + "/s)";
@@ -86,7 +86,7 @@ export class MainGame {
           this.materialLabels[i].y += 30 * visibleLabels;
         }
       }
-      for (let c of CONSTRUCTIONCLASSES) {
+      for (const c of CONSTRUCTIONCLASSES) {
         c.doThing(this);
       }
     }
@@ -103,7 +103,7 @@ export class MainGame {
           resourceGain = resourceGain.addOther(this.hexMatrix[y][x].generateMaterials());
         }
       }
-      for (let c of CONSTRUCTIONCLASSES) {
+      for (const c of CONSTRUCTIONCLASSES) {
         resourceGain = resourceGain.addOther(c.generateMaterials());
       }
 

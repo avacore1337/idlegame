@@ -3,6 +3,12 @@
         /*"max-line-length": {
             "options": [120]
         },*/
+        "max-classes-per-file": [
+          true,
+          1
+        ],
+        "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+        "prefer-const": true,
         "new-parens": true,
         "no-arg": true,
         "no-bitwise": true,
@@ -23,6 +29,17 @@
         "no-unused-expression": true,
         "no-unused-variable": true,
         "semicolon": [true, "always"],
+        "triple-equals": [true,"allow-null-check"],
+        "use-isnan": true,
+        "one-variable-per-declaration": true,
+        "quotemark": [true, "single"],
+        "indent": [true, "spaces"],
+        "no-var-keyword": true,
+        "variable-name": [ true,
+                "ban-keywords",
+                "check-format",
+                "allow-pascal-case"
+            ],
         "space-before-function-paren": [
           true,
           {"anonymous": "never",

@@ -20,12 +20,12 @@ export class Base extends Building {
   }
 
   generateMaterials():Counter<MATERIALS>{
-    let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
+    const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     return counter;
   }
 
   static getRequiredMaterials():Counter<MATERIALS>{
-    let counter:Counter<MATERIALS> = new Counter<MATERIALS>();
+    const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     return counter;
   }
 
