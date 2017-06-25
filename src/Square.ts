@@ -26,7 +26,6 @@ export class Square {
 
   static buildDistance:number = 2;
 
-  // distanceLabel:Phaser.Text;
   constructor(game:MainGame, j:number, i:number){
     this.buildingType = -1;
     this.resourceType = -1;
@@ -52,10 +51,6 @@ export class Square {
     redborder.visible = false;
     game.borderLayer.add(blueborder);
     game.borderLayer.add(redborder);
-
-    /*this.distanceLabel = game.game.add.text(hexagonX + 30, hexagonY + 30, "-1", { font: "14px Arial", fill: "#FF0000", align: "center" });
-    this.distanceLabel.visible = true;
-    game.squareLayer.add(this.distanceLabel);*/
   }
 
   setType(squareType:SQUARETYPES):void {
@@ -93,11 +88,9 @@ export class Square {
         };
       }
       if(highlight){
-        // console.log("don't")
         this.borders[0].visible = false;
         this.borders[1].visible = true;
       } else {
-        // console.log("happens")
         this.borders[0].visible = true;
         this.borders[1].visible = false;
       }
@@ -106,17 +99,15 @@ export class Square {
   }
 
   reveal():void{
-    // if(!this.revealed){
-      this.revealed = true;
-      this.center.visible = true;
-      this.borders[0].visible = true;
-      if(this.resource != null){
-        this.resource.visible = true;
-      }
-      if(this.buildingSprite != null){
-        this.buildingSprite.visible = true;
-      }
-    // }
+    this.revealed = true;
+    this.center.visible = true;
+    this.borders[0].visible = true;
+    if(this.resource != null){
+      this.resource.visible = true;
+    }
+    if(this.buildingSprite != null){
+      this.buildingSprite.visible = true;
+    }
   }
 
   revealNeighbours(){
@@ -154,9 +145,6 @@ export class Square {
     }
     this.visited = true;
     this.distance = newDistance;
-
-    //this.distanceLabel.setText("" + newDistance);
-
     return this.neighbours;
   }
 
@@ -178,28 +166,26 @@ export class Square {
     this.building = null;
   }
 
+/* tslint:disable:no-string-literal */
   set(data:object):void {
     this.squareType = data["squareType"];
     this.setType(data["squareType"]);
 
     this.center.visible = false;
-    // this.center.loadTexture(SQUARESTRINGLIST[data["squareType"]] + '.png');
     if (data["resourceType"] !== undefined && data["resourceType"] !== -1) {
       this.setResource(data["resourceType"]);
     }
-    // this.building = data["building"];
-    // this.buildingType = data["buildingType"];
     if(data["buildingType"] !== -1){
       this.addBuilding(data["buildingType"]);
     }
     if (data["purchased"]) {
       this.purchased = true;
-      // this.revealNeighbours();
     }
     if (data["revealed"]) {
       this.reveal();
     }
     this.distance = data["distance"]
   }
+/* tslint:enable:no-string-literal */
 
 }
