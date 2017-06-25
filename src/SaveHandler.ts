@@ -1,5 +1,6 @@
 import { MainGame } from "./MainGame";
 import { MaterialContainer } from "./MaterialContainer";
+import { CONSTRUCTIONCLASSES, CONSTRUCTIONS } from "./Constants";
 
 export function loadMaterials(game:MainGame):void{
   if (typeof(Storage) !== "undefined") {
@@ -34,7 +35,16 @@ export function saveGame(game:MainGame):void{
   if (typeof(Storage) !== "undefined") {
     localStorage.setItem("materials", JSON.stringify(game.materialContainer.materials.toJSON()));
     localStorage.setItem("map", JSON.stringify(game.hexMatrix));
+    localStorage.setItem("constructions", getConstructionJSON());
   }
+}
+
+function getConstructionJSON():string{
+  let constructionData:Array<[CONSTRUCTIONS, number]> = [];
+  for (let construction:CONSTRUCTIONS = 0; construction < CONSTRUCTIONS.Length; construction++) {
+    constructionData.push([construction, CONSTRUCTIONCLASSES[construction].amount]);
+  }
+  return JSON.stringify(constructionData);
 }
 
 export function resetSave():void{

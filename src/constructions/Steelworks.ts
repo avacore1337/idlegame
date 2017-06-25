@@ -1,6 +1,5 @@
-import { Square } from "../Square";
 import { Construction } from "./Construction";
-import { SQUARETYPES, MATERIALS, EXPONENTS } from "../Constants";
+import { MATERIALS, EXPONENTS } from "../Constants";
 import { Counter } from "../Counter";
 import { MainGame } from "../MainGame";
 
@@ -19,7 +18,7 @@ export class Steelworks extends Construction {
 
   static doThing(game:MainGame):void {
   }
-  
+
   static generateMaterials():Counter<MATERIALS>{
     return new Counter<MATERIALS>();
   }

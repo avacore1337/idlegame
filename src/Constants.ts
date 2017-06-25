@@ -28,7 +28,8 @@ export const enum MATERIALS {
   Coal,
   Copper,
   Research,
-  Food
+  Food,
+  Length
 }
 export const MATERIALSTRINGLIST = ["Wood", "Clay", "Stone", "Iron", "Brick", "Coal", "Copper", "Research", "Food"]
 
@@ -40,7 +41,8 @@ export const enum SQUARETYPES {
   Water,
   Field,
   Mountain,
-  Base
+  Base,
+  Length
 }
 
 export const enum EXPONENTS {
@@ -60,7 +62,8 @@ export const enum BUILDINGS {
   Mine,
   Farm,
   HuntingCamp,
-  Base
+  Base,
+  Length
 }
 export const BUILDINGCLASSES = [Lumbermill, Claypit, Quary, Mine, Farm, HuntingCamp, Base]
 
@@ -68,7 +71,8 @@ export const enum CONSTRUCTIONS {
   Library,
   ToolWorkshop,
   Kiln,
-  Steelworks
+  Steelworks,
+  Length
 }
 export const CONSTRUCTIONCLASSES = [Library, ToolWorkshop, Kiln, Steelworks]
 
@@ -77,7 +81,8 @@ export const enum RESOURCES {
   Horse,
   Copper,
   Iron,
-  Coal
+  Coal,
+  Length
 }
 export const RESOURCESTRINGLIST = ["stone", "horse", "copper", "iron", "coal"]
 

@@ -1,13 +1,12 @@
 import { Counter } from "./Counter";
 import { Square } from "./Square";
-import { Building } from "./buildings/AllBuildings";
 import { MaterialContainer } from "./MaterialContainer";
 import { resourceLoader } from "./resourceLoader";
 import { cameraControls } from "./cameraControls";
 import { createMenu } from "./menu"
 import { generateHexGroup } from "./hexes"
-import { loadMap, loadMaterials, saveGame, resetSave } from "./SaveHandler";
-import { DIRECTIONS, MATERIALS, MATERIALSTRINGLIST, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES, RESOURCES } from "./Constants";
+import { loadMaterials } from "./SaveHandler";
+import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from "./Constants";
 
 export class MainGame {
 
@@ -34,7 +33,6 @@ export class MainGame {
   materialLabels:Phaser.Text[]; // TODO ; These should not be here I don't think
 
   constructor(theGame:Phaser.Game) {
-    loadMaterials(this);
     this.materialLabels = [];
     this.materialUpdate = 0;
     this.state = "";
@@ -51,7 +49,7 @@ export class MainGame {
   }
 
   onCreate():void {
-    let self = this;
+    loadMaterials(this);
     this.game.stage.backgroundColor = "#ffffff";
     this.game.world.setBounds(0, 0, 1600, 1600);
     this.cursors = this.game.input.keyboard.createCursorKeys();

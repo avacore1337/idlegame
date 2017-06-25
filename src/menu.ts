@@ -1,6 +1,6 @@
 import { MainGame } from "./MainGame";
-import { DIRECTIONS, MATERIALS, MATERIALSTRINGLIST, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES, RESOURCES } from "./Constants";
-import { loadMap, loadMaterials, saveGame, resetSave } from "./SaveHandler";
+import { MATERIALSTRINGLIST, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
+import { saveGame, resetSave } from "./SaveHandler";
 import { TechList } from "./TechTree";
 
 function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any{
@@ -89,7 +89,6 @@ export function createMenu(game:MainGame):void{
   game.menuGroup.y = 0;
 
   let style = { font: "14px Arial", fill: "#000000", align: "center" };
-  let style2 = { font: "14px Arial", fill: "#000000", align: "left" };
 
   let topMenu = game.game.add.group();
   let topSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
@@ -109,7 +108,7 @@ export function createMenu(game:MainGame):void{
   game.menuGroup.add(buildingGroup);
   buildingGroup.visible = true;
   let startingButtons = 0;
-  for (let index = 0; index < BUILDINGCLASSES.length; index++) {
+  for (let index = 0; index < BUILDINGS.Length; index++) {
     let b = BUILDINGCLASSES[index];
     let bgroup = game.game.add.group();
     buildingGroup.add(bgroup);
@@ -164,7 +163,7 @@ export function createMenu(game:MainGame):void{
   townBuildingGroup.visible = false;
   let buttons2 = [];
   startingButtons = 0;
-  for (let index = 0; index < CONSTRUCTIONCLASSES.length; index++) {
+  for (let index = 0; index < CONSTRUCTIONS.Length; index++) {
     let c = CONSTRUCTIONCLASSES[index];
     let cgroup = game.game.add.group();
     cgroup.visible = false;
@@ -227,7 +226,7 @@ export function createMenu(game:MainGame):void{
 
         // Update what building-buttons should be visible
         let visibleButtons = 0;
-        for (let index = 0; index < BUILDINGCLASSES.length; index++) {
+        for (let index = 0; index < BUILDINGS.Length; index++) {
           if (BUILDINGCLASSES[index].isEnabled()) {
             visibleButtons++;
             buttons1[index].group.y = 25 * visibleButtons;
@@ -239,7 +238,7 @@ export function createMenu(game:MainGame):void{
 
         // Update what townBuilding-buttons should be visible
         visibleButtons = 0;
-        for (let index = 0; index < CONSTRUCTIONCLASSES.length; index++) {
+        for (let index = 0; index < CONSTRUCTIONS.Length; index++) {
           if (CONSTRUCTIONCLASSES[index].isEnabled()) {
             visibleButtons++;
             buttons2[index].group.y = 25 * visibleButtons;

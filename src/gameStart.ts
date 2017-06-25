@@ -1,4 +1,4 @@
-import { SQUARETYPES, SQUARETYPELIST ,RESOURCES, BUILDINGS, BUILDINGCLASSES } from "./Constants";
+import { SQUARETYPES ,RESOURCES, BUILDINGS } from "./Constants";
 import { MainGame } from "./MainGame";
 import { Square } from "./Square";
 import { shuffle } from "./util";
@@ -106,7 +106,7 @@ function calculateDistances(game:MainGame, centerHex:Square):void {
 }
 
 function randomizeHex(square:Square):void {
-  let squareType:SQUARETYPES = Math.floor((Math.random() * (SQUARETYPELIST.length - 1))); //not including base
+  let squareType:SQUARETYPES = Math.floor((Math.random() * (SQUARETYPES.Length - 1))); //not including base
   square.squareType = squareType;
   square.setType(squareType);
   if(square.squareType === SQUARETYPES.Plains){

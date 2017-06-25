@@ -1,8 +1,8 @@
 import { MainGame } from "./MainGame";
 import { Square } from "./Square";
 import { newGame } from "./gameStart"
-import { loadMap, loadMaterials, saveGame, resetSave } from "./SaveHandler";
-import { DIRECTIONS, MATERIALS, MATERIALSTRINGLIST, SQUARETYPES, SQUARETYPELIST , BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES, RESOURCES } from "./Constants";
+import { loadMap } from "./SaveHandler";
+import { MATERIALS, BUILDINGCLASSES } from "./Constants";
 
 function linkHexes(game:MainGame, square:Square, i:number, j:number, index:number){
   if(i < 0 || i >= game.gridSizeX || j < 0 || j >= game.gridSizeY){
@@ -20,8 +20,6 @@ function generateSquares(game:MainGame){
     for (let j = 0; j < game.gridSizeX; j++) {
       let square:Square = new Square(game, j, i);
       game.hexMatrix[i].push(square);
-      let theSquare = square;
-      let newCenter = square.center;
     }
   }
 }

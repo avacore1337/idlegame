@@ -1,4 +1,3 @@
-import { MainGame } from "./MainGame";
 import { Counter } from "./Counter";
 // import { Building } from "./buildings/AllBuildings";
 // import { DIRECTIONS, MATERIALS, SQUARETYPES, SQUARETYPELIST, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from "./Constants";

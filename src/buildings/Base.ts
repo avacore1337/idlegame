@@ -1,6 +1,6 @@
 import { Square } from "../Square";
 import { Building } from "./Building";
-import { SQUARETYPES, MATERIALS, EXPONENTS} from "../Constants";
+import { MATERIALS} from "../Constants";
 import { Counter } from "../Counter";
 
 export class Base extends Building {

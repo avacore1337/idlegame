@@ -1,6 +1,5 @@
-import { Square } from "../Square";
 import { Construction } from "./Construction";
-import { SQUARETYPES, MATERIALS, EXPONENTS } from "../Constants";
+import { MATERIALS, EXPONENTS } from "../Constants";
 import { Counter } from "../Counter";
 import { MainGame } from "../MainGame";
 
