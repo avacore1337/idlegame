@@ -1,7 +1,7 @@
-import { SQUARETYPES ,RESOURCES, BUILDINGS } from "./Constants";
-import { MainGame } from "./MainGame";
-import { Square } from "./Square";
-import { shuffle } from "./util";
+import { SQUARETYPES ,RESOURCES, BUILDINGS } from './Constants';
+import { MainGame } from './MainGame';
+import { Square } from './Square';
+import { shuffle } from './util';
 
 const start:Array<[SQUARETYPES, number]> = [
   [SQUARETYPES.Forest, RESOURCES.Stone],

@@ -1,12 +1,12 @@
-import { Square } from "../Square";
-import { Building } from "./Building";
-import { MATERIALS} from "../Constants";
-import { Counter } from "../Counter";
+import { Square } from '../Square';
+import { Building } from './Building';
+import { MATERIALS} from '../Constants';
+import { Counter } from '../Counter';
 
 export class Base extends Building {
   static enabled:boolean = false;
-  static title:string = "Base";
-  static spriteName:string = "building";
+  static title:string = 'Base';
+  static spriteName:string = 'building';
   static allowedTerrains = [];
   static neededResources = [];
   static amount:number = 0;

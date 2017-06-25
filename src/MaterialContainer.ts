@@ -1,5 +1,5 @@
-import { Counter } from "./Counter";
-import {FACTORAMOUNT, MATERIALSTRINGLIST, MATERIALS} from "./Constants";
+import { Counter } from './Counter';
+import {FACTORAMOUNT, MATERIALSTRINGLIST, MATERIALS} from './Constants';
 
 export class MaterialContainer {
 

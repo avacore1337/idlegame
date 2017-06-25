@@ -1,12 +1,12 @@
-import { Square } from "../Square";
-import { Building } from "./Building";
-import { SQUARETYPES, MATERIALS, RESOURCES, EXPONENTS } from "../Constants";
-import { Counter } from "../Counter";
+import { Square } from '../Square';
+import { Building } from './Building';
+import { SQUARETYPES, MATERIALS, RESOURCES, EXPONENTS } from '../Constants';
+import { Counter } from '../Counter';
 
 export class Mine extends Building {
   static enabled:boolean = false;
-  static title:string = "Mine";
-  static spriteName:string = "mine";
+  static title:string = 'Mine';
+  static spriteName:string = 'mine';
   static allowedTerrains = [SQUARETYPES.Mountain];
   static neededResources = [RESOURCES.Copper, RESOURCES.Iron, RESOURCES.Coal];
   static amount:number = 0;

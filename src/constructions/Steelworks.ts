@@ -1,11 +1,11 @@
-import { Construction } from "./Construction";
-import { MATERIALS, EXPONENTS } from "../Constants";
-import { Counter } from "../Counter";
-import { MainGame } from "../MainGame";
+import { Construction } from './Construction';
+import { MATERIALS, EXPONENTS } from '../Constants';
+import { Counter } from '../Counter';
+import { MainGame } from '../MainGame';
 
 export class Steelworks extends Construction {
   static enabled:boolean = false;
-  static title:string = "Steelworks";
+  static title:string = 'Steelworks';
   static amount:number = 0;
 
   constructor(){

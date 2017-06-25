@@ -1,12 +1,12 @@
-import { Square } from "../Square";
-import { Building } from "./Building";
-import { SQUARETYPES, MATERIALS, EXPONENTS } from "../Constants";
-import { Counter } from "../Counter";
+import { Square } from '../Square';
+import { Building } from './Building';
+import { SQUARETYPES, MATERIALS, EXPONENTS } from '../Constants';
+import { Counter } from '../Counter';
 
 export class Lumbermill extends Building {
   static enabled:boolean = true;
-  static title:string = "Lumbermill";
-  static spriteName:string = "factory";
+  static title:string = 'Lumbermill';
+  static spriteName:string = 'factory';
   static allowedTerrains = [SQUARETYPES.Forest];
   static neededResources = [];
   static amount:number = 0;

@@ -1,7 +1,7 @@
-import { MainGame } from "./MainGame";
-import { Counter } from "./Counter";
-import { Building } from "./buildings/AllBuildings";
-import { MATERIALS, SQUARETYPES, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from "./Constants";
+import { MainGame } from './MainGame';
+import { Counter } from './Counter';
+import { Building } from './buildings/AllBuildings';
+import { MATERIALS, SQUARETYPES, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from './Constants';
 
 export class Square {
   borders:Phaser.Sprite[];
@@ -44,8 +44,8 @@ export class Square {
     this.x = hexagonX;
     this.y = hexagonY;
 
-    const blueborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', "blueborder.png");
-    const redborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', "redborder.png");
+    const blueborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', 'blueborder.png');
+    const redborder = game.game.add.sprite(hexagonX, hexagonY, 'tiles', 'redborder.png');
     this.borders = [blueborder, redborder];
     blueborder.visible = false;
     redborder.visible = false;
@@ -77,12 +77,12 @@ export class Square {
   update():void {
     if(this.revealed){
       let highlight = false;
-      if(this.game.state === "buying" && !this.purchased){
+      if(this.game.state === 'buying' && !this.purchased){
         if (this.distance <= Square.buildDistance) {
           highlight = true;
         }
       }
-      if(this.game.state === "building" && this.purchased && this.building === null){
+      if(this.game.state === 'building' && this.purchased && this.building === null){
         if(BUILDINGCLASSES[this.game.option].canBuild(this)){
           highlight = true;
         }
@@ -150,12 +150,12 @@ export class Square {
 
   toJSON():object {
     return {
-      "purchased": this.purchased, // boolean
-      "revealed": this.revealed, // boolean
-      "squareType": this.squareType, // SQUARETYPES (enum)
-      "resourceType": this.resourceType, // RESOURCES (enum)
-      "distance": this.distance, // Building
-      "buildingType": this.buildingType // BUILDINGS (enum)
+      'purchased': this.purchased, // boolean
+      'revealed': this.revealed, // boolean
+      'squareType': this.squareType, // SQUARETYPES (enum)
+      'resourceType': this.resourceType, // RESOURCES (enum)
+      'distance': this.distance, // Building
+      'buildingType': this.buildingType // BUILDINGS (enum)
     };
   }
 
@@ -168,23 +168,23 @@ export class Square {
 
 /* tslint:disable:no-string-literal */
   set(data:object):void {
-    this.squareType = data["squareType"];
-    this.setType(data["squareType"]);
+    this.squareType = data['squareType'];
+    this.setType(data['squareType']);
 
     this.center.visible = false;
-    if (data["resourceType"] !== undefined && data["resourceType"] !== -1) {
-      this.setResource(data["resourceType"]);
+    if (data['resourceType'] !== undefined && data['resourceType'] !== -1) {
+      this.setResource(data['resourceType']);
     }
-    if(data["buildingType"] !== -1){
-      this.addBuilding(data["buildingType"]);
+    if(data['buildingType'] !== -1){
+      this.addBuilding(data['buildingType']);
     }
-    if (data["purchased"]) {
+    if (data['purchased']) {
       this.purchased = true;
     }
-    if (data["revealed"]) {
+    if (data['revealed']) {
       this.reveal();
     }
-    this.distance = data["distance"];
+    this.distance = data['distance'];
   }
 /* tslint:enable:no-string-literal */
 

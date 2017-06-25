@@ -1,11 +1,11 @@
-import { MainGame } from "./MainGame";
-import { MATERIALSTRINGLIST, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from "./Constants";
-import { saveGame, resetSave } from "./SaveHandler";
-import { TechList } from "./TechTree";
+import { MainGame } from './MainGame';
+import { MATERIALSTRINGLIST, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from './Constants';
+import { saveGame, resetSave } from './SaveHandler';
+import { TechList } from './TechTree';
 
 function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any{
-  const style = { font: "14px Arial", fill: "#000000", align: "center" };
-  const style2 = { font: "14px Arial", fill: "#000000", align: "left" };
+  const style = { font: '14px Arial', fill: '#000000', align: 'center' };
+  const style2 = { font: '14px Arial', fill: '#000000', align: 'left' };
   const botSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
   botMenu.add(botSprite);
 
@@ -15,7 +15,7 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
   // -----------------------
   let visibleLabels = -1;
   for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
-    const label:Phaser.Text = game.game.add.text(3, 3, MATERIALSTRINGLIST[i] + " " + game.materialContainer.materials.get(i).toFixed(2), style);
+    const label:Phaser.Text = game.game.add.text(3, 3, MATERIALSTRINGLIST[i] + ' ' + game.materialContainer.materials.get(i).toFixed(2), style);
     label.visible = false;
     if (game.materialContainer.materials.get(i) > 0) {
       visibleLabels++;
@@ -35,20 +35,20 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
   buyButton.visible = true;
   buyButton.inputEnabled = true;
   buyGroup.add(buyButton);
-  const buyText:Phaser.Text = game.game.add.text(250, 3, "Buy", style2);
+  const buyText:Phaser.Text = game.game.add.text(250, 3, 'Buy', style2);
   buyText.visible = true;
   buyGroup.add(buyText);
   // Add functionality to the 'Buy'-button
   buyButton.events.onInputUp.add(function() {
-    if(game.state !== "buying"){
-      game.state = "buying";
+    if(game.state !== 'buying'){
+      game.state = 'buying';
       for (const button of buttons1) {
         button.regular.visible = true;
         button.toggled.visible = false;
       }
     }
     else{
-      game.state = "";
+      game.state = '';
     }
     game.needsupdate = true;
   });
@@ -60,7 +60,7 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
   saveButton.visible = true;
   saveButton.inputEnabled = true;
   saveGroup.add(saveButton);
-  const saveText:Phaser.Text = game.game.add.text(250, 33, "Save game", style2);
+  const saveText:Phaser.Text = game.game.add.text(250, 33, 'Save game', style2);
   saveText.visible = true;
   saveGroup.add(saveText);
   saveButton.events.onInputUp.add(function() {
@@ -74,7 +74,7 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
   resetButton.visible = true;
   resetButton.inputEnabled = true;
   resetGroup.add(resetButton);
-  const resetText:Phaser.Text = game.game.add.text(250, 63, "Reset save", style2);
+  const resetText:Phaser.Text = game.game.add.text(250, 63, 'Reset save', style2);
   resetText.visible = true;
   resetGroup.add(resetText);
   resetButton.events.onInputUp.add(function() {
@@ -88,7 +88,7 @@ export function createMenu(game:MainGame):void{
   game.menuGroup.x = 0;
   game.menuGroup.y = 0;
 
-  const style = { font: "14px Arial", fill: "#000000", align: "center" };
+  const style = { font: '14px Arial', fill: '#000000', align: 'center' };
 
   const topMenu = game.game.add.group();
   const topSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
@@ -103,7 +103,7 @@ export function createMenu(game:MainGame):void{
   // SETUP FOR BUILDINGS
   // -------------------
   const button1 = game.game.add.sprite(0, 0, 'menu', 'button.png');
-  const buildings:Phaser.Text = game.game.add.text(30, 3, "Buildings", style);
+  const buildings:Phaser.Text = game.game.add.text(30, 3, 'Buildings', style);
   const buildingGroup = game.game.add.group();
   game.menuGroup.add(buildingGroup);
   buildingGroup.visible = true;
@@ -136,7 +136,7 @@ export function createMenu(game:MainGame):void{
         button.toggled.visible = false;
       }
       game.option = index;
-      game.state = "building";
+      game.state = 'building';
       bbuttonRegular.visible = false;
       bbuttonClicked.visible = true;
     });
@@ -147,7 +147,7 @@ export function createMenu(game:MainGame):void{
         button.toggled.visible = false;
       }
       game.option = -1;
-      game.state = "";
+      game.state = '';
     });
   }
   game.menuGroup.add(button1);
@@ -157,7 +157,7 @@ export function createMenu(game:MainGame):void{
   // SETUP FOR TOWN BUILDINGS
   // -------------------
   const button2 = game.game.add.sprite(112, 0,'menu', 'button.png');
-  const town:Phaser.Text = game.game.add.text(120, 3, "Town buildings", style);
+  const town:Phaser.Text = game.game.add.text(120, 3, 'Town buildings', style);
   const townBuildingGroup = game.game.add.group();
   game.menuGroup.add(townBuildingGroup);
   townBuildingGroup.visible = false;
@@ -195,7 +195,7 @@ export function createMenu(game:MainGame):void{
   // SETUP FOR RESEARCH
   // -------------------
   const button3 = game.game.add.sprite(224, 0,'menu', 'button.png');
-  const research:Phaser.Text = game.game.add.text(250, 3, "Research", style);
+  const research:Phaser.Text = game.game.add.text(250, 3, 'Research', style);
   const researchGroup = game.game.add.group();
   game.menuGroup.add(researchGroup);
   researchGroup.visible = false;
@@ -271,9 +271,9 @@ export function createMenu(game:MainGame):void{
   button3.inputEnabled = true;
   button1.events.onInputUp.add(function() {
     game.needsupdate = true;
-    if (game.state !== "building") {
+    if (game.state !== 'building') {
       game.option = -1;
-      game.state = "";
+      game.state = '';
     }
     buildingGroup.visible = true;
     townBuildingGroup.visible = false;
@@ -281,9 +281,9 @@ export function createMenu(game:MainGame):void{
   });
   button2.events.onInputUp.add(function() {
     game.needsupdate = true;
-    if (game.state !== "town") {
+    if (game.state !== 'town') {
       game.option = -1;
-      game.state = "";
+      game.state = '';
     }
     buildingGroup.visible = false;
     townBuildingGroup.visible = true;
@@ -295,9 +295,9 @@ export function createMenu(game:MainGame):void{
   });
   button3.events.onInputUp.add(function() {
     game.needsupdate = true;
-    if (game.state !== "research") {
+    if (game.state !== 'research') {
       game.option = -1;
-      game.state = "";
+      game.state = '';
     }
     buildingGroup.visible = false;
     townBuildingGroup.visible = false;

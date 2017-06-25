@@ -1,10 +1,10 @@
-import { MainGame } from "./MainGame";
-import { MaterialContainer } from "./MaterialContainer";
-import { CONSTRUCTIONCLASSES, CONSTRUCTIONS } from "./Constants";
+import { MainGame } from './MainGame';
+import { MaterialContainer } from './MaterialContainer';
+import { CONSTRUCTIONCLASSES, CONSTRUCTIONS } from './Constants';
 
 export function loadMaterials(game:MainGame):void{
-  if (typeof(Storage) !== "undefined") {
-    let materials = localStorage.getItem("materials");
+  if (typeof(Storage) !== 'undefined') {
+    let materials = localStorage.getItem('materials');
     if (materials !== null) {
       materials = JSON.parse(materials);
       game.materialContainer = new MaterialContainer(materials);
@@ -17,8 +17,8 @@ export function loadMaterials(game:MainGame):void{
 }
 
 export function loadMap(game:MainGame):void{
-  if (typeof(Storage) !== "undefined") {
-    const map = localStorage.getItem("map");
+  if (typeof(Storage) !== 'undefined') {
+    const map = localStorage.getItem('map');
     if (map !== null) {
       const tmp:Array<Array<object>> = JSON.parse(map);
       for (let y = 0; y < tmp.length; y++) {
@@ -32,10 +32,10 @@ export function loadMap(game:MainGame):void{
 }
 
 export function saveGame(game:MainGame):void{
-  if (typeof(Storage) !== "undefined") {
-    localStorage.setItem("materials", JSON.stringify(game.materialContainer.materials.toJSON()));
-    localStorage.setItem("map", JSON.stringify(game.hexMatrix));
-    localStorage.setItem("constructions", getConstructionJSON());
+  if (typeof(Storage) !== 'undefined') {
+    localStorage.setItem('materials', JSON.stringify(game.materialContainer.materials.toJSON()));
+    localStorage.setItem('map', JSON.stringify(game.hexMatrix));
+    localStorage.setItem('constructions', getConstructionJSON());
   }
 }
 
@@ -48,8 +48,8 @@ function getConstructionJSON():string{
 }
 
 export function resetSave():void{
-  if (typeof(Storage) !== "undefined") {
-    localStorage.removeItem("materials");
-    localStorage.removeItem("map");
+  if (typeof(Storage) !== 'undefined') {
+    localStorage.removeItem('materials');
+    localStorage.removeItem('map');
   }
 }

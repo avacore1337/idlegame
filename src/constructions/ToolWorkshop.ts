@@ -1,11 +1,11 @@
-import { Construction } from "./Construction";
-import { MATERIALS, EXPONENTS, MATERIALMULITIPLIERINDEXES } from "../Constants";
-import { Counter } from "../Counter";
-import { MainGame } from "../MainGame";
+import { Construction } from './Construction';
+import { MATERIALS, EXPONENTS, MATERIALMULITIPLIERINDEXES } from '../Constants';
+import { Counter } from '../Counter';
+import { MainGame } from '../MainGame';
 
 export class ToolWorkshop extends Construction {
   static enabled:boolean = false;
-  static title:string = "Tool workshop";
+  static title:string = 'Tool workshop';
   static amount:number = 0;
 
   constructor(){

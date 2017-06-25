@@ -1,7 +1,7 @@
 
 export class Counter<T> {
   private values: Map<T, number>;
-  // x.set(5, "woa");
+  // x.set(5, 'woa');
   constructor(other?:Counter<T>) {
     this.values = new Map<T, number>();
     if(other){
@@ -93,22 +93,22 @@ export class Counter<T> {
   }
 
   toString():string{
-    let ret:string = "";
+    let ret:string = '';
     for (const key of this.values.keys()){
-      ret += key + ": " + this.values.get(key) + "\n";
+      ret += key + ': ' + this.values.get(key) + '\n';
     }
     return ret;
   }
 
   toJSON():string{
-    let ret:string = "{";
+    let ret:string = '{';
     for (const key of this.values.keys()){
       ret += '"' + key + '":"' + this.values.get(key) + '", ';
     }
     if (ret.length === 1) {
-      return JSON.parse("{}");
+      return JSON.parse('{}');
     }
-    return JSON.parse(ret.substring(0, ret.length - 2) + "}");
+    return JSON.parse(ret.substring(0, ret.length - 2) + '}');
   }
 
   multiplyAll(multiplier:number):Counter<T>{

@@ -1,7 +1,7 @@
-import { MainGame } from "./MainGame";
+import { MainGame } from './MainGame';
 
 window.onload = () => {
-  console.log("testtesttest2");
+  console.log('testtesttest2');
   const game = new Phaser.Game(1200, 600, Phaser.CANVAS, '', {
     preload: onPreload,
     create: onCreate,

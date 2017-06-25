@@ -1,12 +1,12 @@
-import { Counter } from "./Counter";
-import { Square } from "./Square";
-import { MaterialContainer } from "./MaterialContainer";
-import { resourceLoader } from "./resourceLoader";
-import { cameraControls } from "./cameraControls";
-import { createMenu } from "./menu";
-import { generateHexGroup } from "./hexes";
-import { loadMaterials } from "./SaveHandler";
-import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from "./Constants";
+import { Counter } from './Counter';
+import { Square } from './Square';
+import { MaterialContainer } from './MaterialContainer';
+import { resourceLoader } from './resourceLoader';
+import { cameraControls } from './cameraControls';
+import { createMenu } from './menu';
+import { generateHexGroup } from './hexes';
+import { loadMaterials } from './SaveHandler';
+import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
 
 export class MainGame {
 
@@ -35,7 +35,7 @@ export class MainGame {
   constructor(theGame:Phaser.Game) {
     this.materialLabels = [];
     this.materialUpdate = 0;
-    this.state = "";
+    this.state = '';
     this.needsupdate = false;
     this.game = theGame;
     this.hexMatrix = [];
@@ -50,7 +50,7 @@ export class MainGame {
 
   onCreate():void {
     loadMaterials(this);
-    this.game.stage.backgroundColor = "#ffffff";
+    this.game.stage.backgroundColor = '#ffffff';
     this.game.world.setBounds(0, 0, 1600, 1600);
     this.cursors = this.game.input.keyboard.createCursorKeys();
     generateHexGroup(this);
@@ -75,8 +75,8 @@ export class MainGame {
       const materials = this.materialContainer.materials;
       const gains = this.materialContainer.getMaterialGains();
       for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
-        let text = MATERIALSTRINGLIST[i] + " " + materials.get(i).toFixed(2);
-        text += "  (" + gains.get(i).toFixed(2) + "/s)";
+        let text = MATERIALSTRINGLIST[i] + ' ' + materials.get(i).toFixed(2);
+        text += '  (' + gains.get(i).toFixed(2) + '/s)';
         this.materialLabels[i].setText(text);
         this.materialLabels[i].y = 3;
         this.materialLabels[i].visible = false;

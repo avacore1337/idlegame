@@ -1,12 +1,12 @@
-import { Square } from "../Square";
-import { Building } from "./Building";
-import { SQUARETYPES, MATERIALS, EXPONENTS} from "../Constants";
-import { Counter } from "../Counter";
+import { Square } from '../Square';
+import { Building } from './Building';
+import { SQUARETYPES, MATERIALS, EXPONENTS} from '../Constants';
+import { Counter } from '../Counter';
 
 export class HuntingCamp extends Building {
   static enabled:boolean = true;
-  static title:string = "Hunting camp";
-  static spriteName:string = "factory";
+  static title:string = 'Hunting camp';
+  static spriteName:string = 'factory';
   static allowedTerrains = [SQUARETYPES.Field, SQUARETYPES.Forest, SQUARETYPES.Mountain, SQUARETYPES.Plains, SQUARETYPES.River];
   static neededResources = [];
   static amount:number = 0;

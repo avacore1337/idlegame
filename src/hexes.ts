@@ -1,8 +1,8 @@
-import { MainGame } from "./MainGame";
-import { Square } from "./Square";
-import { newGame } from "./gameStart";
-import { loadMap } from "./SaveHandler";
-import { MATERIALS, BUILDINGCLASSES } from "./Constants";
+import { MainGame } from './MainGame';
+import { Square } from './Square';
+import { newGame } from './gameStart';
+import { loadMap } from './SaveHandler';
+import { MATERIALS, BUILDINGCLASSES } from './Constants';
 
 function linkHexes(game:MainGame, square:Square, i:number, j:number, index:number){
   if(i < 0 || i >= game.gridSizeX || j < 0 || j >= game.gridSizeY){
@@ -43,11 +43,11 @@ function placeHexes(game:MainGame){
       theSquare.center.events.onInputUp.add(function() {
         game.needsupdate = true;
         // You own the tile, you wish to build, the tile-type is allowed, you can afford it, TODO (no other building exist on the tile)
-        if (theSquare.purchased && game.state === "building" && BUILDINGCLASSES[game.option].canBuild(theSquare) && game.materialContainer.materials.isSubset(BUILDINGCLASSES[game.option].getRequiredMaterials())) {
+        if (theSquare.purchased && game.state === 'building' && BUILDINGCLASSES[game.option].canBuild(theSquare) && game.materialContainer.materials.isSubset(BUILDINGCLASSES[game.option].getRequiredMaterials())) {
           game.materialContainer.pay(BUILDINGCLASSES[game.option].getRequiredMaterials());
           theSquare.addBuilding(game.option);
         }
-        if(game.state ==="buying" && !theSquare.purchased && game.materialContainer.materials.get(MATERIALS.Food) >= 10*Math.pow(1.4, theSquare.distance) && theSquare.distance <= Square.buildDistance){
+        if(game.state ==='buying' && !theSquare.purchased && game.materialContainer.materials.get(MATERIALS.Food) >= 10*Math.pow(1.4, theSquare.distance) && theSquare.distance <= Square.buildDistance){
           game.materialContainer.materials.subtract(MATERIALS.Food, 10*Math.pow(1.4, theSquare.distance));
           theSquare.purchased = true;
           theSquare.revealNeighbours();
@@ -70,12 +70,12 @@ export function generateHexGroup(game:MainGame):void {
   generateSquares(game);
   linkAllHexes(game);
 
-  if (localStorage.getItem("map") !== null) {
-    console.log("Loading old game");
+  if (localStorage.getItem('map') !== null) {
+    console.log('Loading old game');
     loadMap(game);
   }
   else{
-    console.log("making new game");
+    console.log('making new game');
     newGame(game);
   }
   placeHexes(game);

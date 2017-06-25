@@ -1,10 +1,10 @@
-import { MATERIALS } from "../Constants";
-import { Counter } from "../Counter";
+import { MATERIALS } from '../Constants';
+import { Counter } from '../Counter';
 
 export class Construction {
   title:string;
   constructor(){
-    this.title = "name";
+    this.title = 'name';
   }
 
   getRequiredMaterials():Counter<MATERIALS>{
