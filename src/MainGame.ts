@@ -98,9 +98,9 @@ export class MainGame {
       for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
           resourceGain.add(i, 0);
       }
-      for (let y = 0; y < this.hexMatrix.length; y++) {
-        for (let x = 0; x < this.hexMatrix[y].length; x++) {
-          resourceGain = resourceGain.addOther(this.hexMatrix[y][x].generateMaterials());
+      for(const row of this.hexMatrix){
+        for(const hex of row){
+          resourceGain = resourceGain.addOther(hex.generateMaterials());
         }
       }
       for (const c of CONSTRUCTIONCLASSES) {
@@ -108,10 +108,9 @@ export class MainGame {
       }
 
       this.materialContainer.materialGainBase = resourceGain;
-
-      for (let i = 0; i < this.hexMatrix.length; i++) {
-        for (let j = 0; j < this.hexMatrix[i].length; j++) {
-          this.hexMatrix[i][j].update();
+      for(const row of this.hexMatrix){
+        for(const hex of row){
+          hex.update();
         }
       }
     }

@@ -201,8 +201,7 @@ export function createMenu(game:MainGame):void{
   researchGroup.visible = false;
   const buttons3 = [];
   startingButtons = 0;
-  for (let i = 0; i < TechList.length; i++) {
-    const r = TechList[i];
+  for(const r of TechList){
     const rgroup = game.game.add.group();
     rgroup.visible = false;
     if (r.researchable()) {

@@ -81,8 +81,7 @@ export function newGame(game:MainGame):void {
 
   centerHex.purchased = true;
   centerHex.reveal();
-  for (let i = 0; i < centerHex.neighbours.length; i++) {
-      const hex = centerHex.neighbours[i];
+  for(const hex of centerHex.neighbours){
       hex.purchased = true;
       hex.reveal();
       hex.revealNeighbours();

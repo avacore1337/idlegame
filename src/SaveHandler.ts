@@ -1,5 +1,6 @@
 import { MainGame } from './MainGame';
 import { MaterialContainer } from './MaterialContainer';
+import { TechList } from './TechTree';
 import { CONSTRUCTIONCLASSES, CONSTRUCTIONS } from './Constants';
 
 export function loadMaterials(game:MainGame):void{
@@ -36,6 +37,7 @@ export function saveGame(game:MainGame):void{
     localStorage.setItem('materials', JSON.stringify(game.materialContainer.materials.toJSON()));
     localStorage.setItem('map', JSON.stringify(game.hexMatrix));
     localStorage.setItem('constructions', getConstructionJSON());
+    localStorage.setItem('technologies', getResearchJSON());
   }
 }
 
@@ -47,9 +49,52 @@ function getConstructionJSON():string{
   return JSON.stringify(constructionData);
 }
 
+function getResearchJSON():string{
+  const technologyData:string[] = [];
+  for (const technology of TechList) {
+    if(technology.researched){
+      technologyData.push(technology.name);
+    }
+  }
+  return JSON.stringify(technologyData);
+}
+
+
+/* tslint:disable:no-string-literal */
+
+export function loadConstructions(game:MainGame):void {
+  if (typeof(Storage) !== 'undefined') {
+    const constructionsData = localStorage.getItem('constructions');
+    if (constructionsData !== null) {
+      const constructions:Array<[CONSTRUCTIONS, number]> = JSON.parse(constructionsData);
+      for (const construction of constructions) {
+        CONSTRUCTIONCLASSES[construction[0]].amount = construction[1];
+      }
+    }
+  }
+}
+
+export function loadTechnologies(game:MainGame):void {
+  if (typeof(Storage) !== 'undefined') {
+    const technologyData = localStorage.getItem('technologies');
+    if (technologyData !== null) {
+      const technologies:string[] = JSON.parse(technologyData);
+      for (const technology of TechList) {
+        if(technologies.indexOf(technology.name) !== -1){
+          technology.researched = true;
+          technology.research();
+        }
+      }
+    }
+  }
+}
+/* tslint:enable:no-string-literal */
+
 export function resetSave():void{
   if (typeof(Storage) !== 'undefined') {
     localStorage.removeItem('materials');
     localStorage.removeItem('map');
+    localStorage.removeItem('constructions');
+    localStorage.removeItem('technologies');
   }
 }

@@ -4,7 +4,7 @@ import { Mine, Quary } from './buildings/AllBuildings';
 // import { Quary } from './Quary';
 import { ToolWorkshop, Kiln, Steelworks } from './constructions/AllConstructions';
 
-export let TechList = [];
+export let TechList:TechNode[] = [];
 
 function enableQuary(){
   Quary.enabled = true;
