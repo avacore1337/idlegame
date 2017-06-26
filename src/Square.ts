@@ -55,7 +55,7 @@ export class Square {
 
   setType(squareType:SQUARETYPES):void {
     const old = this.center;
-    this.center = this.game.game.add.sprite(this.x,this.y, 'tiles', SQUARESTRINGLIST[squareType] + '.png');
+    this.center = this.game.game.add.sprite(this.x, this.y, 'tiles', SQUARESTRINGLIST[squareType] + '.png');
     this.center.visible = this.revealed;
     this.game.squareLayer.add(this.center);
     if(old){

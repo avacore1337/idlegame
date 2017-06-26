@@ -53,6 +53,8 @@ function placeHexes(game:MainGame){
           theSquare.revealNeighbours();
         }
       });
+      theSquare.center.input.pixelPerfectClick = true;
+
     }
   }
 }
