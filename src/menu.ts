@@ -52,6 +52,12 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
     }
     game.needsupdate = true;
   });
+  const tip4 = new Phasetips(game.game, {
+    targetObject: buyButton,
+    context: 'You need food to settle new areas.',
+    position: 'right'
+  });
+
 
   const saveGroup:Phaser.Group = game.game.add.group();
   saveGroup.visible = true;
@@ -84,9 +90,10 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
 
 export function createMenu(game:MainGame):void{
   game.menuGroup = game.game.add.group();
+  game.menuGroup.fixedToCamera = true;
 
-  game.menuGroup.x = 0;
-  game.menuGroup.y = 0;
+  // game.menuGroup.x = 0;
+  // game.menuGroup.y = 0;
 
   const style = { font: '14px Arial', fill: '#000000', align: 'center' };
 
@@ -99,6 +106,28 @@ export function createMenu(game:MainGame):void{
   game.menuGroup.add(botMenu);
   createBottomMenu(game,botMenu, buttons1);
 
+  game.modal.createModal({
+      type: 'mainModal',
+      includeBackground: true,
+      modalCloseOnInput: true,
+      fixedToCamera:true,
+      itemsArr: [{
+          type: 'text',
+          content: 'Seriously???',
+          fontSize: 42,
+          color: '0xFEFF49',
+          offsetY: 50
+      }]
+  });
+  const mainMenu = game.game.add.group();
+  game.menuGroup.add(mainMenu);
+  const mainMenuButton = game.game.add.sprite(1134, 1, 'menu', 'gear.png');
+  mainMenu.add(mainMenuButton);
+  mainMenuButton.inputEnabled = true;
+  mainMenuButton.events.onInputUp.add(function() {
+    game.modal.showModal('mainModal');
+  });
+  // mainMenu.add(game.modal);
 
   // SETUP FOR BUILDINGS
   // -------------------

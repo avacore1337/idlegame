@@ -28,6 +28,8 @@ export class MainGame {
   option:number;
   needsupdate:boolean;
   materialUpdate:number;
+  modal:gameModal;
+
   // materials:Counter<MATERIALS>;
   materialContainer:MaterialContainer;
   materialLabels:Phaser.Text[]; // TODO ; These should not be here I don't think
@@ -49,6 +51,8 @@ export class MainGame {
   }
 
   onCreate():void {
+    this.modal = new gameModal(this.game);
+
     loadMaterials(this);
     this.game.stage.backgroundColor = '#ffffff';
     this.game.world.setBounds(0, 0, 1600, 1600);
@@ -61,8 +65,8 @@ export class MainGame {
 
     this.game.camera.x = cameraCenterX;
     this.game.camera.y = cameraCenterY;
-    this.menuGroup.x = cameraCenterX;
-    this.menuGroup.y = cameraCenterY;
+    // this.menuGroup.x = cameraCenterX;
+    // this.menuGroup.y = cameraCenterY;
     this.needsupdate = true;
   }
 

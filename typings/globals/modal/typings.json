@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "/home/avacore/gitstuff/phaser_modals/src/modal.d.ts",
+    "raw": "file:../phaser_modals/src/modal.d.ts",
+    "typings": "/home/avacore/gitstuff/phaser_modals/src/modal.d.ts"
+  }
+}

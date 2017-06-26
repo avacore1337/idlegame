@@ -1,5 +1,9 @@
 {
   "globalDevDependencies": {
     "phaser": "github:photonstorm/phaser-ce/typescript/typings.json"
+  },
+  "globalDependencies": {
+    "Phasetips": "file:typingfiles/Phasetips.d.ts",
+    "modal": "file:../phaser_modals/src/modal.d.ts"
   }
 }

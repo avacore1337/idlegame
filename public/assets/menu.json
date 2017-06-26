@@ -2,7 +2,7 @@
 
 {
 	"filename": "button.png",
-	"frame": {"x":0,"y":0,"w":111,"h":24},
+	"frame": {"x":175,"y":0,"w":111,"h":24},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":111,"h":24},
@@ -10,7 +10,7 @@
 },
 {
 	"filename": "button2.png",
-	"frame": {"x":0,"y":48,"w":332,"h":24},
+	"frame": {"x":0,"y":64,"w":332,"h":24},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":332,"h":24},
@@ -18,7 +18,7 @@
 },
 {
 	"filename": "button2clicked.png",
-	"frame": {"x":0,"y":24,"w":332,"h":24},
+	"frame": {"x":0,"y":88,"w":332,"h":24},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":332,"h":24},
@@ -26,15 +26,23 @@
 },
 {
 	"filename": "buttonclicked.png",
-	"frame": {"x":111,"y":0,"w":111,"h":24},
+	"frame": {"x":64,"y":0,"w":111,"h":24},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":111,"h":24},
 	"sourceSize": {"w":111,"h":24}
 },
 {
+	"filename": "gear.png",
+	"frame": {"x":0,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+	"sourceSize": {"w":64,"h":64}
+},
+{
 	"filename": "leftpanel.png",
-	"frame": {"x":0,"y":72,"w":336,"h":280},
+	"frame": {"x":0,"y":112,"w":336,"h":280},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":336,"h":280},
@@ -45,8 +53,8 @@
 	"version": "1.0",
 	"image": "menu.png",
 	"format": "RGBA8888",
-	"size": {"w":336,"h":352},
+	"size": {"w":336,"h":392},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:2624eb40dab16b43fcc9d6209293f139:7ec605ef2ba8e6d7cc77b904f2013901:e1b68abd82547da08a80c89591506971$"
+	"smartupdate": "$TexturePacker:SmartUpdate:d18a726f928fb839c8ab1bd019929bae:565202243e2bc81ce8e91df32ebaf386:e1b68abd82547da08a80c89591506971$"
 }
 }
