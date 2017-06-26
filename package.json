@@ -4,7 +4,7 @@
   "description": "An idlegame",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && browserify src/app.ts -p tsify -o public/bundle.js && node index.js"
+    "start": "browserify src/app.ts -p tsify -o public/bundle.js && node index.js"
   },
   "dependencies": {
     "browserify": "14.04.0",
