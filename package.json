@@ -4,12 +4,13 @@
   "description": "An idlegame",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && browserify build/app.js -o public/bundle.js && node index.js"
+    "start": "tsc && browserify src/app.ts -p tsify -o public/bundle.js && node index.js"
   },
   "dependencies": {
+    "browserify": "14.04.0",
     "express": "4.13.3",
-    "typescript": "2.3.4",
-    "browserify": "14.04.0"
+    "tsify": "^3.0.1",
+    "typescript": "2.3.4"
   },
   "engines": {
     "node": "4.0.0"
@@ -23,7 +24,5 @@
     "express"
   ],
   "author": "Robert Welin-Berger",
-  "contributors": [
-
-  ]
+  "contributors": []
 }
