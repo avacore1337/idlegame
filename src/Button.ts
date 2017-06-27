@@ -7,22 +7,27 @@ export class Button {
   regular:Phaser.Group;
   toggled:Phaser.Group;
   disabled:Phaser.Group;
-  effect:any;
   game:MainGame;
   toggleAble:boolean;
   disableAble:boolean;
+  isToggled:boolean;
 
   image:string;
   text:string;
   style:object;
+  effect: () => void;
+  regTool:Phasetips;
 
   toggledImage:string;
   toggledText:string;
   toggledStyle:object;
+  toggledEffect: () => void;
+  togTool:Phasetips;
 
   disabledImage:string;
   disabledText:string;
   disabledStyle:object;
+  disTool:Phasetips;
 
   constructor(game:MainGame, x:number, y:number, key:any, text:string, image:string, style:object, options?:any) {
     const self = this;
@@ -32,6 +37,10 @@ export class Button {
     this.image = image;
     this.text = text;
     this.style = style;
+    this.effect = undefined;
+    this.toggledEffect = undefined;
+    this.isToggled = false;
+    this.disTool = undefined;
 
     if(options) {
       const {
@@ -56,8 +65,10 @@ export class Button {
 
     // Regular button
     this.regular = game.game.add.group();
-    const regImg = game.game.add.sprite(x, y, key, this.image);
-    const regTxt:Phaser.Text = game.game.add.text(x + 26, y + 3, this.text, this.style);
+    this.regular.x = x;
+    this.regular.y = y;
+    const regImg = game.game.add.sprite(0, 0, key, this.image);
+    const regTxt:Phaser.Text = game.game.add.text(26, 3, this.text, this.style);
 
     regImg.visible = true;
     regTxt.visible = true;
@@ -72,18 +83,20 @@ export class Button {
 
     this.regular.visible = true;
 
-    const regTool = new Phasetips(game.game, {
+    this.regTool = new Phasetips(game.game, {
       targetObject: regImg,
-      context: 'Untoggled',
+      context: ' ',
       position: 'right'
     });
-    this.regular.add(regTool.getGroup());
+    this.regular.add(this.regTool.getGroup());
 
     // Toggled button
     if(this.toggleAble) {
       this.toggled = game.game.add.group();
-      const togImg = game.game.add.sprite(x, y, key, this.toggledImage);
-      const togTxt:Phaser.Text = game.game.add.text(x + 26, y + 3, this.toggledText, this.toggledStyle);
+      this.toggled.x = x;
+      this.toggled.y = y;
+      const togImg = game.game.add.sprite(0, 0, key, this.toggledImage);
+      const togTxt:Phaser.Text = game.game.add.text(26, 3, this.toggledText, this.toggledStyle);
 
       togImg.visible = true;
       togTxt.visible = true;
@@ -98,12 +111,12 @@ export class Button {
 
       this.toggled.visible = false;
 
-      const togTool = new Phasetips(game.game, {
+      this.togTool = new Phasetips(game.game, {
         targetObject: togImg,
-        context: 'Toggled',
+        context: ' ',
         position: 'right'
       });
-      this.toggled.add(togTool.getGroup());
+      this.toggled.add(this.togTool.getGroup());
     } else {
       this.toggled = undefined;
     }
@@ -112,8 +125,10 @@ export class Button {
     // Disabled button
     if(this.disableAble) {
       this.disabled = game.game.add.group();
-      const disImg = game.game.add.sprite(x, y, key, this.disabledImage);
-      const disTxt:Phaser.Text = game.game.add.text(x + 26, y + 3, this.disabledText, this.disabledStyle);
+      this.disabled.x = x;
+      this.disabled.y = y;
+      const disImg = game.game.add.sprite(0, 0, key, this.disabledImage);
+      const disTxt:Phaser.Text = game.game.add.text(26, 3, this.disabledText, this.disabledStyle);
 
       disImg.visible = true;
       disTxt.visible = true;
@@ -128,19 +143,31 @@ export class Button {
 
       this.disabled.visible = false;
 
-      const disTool = new Phasetips(game.game, {
+      this.disTool = new Phasetips(game.game, {
         targetObject: disImg,
-        context: 'Disabled',
+        context: ' ',
         position: 'right'
       });
-      this.disabled.add(disTool.getGroup());
+      this.disabled.add(this.disTool.getGroup());
     } else {
       this.disabled = undefined;
     }
   }
 
-  onclick(callBack:any):void {
+  onToggle(callBack: () => void):void {
     this.effect = callBack;
+  }
+
+  onUnToggle(callBack: () => void):void {
+    this.toggledEffect = callBack;
+  }
+
+  setToolTip(content:string):void {
+    this.regTool.updateText(content);
+  }
+
+  seToggledtToolTip(callBack:any):void {
+    // TODO
   }
 }
 

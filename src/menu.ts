@@ -29,6 +29,7 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
 
   // Buttons for special things
   // --------------------------
+/*
   const buyGroup:Phaser.Group = game.game.add.group();
   buyGroup.visible = true;
   buyGroup.x = 224;
@@ -54,28 +55,23 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
     }
     game.needsupdate = true;
   });
-  const tip4 = new Phasetips(game.game, {
-    targetObject: buyButton,
-    context: 'You need food to settle new areas.',
-    position: 'right',
-    positionOffset: 10
-    // x: x,
+*/
+  const buy:Button = new Button(game, 224, 0, 'menu', 'Buy', 'button.png', style2);
+  buy.onToggle(function(){
+    if(game.gamestate !== 'buying'){
+      game.gamestate = 'buying';
+      for (const button of buttons1) {
+        button.regular.visible = true;
+        button.toggled.visible = false;
+      }
+    }
+    else{
+      game.gamestate = '';
+    }
+    game.needsupdate = true;
   });
-  buyGroup.add(tip4.getGroup());
-  tip4.updateText('satoeuhsnaoetuhanot asnoetu aonsteu aone aon ethu antoeh uasnoethu naoestuh aosnetu hs');
-
-
-  const unToggleAble:Button = new Button(game, 0, 100, 'menu', 'Save button', 'button2.png', style2);
-  unToggleAble.onclick(function(){
-    console.log('Hello World 1');
-  });
-  buyGroup.add(unToggleAble.regular);
-
-  const toggleAble:Button = new Button(game, 0, 130, 'menu', 'Save button', 'button2.png', style2, 'button2clicked.png');
-  toggleAble.onclick(function(){
-    console.log('Hello World 2');
-  });
-  buyGroup.add(toggleAble.regular);
+  buy.setToolTip('You need food to settle new areas.');
+  botMenu.add(buy.regular);
 
   const saveGroup:Phaser.Group = game.game.add.group();
   saveGroup.visible = true;
