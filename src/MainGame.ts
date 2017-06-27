@@ -1,7 +1,6 @@
 import { Counter } from './Counter';
 import { Square } from './Square';
 import { MaterialContainer } from './MaterialContainer';
-import { resourceLoader } from './resourceLoader';
 import { cameraControls } from './cameraControls';
 import { createMenu } from './menu';
 import { generateHexGroup } from './hexes';
@@ -45,10 +44,6 @@ export class MainGame extends Phaser.State {
   //     this.hexMatrix.push([]);
   //   }
   // }
-
-  preload() {
-    resourceLoader(this.game);
-  }
 
   create():void {
     this.materialLabels = [];
