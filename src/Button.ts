@@ -74,7 +74,7 @@ export class Button {
 
     const regTool = new Phasetips(game.game, {
       targetObject: regImg,
-      context: 'Toggled',
+      context: 'Untoggled',
       position: 'right'
     });
     this.regular.add(regTool.getGroup());
@@ -101,10 +101,9 @@ export class Button {
       const togTool = new Phasetips(game.game, {
         targetObject: togImg,
         context: 'Toggled',
-        x: togImg.x,
-        y: togImg.y,
-        fixedToCamera: true
+        position: 'right'
       });
+      this.toggled.add(togTool.getGroup());
     } else {
       this.toggled = undefined;
     }
@@ -132,10 +131,9 @@ export class Button {
       const disTool = new Phasetips(game.game, {
         targetObject: disImg,
         context: 'Disabled',
-        x: disImg.x,
-        y: disImg.y,
-        fixedToCamera: true
+        position: 'right'
       });
+      this.disabled.add(disTool.getGroup());
     } else {
       this.disabled = undefined;
     }
