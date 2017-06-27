@@ -29,3 +29,11 @@ watchify app.js -o ../public/bundle.js
 tslint is run with:
 
 tslint -p tsconfig.json -c tslint.json
+
+## Other Packages
+
+We are using:
+
+https://github.com/netgfx/phaser_modals
+
+https://github.com/netgfx/Phasetips
