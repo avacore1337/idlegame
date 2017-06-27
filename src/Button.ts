@@ -4,37 +4,141 @@ import { MainGame } from './MainGame';
 
 export class Button {
 
-  button:Phaser.Group;
-  tooltip:Phasetips;
+  regular:Phaser.Group;
+  toggled:Phaser.Group;
+  disabled:Phaser.Group;
   effect:any;
+  game:MainGame;
+  toggleAble:boolean;
+  disableAble:boolean;
 
-  constructor(game:MainGame, x:number, y:number, key:any, text:string, image:string, style:object, toggledImage?:string, styleToggled?:object) {
+  image:string;
+  text:string;
+  style:object;
+
+  toggledImage:string;
+  toggledText:string;
+  toggledStyle:object;
+
+  disabledImage:string;
+  disabledText:string;
+  disabledStyle:object;
+
+  constructor(game:MainGame, x:number, y:number, key:any, text:string, image:string, style:object, options?:any) {
     const self = this;
+    this.game = game;
+    this.toggleAble = false;
+    this.disableAble = false;
+    this.image = image;
+    this.text = text;
+    this.style = style;
 
-    this.button = game.game.add.group();
-    const button:Phaser.Sprite = game.game.add.sprite(x, y, key, image);
-    const buttonText:Phaser.Text = game.game.add.text(x + 26, y + 3, text, style);
+    if(options) {
+      const {
+        toggleAble = false,
+        disableAble = false,
+        toggledImage = image,
+        toggledText = text,
+        toggledStyle = style,
+        disabledImage = image,
+        disabledText = text,
+        disabledStyle = style
+      } = options;
+      this.toggledImage = toggledImage;
+      this.toggledText = toggledText;
+      this.toggledStyle = toggledStyle;
+      this.disabledImage = disabledImage;
+      this.disabledText = disabledText;
+      this.disabledStyle = disabledStyle;
+      this.toggleAble = toggleAble;
+      this.disableAble = disableAble;
+    }
 
-    this.button.visible = true;
-    button.visible = true;
-    buttonText.visible = true;
+    // Regular button
+    this.regular = game.game.add.group();
+    const regImg = game.game.add.sprite(x, y, key, this.image);
+    const regTxt:Phaser.Text = game.game.add.text(x + 26, y + 3, this.text, this.style);
 
-    this.button.add(button);
-    this.button.add(buttonText);
+    regImg.visible = true;
+    regTxt.visible = true;
 
-    button.inputEnabled = true;
-    button.events.onInputUp.add(function() {
+    this.regular.add(regImg);
+    this.regular.add(regTxt);
+
+    regImg.inputEnabled = true;
+    regImg.events.onInputUp.add(function() {
       self.effect();
     });
 
-    this.tooltip = new Phasetips(game.game, {
-        targetObject: button,
-        context: 'You need food to settle new areas.',
-        x: button.x,
-        y: button.y,
+    this.regular.visible = true;
+
+    const regTool = new Phasetips(game.game, {
+      targetObject: regImg,
+      context: 'Toggled',
+      position: 'right'
+    });
+    this.regular.add(regTool.getGroup());
+
+    // Toggled button
+    if(this.toggleAble) {
+      this.toggled = game.game.add.group();
+      const togImg = game.game.add.sprite(x, y, key, this.toggledImage);
+      const togTxt:Phaser.Text = game.game.add.text(x + 26, y + 3, this.toggledText, this.toggledStyle);
+
+      togImg.visible = true;
+      togTxt.visible = true;
+
+      this.toggled.add(togImg);
+      this.toggled.add(togTxt);
+
+      togImg.inputEnabled = true;
+      togImg.events.onInputUp.add(function() {
+        self.effect();
+      });
+
+      this.toggled.visible = false;
+
+      const togTool = new Phasetips(game.game, {
+        targetObject: togImg,
+        context: 'Toggled',
+        x: togImg.x,
+        y: togImg.y,
         fixedToCamera: true
-      }
-    );
+      });
+    } else {
+      this.toggled = undefined;
+    }
+
+
+    // Disabled button
+    if(this.disableAble) {
+      this.disabled = game.game.add.group();
+      const disImg = game.game.add.sprite(x, y, key, this.disabledImage);
+      const disTxt:Phaser.Text = game.game.add.text(x + 26, y + 3, this.disabledText, this.disabledStyle);
+
+      disImg.visible = true;
+      disTxt.visible = true;
+
+      this.disabled.add(disImg);
+      this.disabled.add(disTxt);
+
+      disImg.inputEnabled = true;
+      disImg.events.onInputUp.add(function() {
+        self.effect();
+      });
+
+      this.disabled.visible = false;
+
+      const disTool = new Phasetips(game.game, {
+        targetObject: disImg,
+        context: 'Disabled',
+        x: disImg.x,
+        y: disImg.y,
+        fixedToCamera: true
+      });
+    } else {
+      this.disabled = undefined;
+    }
   }
 
   onclick(callBack:any):void {

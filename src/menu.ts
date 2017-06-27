@@ -69,13 +69,13 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
   unToggleAble.onclick(function(){
     console.log('Hello World 1');
   });
-  buyGroup.add(unToggleAble.button);
+  buyGroup.add(unToggleAble.regular);
 
   const toggleAble:Button = new Button(game, 0, 130, 'menu', 'Save button', 'button2.png', style2, 'button2clicked.png');
   toggleAble.onclick(function(){
     console.log('Hello World 2');
   });
-  buyGroup.add(toggleAble.button);
+  buyGroup.add(toggleAble.regular);
 
   const saveGroup:Phaser.Group = game.game.add.group();
   saveGroup.visible = true;
