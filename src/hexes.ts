@@ -43,11 +43,11 @@ function placeHexes(game:MainGame){
       theSquare.center.events.onInputUp.add(function() {
         game.needsupdate = true;
         // You own the tile, you wish to build, the tile-type is allowed, you can afford it, TODO (no other building exist on the tile)
-        if (theSquare.purchased && game.state === 'building' && BUILDINGCLASSES[game.option].canBuild(theSquare) && game.materialContainer.materials.isSubset(BUILDINGCLASSES[game.option].getRequiredMaterials())) {
+        if (theSquare.purchased && game.gamestate === 'building' && BUILDINGCLASSES[game.option].canBuild(theSquare) && game.materialContainer.materials.isSubset(BUILDINGCLASSES[game.option].getRequiredMaterials())) {
           game.materialContainer.pay(BUILDINGCLASSES[game.option].getRequiredMaterials());
           theSquare.addBuilding(game.option);
         }
-        if(game.state ==='buying' && !theSquare.purchased && game.materialContainer.materials.get(MATERIALS.Food) >= 10*Math.pow(1.4, theSquare.distance) && theSquare.distance <= Square.buildDistance){
+        if(game.gamestate ==='buying' && !theSquare.purchased && game.materialContainer.materials.get(MATERIALS.Food) >= 10*Math.pow(1.4, theSquare.distance) && theSquare.distance <= Square.buildDistance){
           game.materialContainer.materials.subtract(MATERIALS.Food, 10*Math.pow(1.4, theSquare.distance));
           theSquare.purchased = true;
           theSquare.revealNeighbours();

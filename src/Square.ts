@@ -77,12 +77,12 @@ export class Square {
   update():void {
     if(this.revealed){
       let highlight = false;
-      if(this.game.state === 'buying' && !this.purchased){
+      if(this.game.gamestate === 'buying' && !this.purchased){
         if (this.distance <= Square.buildDistance) {
           highlight = true;
         }
       }
-      if(this.game.state === 'building' && this.purchased && this.building === null){
+      if(this.game.gamestate === 'building' && this.purchased && this.building === null){
         if(BUILDINGCLASSES[this.game.option].canBuild(this)){
           highlight = true;
         }

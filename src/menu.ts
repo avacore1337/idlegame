@@ -42,15 +42,15 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
   buyGroup.add(buyText);
   // Add functionality to the 'Buy'-button
   buyButton.events.onInputUp.add(function() {
-    if(game.state !== 'buying'){
-      game.state = 'buying';
+    if(game.gamestate !== 'buying'){
+      game.gamestate = 'buying';
       for (const button of buttons1) {
         button.regular.visible = true;
         button.toggled.visible = false;
       }
     }
     else{
-      game.state = '';
+      game.gamestate = '';
     }
     game.needsupdate = true;
   });
@@ -183,7 +183,7 @@ export function createMenu(game:MainGame):void{
         button.toggled.visible = false;
       }
       game.option = index;
-      game.state = 'building';
+      game.gamestate = 'building';
       bbuttonRegular.visible = false;
       bbuttonClicked.visible = true;
     });
@@ -194,7 +194,7 @@ export function createMenu(game:MainGame):void{
         button.toggled.visible = false;
       }
       game.option = -1;
-      game.state = '';
+      game.gamestate = '';
     });
   }
   game.menuGroup.add(button1);
@@ -317,9 +317,9 @@ export function createMenu(game:MainGame):void{
   button3.inputEnabled = true;
   button1.events.onInputUp.add(function() {
     game.needsupdate = true;
-    if (game.state !== 'building') {
+    if (game.gamestate !== 'building') {
       game.option = -1;
-      game.state = '';
+      game.gamestate = '';
     }
     buildingGroup.visible = true;
     townBuildingGroup.visible = false;
@@ -327,9 +327,9 @@ export function createMenu(game:MainGame):void{
   });
   button2.events.onInputUp.add(function() {
     game.needsupdate = true;
-    if (game.state !== 'town') {
+    if (game.gamestate !== 'town') {
       game.option = -1;
-      game.state = '';
+      game.gamestate = '';
     }
     buildingGroup.visible = false;
     townBuildingGroup.visible = true;
@@ -341,9 +341,9 @@ export function createMenu(game:MainGame):void{
   });
   button3.events.onInputUp.add(function() {
     game.needsupdate = true;
-    if (game.state !== 'research') {
+    if (game.gamestate !== 'research') {
       game.option = -1;
-      game.state = '';
+      game.gamestate = '';
     }
     buildingGroup.visible = false;
     townBuildingGroup.visible = false;

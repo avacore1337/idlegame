@@ -8,9 +8,9 @@ import { generateHexGroup } from './hexes';
 import { loadMaterials } from './SaveHandler';
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
 
-export class MainGame {
+export class MainGame extends Phaser.State {
 
-  game: Phaser.Game;
+  // game: Phaser.Game;
 
   hexagonWidth:number = 70;
   hexagonHeight:number = 80;
@@ -24,7 +24,7 @@ export class MainGame {
   buildingLayer:Phaser.Group;
   cursors:Phaser.CursorKeys;
   hexMatrix: Square[][];
-  state:string;
+  gamestate:string;
   option:number;
   needsupdate:boolean;
   materialUpdate:number;
@@ -34,23 +34,33 @@ export class MainGame {
   materialContainer:MaterialContainer;
   materialLabels:Phaser.Text[]; // TODO ; These should not be here I don't think
 
-  constructor(theGame:Phaser.Game) {
+  // constructor(theGame:Phaser.Game) {
+  //   this.materialLabels = [];
+  //   this.materialUpdate = 0;
+  //   this.gamestate = '';
+  //   this.needsupdate = false;
+  //   this.game = theGame;
+  //   this.hexMatrix = [];
+  //   for (let i = 0; i < this.gridSizeY; i++) {
+  //     this.hexMatrix.push([]);
+  //   }
+  // }
+
+  preload() {
+    resourceLoader(this.game);
+  }
+
+  create():void {
     this.materialLabels = [];
     this.materialUpdate = 0;
-    this.state = '';
+    this.gamestate = '';
     this.needsupdate = false;
-    this.game = theGame;
+    // this.game = theGame;
     this.hexMatrix = [];
     for (let i = 0; i < this.gridSizeY; i++) {
       this.hexMatrix.push([]);
     }
-  }
 
-  onPreload() {
-    resourceLoader(this.game);
-  }
-
-  onCreate():void {
     this.modal = new gameModal(this.game);
 
     loadMaterials(this);
@@ -70,7 +80,7 @@ export class MainGame {
     this.needsupdate = true;
   }
 
-  onUpdate():void {
+  update():void {
 
     this.materialUpdate = (this.materialUpdate + 1) % 20;
     if (this.materialUpdate === 0) {
@@ -123,7 +133,7 @@ export class MainGame {
     cameraControls(this.game, this.cursors, this.menuGroup);
   }
 
-  onRender():void {
+  render():void {
     // this.game.debug.cameraInfo(this.game.camera, 32, 32);
   }
 
