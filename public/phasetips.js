@@ -11,9 +11,25 @@ var Phasetips = function(localGame, options) {
     var _this = this;
     var _options = options || {};
     var game = localGame || game; // it looks for a game object or falls back to the global one
+    var _width;
+    var _height;
+    var _x;
+    var _y;
+    var _padding;
+    var _positionOffset;
+    var _bgColor;
+    var _strokeColor;
+    var _strokeWeight;
+    var _customArrow;
+    var _enableCursor;
+    var _customBackground;
+    var _fixedToCamera;
+    var _textStyle;
+    var _tooltipContent;
+    var _roundedCornersRadius;
+    var _bgGroup;
 
     this.printOptions = function() {
-        window.console.log(_options);
     };
 
     this.onHoverOver = function() {
@@ -27,11 +43,6 @@ var Phasetips = function(localGame, options) {
         } else if (_options.animation === "slide") {
 
         } else if (_options.animation === "grow") {
-
-            _this.mainGroup.pivot.setTo(_this.mainGroup.width / 2, _this.mainGroup.height);
-            _this.mainGroup.pivot.setTo(_this.mainGroup.width / 2, _this.mainGroup.height);
-            _this.mainGroup.x = _this.mainGroup.initialX + _this.mainGroup.width / 2;
-            _this.mainGroup.y = _this.mainGroup.initialY + _this.mainGroup.height;
             _this.mainGroup.scale.setTo(0, 0);
             _this.mainGroup.alpha = 1;
             _this.tweenObj = game.add.tween(_this.mainGroup.scale).to({
@@ -66,24 +77,54 @@ var Phasetips = function(localGame, options) {
         }
     };
 
+    this.updateText = function(text) {
+      _tooltipContent.text = text;
+      // tooltipContent = new Phaser.Text(game, _padding / 2, _padding / 2, String(text), _textStyle);
+      // tooltipContent.lineSpacing = _textStyle.lineSpacing || 0;
+      // _tooltipContent
+      _tooltipContent.updateText();
+      // tooltipContent.update();
+      // tooltipContent.x = _padding / 2;
+      // tooltipContent.y = _padding / 2;
+      // var bounds = tooltipContent.getBounds();
+
+      _this._tooltipBG.destroy();
+      var tooltipBG = game.add.graphics(_tooltipContent.width, _tooltipContent.height);
+      tooltipBG.beginFill(_bgColor, 1);
+      tooltipBG.x = 0;
+      tooltipBG.y = 0;
+      tooltipBG.lineStyle(_strokeWeight, _strokeColor, 1);
+
+      // if roundedCornersRadius option is set to 1, drawRect will be used.
+      if( _roundedCornersRadius == 1 ) {
+          tooltipBG.drawRect(0, 0, _tooltipContent.width + _padding, _tooltipContent.height + _padding, 1);
+      } else {
+          tooltipBG.drawRoundedRect(0, 0, _tooltipContent.width + _padding, _tooltipContent.height + _padding, _roundedCornersRadius);
+      }
+      _bgGroup.add(tooltipBG);
+      _this._tooltipBG = tooltipBG;
+    };
+
     this.createTooltips = function() {
 
         // layout
-        var _width = _options.width || "auto";
-        var _height = _options.height || "auto";
-        var _x = _options.x || "auto";
-        var _y = _options.y || "auto";
-        var _padding = _options.padding === undefined ? 20 : _options.padding;
-        var _positionOffset = _options.positionOffset === undefined ? 20 : _options.positionOffset;
-        var _bgColor = _options.backgroundColor || 0x000000;
-        var _strokeColor = _options.strokeColor || 0xffffff;
-        var _strokeWeight = _options.strokeWeight || 2;
-        var _customArrow = _options.customArrow || false;
-        var _enableCursor = _options.enableCursor || false;
-        var _customBackground = _options.customBackground || false;
-        var _fixedToCamera = _options.fixedToCamera || false;
+        _width = _options.width || "auto";
+        _height = _options.height || "auto";
+        _x = _options.x || "auto";
+        _y = _options.y || "auto";
+        _x = _options.x === undefined ? "auto" : _options.x;
+        _y = _options.y === undefined ? "auto" : _options.y;
+        _padding = _options.padding === undefined ? 20 : _options.padding;
+        _positionOffset = _options.positionOffset === undefined ? 20 : _options.positionOffset;
+        _bgColor = _options.backgroundColor || 0x000000;
+        _strokeColor = _options.strokeColor || 0xffffff;
+        _strokeWeight = _options.strokeWeight || 2;
+        _customArrow = _options.customArrow || false;
+        _enableCursor = _options.enableCursor || false;
+        _customBackground = _options.customBackground || false;
+        _fixedToCamera = _options.fixedToCamera || false;
         // Option for rounded corners
-        var _roundedCornersRadius = _options.roundedCornersRadius || 1;
+        _roundedCornersRadius = _options.roundedCornersRadius || 1;
         // Option for font style
         var _font = _options.font || '';
         var _fontSize = _options.fontSize || 12;
@@ -92,8 +133,9 @@ var Phasetips = function(localGame, options) {
         var _fontStrokeThickness = _options.fontStrokeThickness || 1;
         var _fontWordWrap = _options.fontWordWrap || true;
         var _fontWordWrapWidth = _options.fontWordWrapWidth || 200;
+        var _tooltipBG;
         // Text style properties
-        var _textStyle = _options.textStyle || {
+        _textStyle = _options.textStyle || {
             font: _font,
             fontSize: _fontSize,
             fill: _fontFill,
@@ -133,7 +175,9 @@ var Phasetips = function(localGame, options) {
         var tooltipArrow;
 
         _this.mainGroup = game.add.group();
+        _bgGroup = game.add.group();
         var mainGroup = _this.mainGroup;
+        mainGroup.add(_bgGroup);
 
         // add content first to calculate width & height in case of auto
         var type = typeof _content;
@@ -146,13 +190,11 @@ var Phasetips = function(localGame, options) {
             tooltipContent.x = _padding / 2;
             tooltipContent.y = _padding / 2;
             var bounds = tooltipContent.getBounds();
-            /* window.console.log(bounds);
-             var debug = game.add.graphics(bounds.width, bounds.height);
-             debug.x = _padding/2;
-             debug.y = _padding/2;
-             debug.beginFill(0xff0000, 0.6);
-             debug.drawRect(0, 0, bounds.width, bounds.height, 1);
-             window.console.log(debug.x)*/
+            //  var debug = game.add.graphics(bounds.width, bounds.height);
+            //  debug.x = _padding/2;
+            //  debug.y = _padding/2;
+            //  debug.beginFill(0xff0000, 0.6);
+            //  debug.drawRect(0, 0, bounds.width, bounds.height, 1);
         } else if (type === "object") {
             tooltipContent = _content;
         }
@@ -187,56 +229,32 @@ var Phasetips = function(localGame, options) {
                 var worldPos = _options.targetObject ? _options.targetObject.world : game.world;
                 mainGroup.x = _x;
                 mainGroup.y = _y;
-                if (_fixedToCamera == true) {
+                if (_fixedToCamera) {
                     mainGroup.fixedToCamera = true;
                     mainGroup.cameraOffset.setTo(mainGroup.x, mainGroup.y);
                 }
             } else {
-                var worldPos = _options.targetObject ? _options.targetObject.world : game.world;
-                objectX = worldPos.x || _options.targetObject.x;
-                objectY = worldPos.y || _options.targetObject.y;
-
-                // sanity check
-                if (_position === "bottom") {
-                    if (Math.round(objectY + _object.height + (_positionOffset)) + mainGroup._height > game.height) {
-                        _position = "top";
-                    }
-                } else if (_position === "top") {
-                    if (Math.round(objectY - (_positionOffset + mainGroup._height)) < 0) {
-                        _position = "bottom";
-                    }
-                }
-
                 if (_position === "top") {
-                    mainGroup.x = Math.round(objectX + ((_object.width / 2) - (mainGroup._width / 2)));
-                    mainGroup.y = Math.round(objectY - (_positionOffset + mainGroup._height));
+                    mainGroup.x = Math.round(((_object.width / 2) - (mainGroup._width / 2)));
+                    mainGroup.y = Math.round((_positionOffset + mainGroup._height));
                 } else if (_position === "bottom") {
-                    mainGroup.x = Math.round(objectX + ((_object.width / 2) - (mainGroup._width) / 2));
-                    mainGroup.y = Math.round(objectY + _object.height + (_positionOffset));
+                    mainGroup.x = Math.round(((_object.width / 2) - (mainGroup._width) / 2));
+                    mainGroup.y = Math.round(_object.height + (_positionOffset));
                 } else if (_position === "left") {
-                    mainGroup.x = Math.round(objectX - (_positionOffset + mainGroup._width));
-                    mainGroup.y = Math.round((objectY + _object.height / 2) - (mainGroup._height / 2));
+                    mainGroup.x = Math.round((_positionOffset + mainGroup._width));
+                    mainGroup.y = Math.round((_object.height / 2) - (mainGroup._height / 2));
                     // mainGroup.scale.x = -1;
                 } else if (_position === "right") {
-                    mainGroup.x = Math.round(objectX + _object.width + _positionOffset);
-                    mainGroup.y = Math.round((objectY + _object.height / 2) - (mainGroup._height / 2));
+                    mainGroup.x = Math.round(_object.width + _positionOffset);
+                    mainGroup.y = Math.round((_object.height / 2) - (mainGroup._height / 2));
                 }
 
-                if (_fixedToCamera == true) {
+                if (_fixedToCamera) {
                     mainGroup.fixedToCamera = true;
                     mainGroup.cameraOffset.setTo(mainGroup.x, mainGroup.y);
                 }
             }
 
-            // clone world position
-            mainGroup.initialWorldX = worldPos.x;
-            mainGroup.initialWorldY = worldPos.y;
-
-            mainGroup.initialX = mainGroup.x;
-            mainGroup.initialY = mainGroup.y;
-
-            // if the world position changes, there might be space for the tooltip
-            // to be in the original position.
             _position = _origPosition;
         }
 
@@ -265,8 +283,10 @@ var Phasetips = function(localGame, options) {
         }
 
         // add all to group
+        this._tooltipBG = tooltipBG;
         mainGroup.add(tooltipBG);
         mainGroup.add(tooltipContent);
+        _tooltipContent = tooltipContent;
         //if(debug)
         //mainGroup.add(debug);
 
@@ -288,7 +308,7 @@ var Phasetips = function(localGame, options) {
             if (worldPos.x !== mainGroup.initialWorldX) {
                 updatePosition();
             }
-        }
+        };
     };
 
     this.createTooltips();
@@ -318,6 +338,12 @@ var Phasetips = function(localGame, options) {
         },
         simulateOnHoverOut: function () {
             _this.onHoverOut();
+        },
+        getGroup: function () {
+            return _this.mainGroup;
+        },
+        updateText: function (text) {
+          _this.updateText(text);
         }
     };
 };

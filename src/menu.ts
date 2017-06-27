@@ -2,6 +2,7 @@ import { MainGame } from './MainGame';
 import { MATERIALSTRINGLIST, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from './Constants';
 import { saveGame, resetSave } from './SaveHandler';
 import { TechList } from './TechTree';
+import { Button } from './Button';
 
 function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any{
   const style = { font: '14px Arial', fill: '#000000', align: 'center' };
@@ -30,12 +31,13 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
   // --------------------------
   const buyGroup:Phaser.Group = game.game.add.group();
   buyGroup.visible = true;
+  buyGroup.x = 224;
   botMenu.add(buyGroup);
-  const buyButton:Phaser.Sprite = game.game.add.sprite(224, 0, 'menu', 'button.png');
+  const buyButton:Phaser.Sprite = game.game.add.sprite(0, 0, 'menu', 'button.png');
   buyButton.visible = true;
   buyButton.inputEnabled = true;
   buyGroup.add(buyButton);
-  const buyText:Phaser.Text = game.game.add.text(250, 3, 'Buy', style2);
+  const buyText:Phaser.Text = game.game.add.text(26, 3, 'Buy', style2);
   buyText.visible = true;
   buyGroup.add(buyText);
   // Add functionality to the 'Buy'-button
@@ -55,9 +57,25 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
   const tip4 = new Phasetips(game.game, {
     targetObject: buyButton,
     context: 'You need food to settle new areas.',
-    position: 'right'
+    position: 'right',
+    positionOffset: 10
+    // x: x,
   });
+  buyGroup.add(tip4.getGroup());
+  tip4.updateText('satoeuhsnaoetuhanot asnoetu aonsteu aone aon ethu antoeh uasnoethu naoestuh aosnetu hs');
 
+
+  const unToggleAble:Button = new Button(game, 0, 100, 'menu', 'Save button', 'button2.png', style2);
+  unToggleAble.onclick(function(){
+    console.log('Hello World 1');
+  });
+  buyGroup.add(unToggleAble.button);
+
+  const toggleAble:Button = new Button(game, 0, 130, 'menu', 'Save button', 'button2.png', style2, 'button2clicked.png');
+  toggleAble.onclick(function(){
+    console.log('Hello World 2');
+  });
+  buyGroup.add(toggleAble.button);
 
   const saveGroup:Phaser.Group = game.game.add.group();
   saveGroup.visible = true;

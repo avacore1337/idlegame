@@ -33,6 +33,10 @@ declare class Phasetips {
 	simulateOnHoverOver(): void;
 
 	simulateOnHoverOut(): void;
+
+	getGroup(): any;
+
+	updateText(text: string): void;
 }
 
 
