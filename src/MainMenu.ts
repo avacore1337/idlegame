@@ -27,12 +27,12 @@ export class MainMenu extends Phaser.State {
     resetSave();
     self.state.start('mainGame', true, false);
   });
-  const load:Button = new Button(this.game, 535, 300, 'menu', 'Load Game', 'button.png', style, {disableAble:true});
+  const load:Button = new Button(this.game, 535, 300, 'menu', 'Load Game', 'button.png', style, {disableAble:true, disabledImage: 'buttondisabled.png'});
   load.onClick(Button.REGULAR, function(){
     self.state.start('mainGame', true, false);
   });
-  if(typeof(Storage) !== 'undefined' || localStorage.getItem('map') === undefined) {
-    // load.disable();
+  if(typeof(Storage) === 'undefined' || localStorage.getItem('map') === null) {
+    load.disable();
   }
   // buy.setToolTip('You need food to settle new areas.', Button.REGULAR);
   }
