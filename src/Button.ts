@@ -145,7 +145,7 @@ export class Button {
     this.buttons[button][Button.SPRITE].events.onInputUp.add(function() {
       const toggled:boolean = self.toggled; // Since the callBack might change the toggle state
       callBack();
-      if(self.toggleAble) {
+      if(!self.disabled && self.toggleAble) {
         self.buttons[Button.REGULAR][Button.GROUP].vissible = toggled;
         self.buttons[Button.TOGGLED][Button.GROUP].vissible = !toggled;
       }
@@ -154,6 +154,23 @@ export class Button {
   }
 
   unToggle():void {
+    if(this.disabled) {
+      return;
+    }
+    if(this.toggleAble) {
+      this.buttons[Button.REGULAR][Button.GROUP].visible = true;
+      this.buttons[Button.TOGGLED][Button.GROUP].visible = false;
+      this.buttons[Button.DISABLED][Button.GROUP].visible = false;
+    }
+  }
+
+  disable():void {
+    this.buttons[Button.REGULAR][Button.GROUP].visible = false;
+    this.buttons[Button.TOGGLED][Button.GROUP].visible = false;
+    this.buttons[Button.DISABLED][Button.GROUP].visible = true;
+  }
+
+  enable():void {
     this.buttons[Button.REGULAR][Button.GROUP].visible = true;
     this.buttons[Button.TOGGLED][Button.GROUP].visible = false;
     this.buttons[Button.DISABLED][Button.GROUP].visible = false;
@@ -172,5 +189,13 @@ export class Button {
         this.buttons[button][Button.TOOLTIP].updateText(content);
       }
     }
+  }
+
+  hide():void {
+    this.group.visible = false;
+  }
+
+  show():void {
+    this.group.visible = true;
   }
 }
