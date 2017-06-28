@@ -11,7 +11,7 @@ export function shuffle(a:any[]):void {
 export function toReadableString(counter:Counter<number>):string {
   let ret:string = '';
   for (const key of counter.values.keys()){
-    ret += MATERIALSTRINGLIST[key] + ': ' + counter.values.get(key) + '\n';
+    ret += MATERIALSTRINGLIST[key] + ': ' + counter.values.get(key).toFixed(2) + '\n';
   }
   return ret;
 }

@@ -32,6 +32,7 @@ export class Button {
     this.toggleAble = false;
     this.disableAble = false;
     this.group = game.add.group();
+    this.update = function(){};
 
     // ------------------
     // | REGULAR BUTTON |

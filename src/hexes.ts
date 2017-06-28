@@ -46,6 +46,9 @@ function placeHexes(game:MainGame){
         if (theSquare.purchased && game.gamestate === 'building' && BUILDINGCLASSES[game.option].canBuild(theSquare) && game.materialContainer.materials.isSubset(BUILDINGCLASSES[game.option].getRequiredMaterials())) {
           game.materialContainer.pay(BUILDINGCLASSES[game.option].getRequiredMaterials());
           theSquare.addBuilding(game.option);
+          for (const button of game.allButtons) {
+            button.update();
+          }
         }
         if(game.gamestate ==='buying' && !theSquare.purchased && game.materialContainer.materials.get(MATERIALS.Food) >= 10*Math.pow(1.4, theSquare.distance) && theSquare.distance <= Square.buildDistance){
           game.materialContainer.materials.subtract(MATERIALS.Food, 10*Math.pow(1.4, theSquare.distance));

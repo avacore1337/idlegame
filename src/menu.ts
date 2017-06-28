@@ -167,7 +167,7 @@ function setupBuildings(game:MainGame, style:object):Phaser.Group {
     const b = BUILDINGCLASSES[index];
     const building:Button = new Button(game.game, 0, 0, 'menu', b.title, 'button2.png', style, {'toggleAble': true, 'disableAble': false, 'toggledImage': 'button2clicked.png'});
     building.hide();
-    building.onClick(Button.REGULAR, function(){
+    building.onClick(Button.REGULAR, function():void {
       game.needsupdate = true;
       for (const button of game.allButtons) {
         button.unToggle();
@@ -175,13 +175,17 @@ function setupBuildings(game:MainGame, style:object):Phaser.Group {
       game.option = index;
       game.gamestate = 'building';
     });
-    building.onClick(Button.TOGGLED, function(){
+    building.onClick(Button.TOGGLED, function():void {
       game.needsupdate = true;
       game.option = -1;
       game.gamestate = '';
     });
     building.setToolTip(Button.REGULAR, toReadableString(b.getRequiredMaterials()));
     building.setToolTip(Button.TOGGLED, toReadableString(b.getRequiredMaterials()));
+    building.addUpdate(function():void {
+      building.setToolTip(Button.REGULAR, toReadableString(b.getRequiredMaterials()));
+      building.setToolTip(Button.TOGGLED, toReadableString(b.getRequiredMaterials()));
+    });
     group.add(building.group);
     game.allButtons.push(building);
     if (b.isEnabled()) {
@@ -202,7 +206,7 @@ function setupConstructions(game:MainGame, style:object):Phaser.Group {
     const c = CONSTRUCTIONCLASSES[index];
     const construction:Button = new Button(game.game, 0, 0, 'menu', c.title, 'button2.png', style);
     construction.hide();
-    construction.onClick(Button.REGULAR, function(){
+    construction.onClick(Button.REGULAR, function():void {
       const canAfford = game.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
       if (canAfford) {
         game.needsupdate = true;
@@ -228,7 +232,7 @@ function setupResearch(game:MainGame, style:object):Phaser.Group {
   for(const r of TechList){
     const research:Button = new Button(game.game, 0, 0, 'menu', r.name, 'button2.png', style);
     research.hide();
-    research.onClick(Button.REGULAR, function(){
+    research.onClick(Button.REGULAR, function():void {
       const canAfford = true;
       if (canAfford) {
         game.needsupdate = true;
