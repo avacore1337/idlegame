@@ -13,5 +13,5 @@ export function toReadableString(counter:Counter<number>):string {
   for (const key of counter.values.keys()){
     ret += MATERIALSTRINGLIST[key] + ': ' + counter.values.get(key).toFixed(2) + '\n';
   }
-  return ret;
+  return ret.substring(0, ret.length - 1);
 }

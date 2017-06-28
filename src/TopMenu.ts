@@ -88,8 +88,16 @@ function createBuildings(game:MainGame, headerStyle:object):Phaser.Group {
     building.setToolTip(Button.REGULAR, toReadableString(b.getRequiredMaterials()));
     building.setToolTip(Button.TOGGLED, toReadableString(b.getRequiredMaterials()));
     building.addUpdate(function():void {
+      if (b.isEnabled()) {
+        building.show();
+        game.visibleBuildings += 1;
+        building.group.y = 25 * game.visibleBuildings;
+        } else {
+          building.hide();
+        }
       building.setToolTip(Button.REGULAR, toReadableString(b.getRequiredMaterials()));
       building.setToolTip(Button.TOGGLED, toReadableString(b.getRequiredMaterials()));
+
     });
     group.add(building.group);
     game.allButtons.push(building);
@@ -109,13 +117,33 @@ function createConstructions(game:MainGame, headerStyle:object):Phaser.Group {
   game.menuGroup.add(group);
   for (let index = 0; index < CONSTRUCTIONS.Length; index++) {
     const c = CONSTRUCTIONCLASSES[index];
-    const construction:Button = new Button(game.game, 0, 0, 'menu', c.title, 'button2.png', headerStyle);
+    const construction:Button = new Button(game.game, 0, 0, 'menu', c.title + ' ' + c.amount, 'button2.png', headerStyle, {disableAble:true, disabledImage:'button2disabled.png'});
     construction.hide();
     construction.onClick(Button.REGULAR, function():void {
       const canAfford = game.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
       if (canAfford) {
         game.needsupdate = true;
         CONSTRUCTIONCLASSES[index].build(game);
+      }
+    });
+    construction.addUpdate(function(){
+      construction.setToolTip(Button.REGULAR, toReadableString(c.getRequiredMaterials()));
+      construction.setToolTip(Button.DISABLED, toReadableString(c.getRequiredMaterials()));
+      construction.setText(Button.REGULAR, c.title + ' ' + c.amount);
+      construction.setText(Button.DISABLED, c.title + ' ' + c.amount);
+      if (c.isEnabled()) {
+        construction.show();
+        game.visibleConstructions += 1;
+        construction.group.y = 25 * game.visibleConstructions;
+      } else {
+        construction.hide();
+      }
+      const canAfford = game.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
+      if(canAfford){
+        construction.enable();
+      }
+      else {
+        construction.disable();
       }
     });
     group.add(construction.group);
@@ -142,47 +170,18 @@ function createResearch(game:MainGame, headerStyle:object):Phaser.Group {
       if (canAfford) {
         game.needsupdate = true;
         r.research();
-
-        const specialButtons = 1; // The buy button
-
-        // Update what building-buttons should be visible
-        let visibleButtons = 0;
-        for (let index = specialButtons; index < specialButtons + BUILDINGS.Length; index++) {
-          if (BUILDINGCLASSES[index - specialButtons].isEnabled()) {
-            game.allButtons[index].show();
-            visibleButtons++;
-            game.allButtons[index].group.y = 25 * visibleButtons;
-          } else {
-            game.allButtons[index].hide();
-          }
-        }
-
-        // Update what townBuilding-buttons should be visible
-        visibleButtons = 0;
-        for (let index = specialButtons + BUILDINGS.Length; index < specialButtons + CONSTRUCTIONS.Length + BUILDINGS.Length; index++) {
-          if (CONSTRUCTIONCLASSES[index - BUILDINGS.Length - specialButtons].isEnabled()) {
-            game.allButtons[index].show();
-            visibleButtons++;
-            game.allButtons[index].group.y = 25 * visibleButtons;
-          } else {
-            game.allButtons[index].hide();
-          }
-        }
-
-        // Update what research-buttons should be visible
-        visibleButtons = 0;
-        for (let index = specialButtons + CONSTRUCTIONS.Length + BUILDINGS.Length; index < specialButtons + TechList.length + CONSTRUCTIONS.Length + BUILDINGS.Length; index++) {
-          if (TechList[index - CONSTRUCTIONS.Length - BUILDINGS.Length - specialButtons].researchable()) {
-            game.allButtons[index].show();
-            visibleButtons++;
-            game.allButtons[index].group.y = 25 * visibleButtons;
-          } else {
-            game.allButtons[index].hide();
-          }
-        }
       }
     });
     research.setToolTip(Button.REGULAR, r.description);
+    research.addUpdate(function(){
+      if (r.researchable()) {
+          research.show();
+          game.visibleTechs++;
+          research.group.y = 25 * game.visibleTechs;
+        } else {
+          research.hide();
+        }
+    });
     group.add(research.group);
     game.allButtons.push(research);
     if (r.researchable()) {

@@ -11,6 +11,7 @@ export class Button {
   private static readonly GROUP:number = 0;
   private static readonly SPRITE:number = 1;
   private static readonly TOOLTIP:number = 2;
+  private static readonly TEXT:number = 3;
 
   game:Phaser.Game;
 
@@ -21,7 +22,7 @@ export class Button {
   toggleAble:boolean;
   disableAble:boolean;
   group:Phaser.Group;
-  update: () => void;
+  updateCallback: () => void;
 
   constructor(game:Phaser.Game, x:number, y:number, key:any, text:string, image:string, style:any, options?:any) {
     const self = this;
@@ -32,7 +33,7 @@ export class Button {
     this.toggleAble = false;
     this.disableAble = false;
     this.group = game.add.group();
-    this.update = function(){};
+    this.updateCallback = function(){};
 
     // ------------------
     // | REGULAR BUTTON |
@@ -54,6 +55,7 @@ export class Button {
     regGroup.add(regTxt);
     // Tooltip
     reg.push(undefined);
+    reg.push(regTxt);
     // Export button
     this.buttons.push(reg);
     this.group.add(regGroup);
@@ -94,6 +96,7 @@ export class Button {
         togGroup.add(togTxt);
         // Tooltip
         tog.push(undefined);
+        tog.push(togTxt);
         // Export button
         this.buttons.push(tog);
         this.group.add(togGroup);
@@ -123,6 +126,7 @@ export class Button {
         disGroup.add(disTxt);
         // Tooltip
         dis.push(undefined);
+        dis.push(disTxt);
         // Export button
         this.buttons.push(dis);
         this.group.add(disGroup);
@@ -171,7 +175,11 @@ export class Button {
   }
 
   addUpdate(callBack: () => void):void {
-    this.update = callBack;
+    this.updateCallback = callBack;
+  }
+
+  update():void {
+    this.updateCallback();
   }
 
   draw():void {
@@ -196,6 +204,12 @@ export class Button {
         this.buttons[Button.DISABLED][Button.GROUP].visible = false;
       }
     }
+  }
+
+  setText(button:number, content:string):void {
+    const text = this.buttons[button][Button.TEXT];
+    text.text = content;
+    text.updateText();
   }
 
   setToolTip(button:number, content:string):void {
