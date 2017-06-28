@@ -1,4 +1,5 @@
 import { Counter } from './Counter';
+import { Game } from './app';
 import { Square } from './Square';
 import { MaterialContainer } from './MaterialContainer';
 import { cameraControls } from './cameraControls';
@@ -9,8 +10,7 @@ import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants'
 
 export class MainGame extends Phaser.State {
 
-  // game: Phaser.Game;
-
+  static myGame: Game;
   hexagonWidth:number = 70;
   hexagonHeight:number = 80;
   gridSizeX:number = 16;
@@ -33,12 +33,11 @@ export class MainGame extends Phaser.State {
   materialContainer:MaterialContainer;
   materialLabels:Phaser.Text[]; // TODO ; These should not be here I don't think
 
-  // constructor(theGame:Phaser.Game) {
+  // constructor() {
   //   this.materialLabels = [];
   //   this.materialUpdate = 0;
   //   this.gamestate = '';
   //   this.needsupdate = false;
-  //   this.game = theGame;
   //   this.hexMatrix = [];
   //   for (let i = 0; i < this.gridSizeY; i++) {
   //     this.hexMatrix.push([]);
@@ -125,7 +124,7 @@ export class MainGame extends Phaser.State {
     }
 
     // Update camera
-    cameraControls(this.game, this.cursors, this.menuGroup);
+    cameraControls(this.game, this.cursors);
   }
 
   render():void {
