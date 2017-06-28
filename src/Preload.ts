@@ -9,7 +9,7 @@ export class Preload extends Phaser.State {
   }
 
   create() {
-    this.state.start('mainMenu');
+    this.state.start('mainMenu', true, false);
   }
 
 }
