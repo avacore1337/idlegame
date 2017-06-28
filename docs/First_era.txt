@@ -62,8 +62,32 @@ Taxation (Math): every owned tiles give gold
 Metalworking (Copper): enables smelters
 Iron working (Metalworking): enables iron smith
 
+Evolution points: x*5 % gain to all resources,
+Genes:
+
+1 Brain size: research++
+2 Dedicated thinker: research when clicking++
+2 Daydreaming: all owned tiles gives a small base research
+3 Genetic memory: start with technologies in first era
 
 
+
+1 Muscle size: base resource gain++
+2 Dexterous: gain more when refining
+2 Hard worker: resources when clicking++
+3 Resourcefull Ancestors: start with X in all base resources
+
+
+1 Traveler: buying range ++
+2 Hunger management: less food needed when expanding
+2 Bountiful gains: food gain++
+3 Bountifull start: start with X in food
+
+(unlocked by buiding in era 2? )
+1 Advanced evolution: evolution point bonus + %
+2 Faster evolution: evolution point gain++
+2 adapting civilization: cheaper era
+3 Leaping civilization: start in era X
 
 
 Stone age
