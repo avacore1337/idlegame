@@ -56,7 +56,6 @@ export class MainGame extends Phaser.State {
     }
 
     this.modal = new gameModal(this.game);
-
     loadMaterials(this);
     this.game.stage.backgroundColor = '#ffffff';
     this.game.world.setBounds(0, 0, 1600, 1600);
