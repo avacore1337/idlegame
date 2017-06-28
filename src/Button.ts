@@ -8,9 +8,9 @@ export class Button {
   public static readonly TOGGLED:number = 1;
   public static readonly DISABLED:number = 2;
 
-  public static readonly GROUP:number = 0;
-  public static readonly SPRITE:number = 1;
-  public static readonly TOOLTIP:number = 2;
+  private static readonly GROUP:number = 0;
+  private static readonly SPRITE:number = 1;
+  private static readonly TOOLTIP:number = 2;
 
   game:Phaser.Game;
 
@@ -21,6 +21,7 @@ export class Button {
   toggleAble:boolean;
   disableAble:boolean;
   group:Phaser.Group;
+  update: () => void;
 
   constructor(game:Phaser.Game, x:number, y:number, key:any, text:string, image:string, style:object, options?:any) {
     const self = this;
@@ -138,7 +139,7 @@ export class Button {
       callBack();
       if(!self.disabled && self.toggleAble) {
         self.toggled = !self.toggled;
-        self.update();
+        self.draw();
       }
     });
     return true;
@@ -146,20 +147,24 @@ export class Button {
 
   unToggle():void {
     this.toggled = false;
-    this.update();
+    this.draw();
   }
 
   disable():void {
     this.disabled = true;
-    this.update();
+    this.draw();
   }
 
   enable():void {
     this.disabled = false;
-    this.update();
+    this.draw();
   }
 
-  update():void {
+  addUpdate(callBack: () => void):void {
+    this.update = callBack;
+  }
+
+  draw():void {
     if(this.disabled) {
       this.buttons[Button.REGULAR][Button.GROUP].visible = false;
       if(this.toggleAble) {

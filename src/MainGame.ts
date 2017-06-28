@@ -29,7 +29,7 @@ export class MainGame extends Phaser.State {
   needsupdate:boolean;
   materialUpdate:number;
   modal:gameModal;
-  allToggleableButtons:Array<Button>;
+  allButtons:Array<Button>;
 
   // materials:Counter<MATERIALS>;
   materialContainer:MaterialContainer;
@@ -47,7 +47,7 @@ export class MainGame extends Phaser.State {
   // }
 
   create():void {
-    this.allToggleableButtons = [];
+    this.allButtons = [];
     this.materialLabels = [];
     this.materialUpdate = 0;
     this.gamestate = '';

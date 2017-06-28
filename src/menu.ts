@@ -35,7 +35,7 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group):any{
   const buy:Button = new Button(game.game, 224, 0, 'menu', 'Buy', 'button.png', style2, {toggleAble:true, toggledImage:'buttonclicked.png'});
   buy.onClick(Button.REGULAR, function(){
     game.gamestate = 'buying';
-    for (const button of game.allToggleableButtons) {
+    for (const button of game.allButtons) {
       button.unToggle();
     }
     game.needsupdate = true;
@@ -45,7 +45,7 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group):any{
     game.gamestate = '';
     game.needsupdate = true;
   });
-  game.allToggleableButtons.push(buy);
+  game.allButtons.push(buy);
 
   botMenu.add(buy.group);
 
@@ -77,7 +77,7 @@ export function createMenu(game:MainGame):void{
   const topSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
   topMenu.add(topSprite);
   game.menuGroup.add(topMenu);
-  //const game.allToggleableButtons:any = [];
+  //const game.allButtons:any = [];
   const botMenu = game.game.add.group();
   game.menuGroup.add(botMenu);
   createBottomMenu(game, botMenu);
@@ -103,25 +103,72 @@ export function createMenu(game:MainGame):void{
   mainMenuButton.events.onInputUp.add(function() {
     game.modal.showModal('mainModal');
   });
-  // mainMenu.add(game.modal);
 
-  // -----------------------
-  // | SETUP FOR BUILDINGS |
-  // -----------------------
-  // The button at the top
+  const bGroup:Phaser.Group = setupBuildings(game, style);
+  const cGroup:Phaser.Group = setupConstructions(game, style);
+  const rGroup:Phaser.Group = setupResearch(game, style);
+  setupTopbar(game, style, bGroup, cGroup, rGroup);
+}
+
+function setupTopbar(game:MainGame, style:object, bGroup:Phaser.Group, cGroup:Phaser.Group, rGroup:Phaser.Group):void {
+  const group = game.add.group();
   const buildings = new Button(game.game, 0, 0, 'menu', 'Buildings', 'button.png', style);
-  game.menuGroup.add(buildings.group);
-  // The different buildings
+  const constructions = new Button(game.game, 112, 0, 'menu', 'Town buildings', 'button.png', style);
+  const research = new Button(game.game, 224, 0, 'menu', 'Research', 'button.png', style);
+  group.add(buildings.group);
+  group.add(constructions.group);
+  group.add(research.group);
+  game.menuGroup.add(group);
+
+  buildings.onClick(Button.REGULAR, function() {
+    game.needsupdate = true;
+    if (game.gamestate !== 'building') {
+      game.option = -1;
+      game.gamestate = '';
+    }
+    cGroup.visible = false;
+    rGroup.visible = false;
+    bGroup.visible = true;
+  });
+  constructions.onClick(Button.REGULAR, function() {
+    game.needsupdate = true;
+    if (game.gamestate !== 'construction') {
+      game.option = -1;
+      game.gamestate = '';
+    }
+    bGroup.visible = false;
+    rGroup.visible = false;
+    cGroup.visible = true;
+    for (const button of game.allButtons) {
+      button.unToggle();
+    }
+  });
+  research.onClick(Button.REGULAR, function() {
+    game.needsupdate = true;
+    if (game.gamestate !== 'research') {
+      game.option = -1;
+      game.gamestate = '';
+    }
+    bGroup.visible = false;
+    cGroup.visible = false;
+    rGroup.visible = true;
+    for (const button of game.allButtons) {
+      button.unToggle();
+    }
+  });
+}
+
+function setupBuildings(game:MainGame, style:object):Phaser.Group {
   let startingButtons = 0;
-  const buildingGroup = game.game.add.group();
-  game.menuGroup.add(buildingGroup);
+  const group = game.game.add.group();
+  game.menuGroup.add(group);
   for (let index = 0; index < BUILDINGS.Length; index++) {
     const b = BUILDINGCLASSES[index];
     const building:Button = new Button(game.game, 0, 0, 'menu', b.title, 'button2.png', style, {'toggleAble': true, 'disableAble': false, 'toggledImage': 'button2clicked.png'});
     building.hide();
     building.onClick(Button.REGULAR, function(){
       game.needsupdate = true;
-      for (const button of game.allToggleableButtons) {
+      for (const button of game.allButtons) {
         button.unToggle();
       }
       game.option = index;
@@ -134,166 +181,104 @@ export function createMenu(game:MainGame):void{
     });
     building.setToolTip(Button.REGULAR, toReadableString(b.getRequiredMaterials()));
     building.setToolTip(Button.TOGGLED, toReadableString(b.getRequiredMaterials()));
-    buildingGroup.add(building.group);
-    game.allToggleableButtons.push(building);
+    group.add(building.group);
+    game.allButtons.push(building);
     if (b.isEnabled()) {
       building.show();
       startingButtons++;
       building.group.y = 25 * startingButtons;
     }
   }
+  return group;
+}
 
-  // SETUP FOR TOWN BUILDINGS
-  // -------------------
-  const button2 = game.game.add.sprite(112, 0,'menu', 'button.png');
-  const town:Phaser.Text = game.game.add.text(120, 3, 'Town buildings', style);
-  const townBuildingGroup = game.game.add.group();
-  game.menuGroup.add(townBuildingGroup);
-  townBuildingGroup.visible = false;
-  const buttons2 = [];
-  startingButtons = 0;
+function setupConstructions(game:MainGame, style:object):Phaser.Group {
+  let startingButtons = 0;
+  const group = game.game.add.group();
+  group.visible = false;
+  game.menuGroup.add(group);
   for (let index = 0; index < CONSTRUCTIONS.Length; index++) {
     const c = CONSTRUCTIONCLASSES[index];
-    const cgroup = game.game.add.group();
-    cgroup.visible = false;
-    townBuildingGroup.add(cgroup);
-    const cbutton = game.game.add.sprite(0, 0,'menu', 'button2.png');
-    cgroup.add(cbutton);
-    cbutton.visible = true;
-    cbutton.inputEnabled = true;
-    const ctext:Phaser.Text = game.game.add.text(3, 3, c.title, style);
-    cgroup.add(ctext);
-    if (c.isEnabled()) {
-      cgroup.visible = true;
-      startingButtons++;
-      cgroup.y = 25 * startingButtons;
-    }
-    buttons2.push({'group': cgroup});
-    cbutton.events.onInputUp.add(function() {
+    const construction:Button = new Button(game.game, 0, 0, 'menu', c.title, 'button2.png', style);
+    construction.hide();
+    construction.onClick(Button.REGULAR, function(){
       const canAfford = game.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
       if (canAfford) {
         game.needsupdate = true;
         CONSTRUCTIONCLASSES[index].build(game);
       }
     });
-  }
-  game.menuGroup.add(button2);
-  game.menuGroup.add(town);
-
-
-  // SETUP FOR RESEARCH
-  // -------------------
-  const button3 = game.game.add.sprite(224, 0,'menu', 'button.png');
-  const research:Phaser.Text = game.game.add.text(250, 3, 'Research', style);
-  const researchGroup = game.game.add.group();
-  game.menuGroup.add(researchGroup);
-  researchGroup.visible = false;
-  const buttons3 = [];
-  startingButtons = 0;
-  for(const r of TechList){
-    const rgroup = game.game.add.group();
-    rgroup.visible = false;
-    if (r.researchable()) {
-      rgroup.visible = true;
+    group.add(construction.group);
+    game.allButtons.push(construction);
+    if (c.isEnabled()) {
+      construction.show();
       startingButtons++;
-      rgroup.y = 25 * startingButtons;
+      construction.group.y = 25 * startingButtons;
     }
-    researchGroup.add(rgroup);
-    buttons3.push(rgroup);
-    const rbutton = game.game.add.sprite(0, 0,'menu', 'button2.png');
-    rbutton.visible = true;
-    rbutton.inputEnabled = true;
-    rgroup.add(rbutton);
-    const rtext:Phaser.Text = game.game.add.text(3, 3, r.name, style);
-    rgroup.add(rtext);
-    rbutton.events.onInputUp.add(function() {
+  }
+  return group;
+}
+
+function setupResearch(game:MainGame, style:object):Phaser.Group {
+  let startingButtons = 0;
+  const group = game.game.add.group();
+  group.visible = false;
+  game.menuGroup.add(group);
+  for(const r of TechList){
+    const research:Button = new Button(game.game, 0, 0, 'menu', r.name, 'button2.png', style);
+    research.hide();
+    research.onClick(Button.REGULAR, function(){
       const canAfford = true;
       if (canAfford) {
         game.needsupdate = true;
         r.research();
 
+        const specialButtons = 1; // The buy button
+
         // Update what building-buttons should be visible
         let visibleButtons = 0;
-        for (let index = 0; index < BUILDINGS.Length; index++) {
-          if (BUILDINGCLASSES[index].isEnabled()) {
+        for (let index = specialButtons; index < specialButtons + BUILDINGS.Length; index++) {
+          if (BUILDINGCLASSES[index - specialButtons].isEnabled()) {
+            game.allButtons[index].show();
             visibleButtons++;
-            game.allToggleableButtons[index].group.y = 25 * visibleButtons;
-            game.allToggleableButtons[index].group.visible = true;
+            game.allButtons[index].group.y = 25 * visibleButtons;
           } else {
-            game.allToggleableButtons[index].group.visible = false;
+            game.allButtons[index].hide();
           }
         }
 
         // Update what townBuilding-buttons should be visible
         visibleButtons = 0;
-        for (let index = 0; index < CONSTRUCTIONS.Length; index++) {
-          if (CONSTRUCTIONCLASSES[index].isEnabled()) {
+        for (let index = specialButtons + BUILDINGS.Length; index < specialButtons + CONSTRUCTIONS.Length + BUILDINGS.Length; index++) {
+          if (CONSTRUCTIONCLASSES[index - BUILDINGS.Length - specialButtons].isEnabled()) {
+            game.allButtons[index].show();
             visibleButtons++;
-            buttons2[index].group.y = 25 * visibleButtons;
-            buttons2[index].group.visible = true;
+            game.allButtons[index].group.y = 25 * visibleButtons;
           } else {
-            buttons2[index].group.visible = false;
+            game.allButtons[index].hide();
           }
         }
 
         // Update what research-buttons should be visible
         visibleButtons = 0;
-        for (let index = 0; index < TechList.length; index++) {
-          if (TechList[index].researchable()) {
+        for (let index = specialButtons + CONSTRUCTIONS.Length + BUILDINGS.Length; index < specialButtons + TechList.length + CONSTRUCTIONS.Length + BUILDINGS.Length; index++) {
+          if (TechList[index - CONSTRUCTIONS.Length - BUILDINGS.Length - specialButtons].researchable()) {
+            game.allButtons[index].show();
             visibleButtons++;
-            buttons3[index].y = 25 * visibleButtons;
-            buttons3[index].visible = true;
+            game.allButtons[index].group.y = 25 * visibleButtons;
           } else {
-            buttons3[index].visible = false;
+            game.allButtons[index].hide();
           }
         }
       }
     });
+    group.add(research.group);
+    game.allButtons.push(research);
+    if (r.researchable()) {
+      research.show();
+      startingButtons++;
+      research.group.y = 25 * startingButtons;
+    }
   }
-  game.menuGroup.add(button3);
-  game.menuGroup.add(research);
-
-  // Toggle between 'Buildings' / 'Town buildings' / 'Research'
-  button2.inputEnabled = true;
-  button3.inputEnabled = true;
-  buildings.onClick(Button.REGULAR, function() {
-    game.needsupdate = true;
-    if (game.gamestate !== 'building') {
-      game.option = -1;
-      game.gamestate = '';
-    }
-    buildingGroup.visible = true;
-    townBuildingGroup.visible = false;
-    researchGroup.visible = false;
-  });
-  button2.events.onInputUp.add(function() {
-    game.needsupdate = true;
-    if (game.gamestate !== 'town') {
-      game.option = -1;
-      game.gamestate = '';
-    }
-    buildingGroup.visible = false;
-    townBuildingGroup.visible = true;
-    researchGroup.visible = false;
-    for (const button of game.allToggleableButtons) {
-      button.unToggle();
-    }
-  });
-  button3.events.onInputUp.add(function() {
-    game.needsupdate = true;
-    if (game.gamestate !== 'research') {
-      game.option = -1;
-      game.gamestate = '';
-    }
-    buildingGroup.visible = false;
-    townBuildingGroup.visible = false;
-    researchGroup.visible = true;
-    for (const button of game.allToggleableButtons) {
-      button.unToggle();
-    }
-  });
-
-  game.menuGroup.add(button3);
-  game.menuGroup.add(town);
-  game.menuGroup.add(research);
+  return group;
 }
