@@ -56,8 +56,8 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
     game.needsupdate = true;
   });
 */
-  const buy:Button = new Button(game, 224, 0, 'menu', 'Buy', 'button.png', style2);
-  buy.onToggle(function(){
+  const buy:Button = new Button(game.game, 224, 0, 'menu', 'Buy', 'button.png', style2);
+  buy.onClick(function(){
     if(game.gamestate !== 'buying'){
       game.gamestate = 'buying';
       for (const button of buttons1) {
@@ -69,9 +69,9 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
       game.gamestate = '';
     }
     game.needsupdate = true;
-  });
-  buy.setToolTip('You need food to settle new areas.');
-  botMenu.add(buy.regular);
+  }, Button.REGULAR);
+  buy.setToolTip('You need food to settle new areas.', Button.REGULAR);
+  botMenu.add(buy.group);
 
   const saveGroup:Phaser.Group = game.game.add.group();
   saveGroup.visible = true;

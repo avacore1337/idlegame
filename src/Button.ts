@@ -4,45 +4,60 @@ import { MainGame } from './MainGame';
 
 export class Button {
 
-  regular:Phaser.Group;
-  toggled:Phaser.Group;
-  disabled:Phaser.Group;
-  game:MainGame;
+  public static readonly REGULAR:number = 0;
+  public static readonly TOGGLED:number = 1;
+  public static readonly DISABLED:number = 2;
+
+  public static readonly GROUP:number = 0;
+  public static readonly SPRITE:number = 1;
+  public static readonly TOOLTIP:number = 2;
+
+  game:Phaser.Game;
+
+  buttons:Array<Array<any>>;
+
+  toggled:boolean;
+  disabled:boolean;
   toggleAble:boolean;
   disableAble:boolean;
-  isToggled:boolean;
+  group:Phaser.Group;
 
-  image:string;
-  text:string;
-  style:object;
-  effect: () => void;
-  regTool:Phasetips;
-
-  toggledImage:string;
-  toggledText:string;
-  toggledStyle:object;
-  toggledEffect: () => void;
-  togTool:Phasetips;
-
-  disabledImage:string;
-  disabledText:string;
-  disabledStyle:object;
-  disTool:Phasetips;
-
-  constructor(game:MainGame, x:number, y:number, key:any, text:string, image:string, style:object, options?:any) {
+  constructor(game:Phaser.Game, x:number, y:number, key:any, text:string, image:string, style:object, options?:any) {
     const self = this;
     this.game = game;
+    this.buttons = [];
+    this.toggled = false;
+    this.disabled = false;
     this.toggleAble = false;
     this.disableAble = false;
-    this.image = image;
-    this.text = text;
-    this.style = style;
-    this.effect = undefined;
-    this.toggledEffect = undefined;
-    this.isToggled = false;
-    this.disTool = undefined;
+    this.group = game.add.group();
 
-    if(options) {
+    // ------------------
+    // | REGULAR BUTTON |
+    // ------------------
+    const reg:Array<any> = [];
+    // Group
+    const regGroup = game.add.group();
+    regGroup.x = x;
+    regGroup.y = y;
+    reg.push(regGroup);
+    // Sprite
+    const regImg:Phaser.Sprite = game.add.sprite(0, 0, key, image);
+    regImg.visible = true;
+    regImg.inputEnabled = true;
+    regGroup.add(regImg);
+    reg.push(regImg);
+    // Text
+    const regTxt:Phaser.Text = game.add.text(26, 3, text, style);
+    regTxt.visible = true;
+    regGroup.add(regTxt);
+    // Tooltip
+    reg.push(undefined);
+    // Export button
+    this.buttons.push(reg);
+    this.group.add(regGroup);
+
+    if(options !== undefined) {
       const {
         toggleAble = false,
         disableAble = false,
@@ -53,138 +68,109 @@ export class Button {
         disabledText = text,
         disabledStyle = style
       } = options;
-      this.toggledImage = toggledImage;
-      this.toggledText = toggledText;
-      this.toggledStyle = toggledStyle;
-      this.disabledImage = disabledImage;
-      this.disabledText = disabledText;
-      this.disabledStyle = disabledStyle;
       this.toggleAble = toggleAble;
       this.disableAble = disableAble;
-    }
 
-    // Regular button
-    this.regular = game.game.add.group();
-    this.regular.x = x;
-    this.regular.y = y;
-    const regImg = game.game.add.sprite(0, 0, key, this.image);
-    const regTxt:Phaser.Text = game.game.add.text(26, 3, this.text, this.style);
+      // ------------------
+      // | TOGGLED BUTTON |
+      // ------------------
+      if(this.toggleAble) {
+        const tog:Array<any> = [];
+        // Group
+        const togGroup = game.add.group();
+        togGroup.visible = false;
+        togGroup.x = x;
+        togGroup.y = y;
+        tog.push(togGroup);
+        // Sprite
+        const togImg:Phaser.Sprite = game.add.sprite(0, 0, key, toggledImage);
+        togImg.visible = true;
+        togImg.inputEnabled = true;
+        togGroup.add(togImg);
+        tog.push(togImg);
+        // Text
+        const togTxt:Phaser.Text = game.add.text(26, 3, toggledText, toggledStyle);
+        togTxt.visible = true;
+        togGroup.add(togTxt);
+        // Tooltip
+        tog.push(undefined);
+        // Export button
+        this.buttons.push(tog);
+        this.group.add(togGroup);
+      } else {
+        this.buttons.push(undefined); // Toggled
+      }
 
-    regImg.visible = true;
-    regTxt.visible = true;
-
-    this.regular.add(regImg);
-    this.regular.add(regTxt);
-
-    regImg.inputEnabled = true;
-    regImg.events.onInputUp.add(function() {
-      self.effect();
-    });
-
-    this.regular.visible = true;
-
-    this.regTool = new Phasetips(game.game, {
-      targetObject: regImg,
-      context: ' ',
-      position: 'right'
-    });
-    this.regular.add(this.regTool.getGroup());
-
-    // Toggled button
-    if(this.toggleAble) {
-      this.toggled = game.game.add.group();
-      this.toggled.x = x;
-      this.toggled.y = y;
-      const togImg = game.game.add.sprite(0, 0, key, this.toggledImage);
-      const togTxt:Phaser.Text = game.game.add.text(26, 3, this.toggledText, this.toggledStyle);
-
-      togImg.visible = true;
-      togTxt.visible = true;
-
-      this.toggled.add(togImg);
-      this.toggled.add(togTxt);
-
-      togImg.inputEnabled = true;
-      togImg.events.onInputUp.add(function() {
-        self.effect();
-      });
-
-      this.toggled.visible = false;
-
-      this.togTool = new Phasetips(game.game, {
-        targetObject: togImg,
-        context: ' ',
-        position: 'right'
-      });
-      this.toggled.add(this.togTool.getGroup());
+      // -------------------
+      // | DISABLED BUTTON |
+      // -------------------
+      if(this.disableAble) {
+        const dis:Array<any> = [];
+        // Group
+        const disGroup = game.add.group();
+        disGroup.visible = false;
+        disGroup.x = x;
+        disGroup.y = y;
+        dis.push(disGroup);
+        // Sprite
+        const disImg:Phaser.Sprite = game.add.sprite(0, 0, key, disabledImage);
+        disImg.visible = true;
+        disImg.inputEnabled = true;
+        disGroup.add(disImg);
+        dis.push(disImg);
+        // Text
+        const disTxt:Phaser.Text = game.add.text(26, 3, disabledText, disabledStyle);
+        disTxt.visible = true;
+        disGroup.add(disTxt);
+        // Tooltip
+        dis.push(undefined);
+        // Export button
+        this.buttons.push(dis);
+        this.group.add(disGroup);
+      } else {
+        this.buttons.push(undefined); // Disabled
+      }
     } else {
-      this.toggled = undefined;
-    }
-
-
-    // Disabled button
-    if(this.disableAble) {
-      this.disabled = game.game.add.group();
-      this.disabled.x = x;
-      this.disabled.y = y;
-      const disImg = game.game.add.sprite(0, 0, key, this.disabledImage);
-      const disTxt:Phaser.Text = game.game.add.text(26, 3, this.disabledText, this.disabledStyle);
-
-      disImg.visible = true;
-      disTxt.visible = true;
-
-      this.disabled.add(disImg);
-      this.disabled.add(disTxt);
-
-      disImg.inputEnabled = true;
-      disImg.events.onInputUp.add(function() {
-        self.effect();
-      });
-
-      this.disabled.visible = false;
-
-      this.disTool = new Phasetips(game.game, {
-        targetObject: disImg,
-        context: ' ',
-        position: 'right'
-      });
-      this.disabled.add(this.disTool.getGroup());
-    } else {
-      this.disabled = undefined;
+      this.buttons.push(undefined); // Toggled
+      this.buttons.push(undefined); // Disabled
     }
   }
 
-  onToggle(callBack: () => void):void {
-    this.effect = callBack;
+  onClick(callBack: () => void, button:number):boolean {
+    if(this.buttons[button] === undefined) {
+      return false;
+    }
+
+    const self = this;
+    this.buttons[button][Button.SPRITE].events.onInputUp.add(function() {
+      const toggled:boolean = self.toggled; // Since the callBack might change the toggle state
+      callBack();
+      if(self.toggleAble) {
+        self.buttons[Button.REGULAR][Button.GROUP].vissible = toggled;
+        self.buttons[Button.TOGGLED][Button.GROUP].vissible = !toggled;
+      }
+    });
+    return true;
   }
 
-  onUnToggle(callBack: () => void):void {
-    this.toggledEffect = callBack;
+  unToggle():void {
+    this.buttons[Button.REGULAR][Button.GROUP].visible = true;
+    this.buttons[Button.TOGGLED][Button.GROUP].visible = false;
+    this.buttons[Button.DISABLED][Button.GROUP].visible = false;
   }
 
-  setToolTip(content:string):void {
-    this.regTool.updateText(content);
-  }
-
-  seToggledtToolTip(callBack:any):void {
-    // TODO
+  setToolTip(content:string, button:number):void {
+    if(this.buttons[button] !== undefined) {
+      if(this.buttons[button][Button.TOOLTIP] === undefined) {
+        this.buttons[button][Button.TOOLTIP] = new Phasetips(this.game, {
+          targetObject: this.buttons[button][Button.SPRITE],
+          context: content,
+          position: 'right'
+        });
+        this.buttons[button][Button.GROUP].add(this.buttons[button][Button.TOOLTIP].getGroup());
+      } else {
+        this.buttons[button][Button.TOOLTIP].updateText(content);
+      }
+    }
   }
 }
-
-/*
-Example usages:
-
-const style2 = { font: '14px Arial', fill: '#000000', align: 'left' };
-
-const unToggleAble:Button = new Button(game, 225, 30, 'menu', 'Save button', 'button2.png', style2);
-unToggleAble.onclick(function(){
-  console.log('Hello World 1');
-});
-mainGroup.add(unToggleAble.button);
-
-const toggleAble:Button = new Button(game, 225, 30, 'menu', 'Save button', 'button2.png', style2, 'button2clicked.png');
-toggleAble.onclick(function(){
-  console.log('Hello World 2');
-});
-mainGroup.add(toggleAble.button);
-*/
