@@ -87,7 +87,7 @@ export class Button {
         togGroup.add(togImg);
         tog.push(togImg);
         // Text
-        const togTxt:Phaser.Text = game.add.text(10, 3, text, style);
+        const togTxt:Phaser.Text = game.add.text(10, 3, toggledText, toggledStyle);
         if (style.align === 'center') {
           togTxt.x =(togImg.width - togTxt.width) / 2;
         }
@@ -116,7 +116,7 @@ export class Button {
         disGroup.add(disImg);
         dis.push(disImg);
         // Text
-        const disTxt:Phaser.Text = game.add.text(10, 3, text, style);
+        const disTxt:Phaser.Text = game.add.text(10, 3, disabledText, disabledStyle);
         if (style.align === 'center') {
           disTxt.x =(disImg.width - disTxt.width) / 2;
         }
