@@ -32,7 +32,7 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group):any{
   // --------------------------
 
 
-  const buy:Button = new Button(game.game, 224, 0, 'menu', 'Buy', 'button.png', style2, {toggleAble:true, toggledImage:'buttonclicked.png'});
+  const buy:Button = new Button(game.game, 224, 0, 'menu', 'Buy', 'button.png', style, {toggleAble:true, toggledImage:'buttonclicked.png'});
   buy.onClick(Button.REGULAR, function(){
     game.gamestate = 'buying';
     for (const button of game.allButtons) {
@@ -72,6 +72,7 @@ export function createMenu(game:MainGame):void{
   // game.menuGroup.y = 0;
 
   const style = { font: '14px Arial', fill: '#000000', align: 'center' };
+  const style2 = { font: '14px Arial', fill: '#000000', align: 'left' };
 
   const topMenu = game.game.add.group();
   const topSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
@@ -104,9 +105,9 @@ export function createMenu(game:MainGame):void{
     game.modal.showModal('mainModal');
   });
 
-  const bGroup:Phaser.Group = setupBuildings(game, style);
-  const cGroup:Phaser.Group = setupConstructions(game, style);
-  const rGroup:Phaser.Group = setupResearch(game, style);
+  const bGroup:Phaser.Group = setupBuildings(game, style2);
+  const cGroup:Phaser.Group = setupConstructions(game, style2);
+  const rGroup:Phaser.Group = setupResearch(game, style2);
   setupTopbar(game, style, bGroup, cGroup, rGroup);
 }
 

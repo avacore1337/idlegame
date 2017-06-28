@@ -23,7 +23,7 @@ export class Button {
   group:Phaser.Group;
   update: () => void;
 
-  constructor(game:Phaser.Game, x:number, y:number, key:any, text:string, image:string, style:object, options?:any) {
+  constructor(game:Phaser.Game, x:number, y:number, key:any, text:string, image:string, style:any, options?:any) {
     const self = this;
     this.game = game;
     this.buttons = [];
@@ -46,7 +46,10 @@ export class Button {
     regGroup.add(regImg);
     reg.push(regImg);
     // Text
-    const regTxt:Phaser.Text = game.add.text(26, 3, text, style);
+    const regTxt:Phaser.Text = game.add.text(10, 3, text, style);
+    if (style.align === 'center') {
+      regTxt.x =(regImg.width - regTxt.width) / 2;
+    }
     regGroup.add(regTxt);
     // Tooltip
     reg.push(undefined);
@@ -83,7 +86,10 @@ export class Button {
         togGroup.add(togImg);
         tog.push(togImg);
         // Text
-        const togTxt:Phaser.Text = game.add.text(26, 3, toggledText, toggledStyle);
+        const togTxt:Phaser.Text = game.add.text(10, 3, text, style);
+        if (style.align === 'center') {
+          togTxt.x =(togImg.width - togTxt.width) / 2;
+        }
         togGroup.add(togTxt);
         // Tooltip
         tog.push(undefined);
@@ -109,7 +115,10 @@ export class Button {
         disGroup.add(disImg);
         dis.push(disImg);
         // Text
-        const disTxt:Phaser.Text = game.add.text(26, 3, disabledText, disabledStyle);
+        const disTxt:Phaser.Text = game.add.text(10, 3, text, style);
+        if (style.align === 'center') {
+          disTxt.x =(disImg.width - disTxt.width) / 2;
+        }
         disGroup.add(disTxt);
         // Tooltip
         dis.push(undefined);
