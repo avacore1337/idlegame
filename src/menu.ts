@@ -5,7 +5,7 @@ import { TechList } from './TechTree';
 import { Button } from './Button';
 import { toReadableString } from './util';
 
-function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any{
+function createBottomMenu(game:MainGame, botMenu:Phaser.Group):any{
   const style = { font: '14px Arial', fill: '#000000', align: 'center' };
   const style2 = { font: '14px Arial', fill: '#000000', align: 'left' };
   const botSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
@@ -30,47 +30,23 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
 
   // Buttons for special things
   // --------------------------
-/*
-  const buyGroup:Phaser.Group = game.game.add.group();
-  buyGroup.visible = true;
-  buyGroup.x = 224;
-  botMenu.add(buyGroup);
-  const buyButton:Phaser.Sprite = game.game.add.sprite(0, 0, 'menu', 'button.png');
-  buyButton.visible = true;
-  buyButton.inputEnabled = true;
-  buyGroup.add(buyButton);
-  const buyText:Phaser.Text = game.game.add.text(26, 3, 'Buy', style2);
-  buyText.visible = true;
-  buyGroup.add(buyText);
-  // Add functionality to the 'Buy'-button
-  buyButton.events.onInputUp.add(function() {
-    if(game.gamestate !== 'buying'){
-      game.gamestate = 'buying';
-      for (const button of buttons1) {
-        button.regular.visible = true;
-        button.toggled.visible = false;
-      }
-    }
-    else{
-      game.gamestate = '';
-    }
-    game.needsupdate = true;
-  });
-*/
-  const buy:Button = new Button(game.game, 224, 0, 'menu', 'Buy', 'button.png', style2);
+
+
+  const buy:Button = new Button(game.game, 224, 0, 'menu', 'Buy', 'button.png', style2, {toggleAble:true, toggledImage:'buttonclicked.png'});
   buy.onClick(Button.REGULAR, function(){
-    if(game.gamestate !== 'buying'){
-      game.gamestate = 'buying';
-      for (const button of buttons1) {
-        button.unToggle();
-      }
-    }
-    else{
-      game.gamestate = '';
+    game.gamestate = 'buying';
+    for (const button of game.allToggleableButtons) {
+      button.unToggle();
     }
     game.needsupdate = true;
   });
   buy.setToolTip(Button.REGULAR, 'You need food to settle new areas.');
+  buy.onClick(Button.TOGGLED, function(){
+    game.gamestate = '';
+    game.needsupdate = true;
+  });
+  game.allToggleableButtons.push(buy);
+
   botMenu.add(buy.group);
 
   const saveGroup:Phaser.Group = game.game.add.group();
@@ -85,20 +61,6 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
   saveGroup.add(saveText);
   saveButton.events.onInputUp.add(function() {
     saveGame(game);
-  });
-
-  const resetGroup:Phaser.Group = game.game.add.group();
-  resetGroup.visible = true;
-  botMenu.add(resetGroup);
-  const resetButton:Phaser.Sprite = game.game.add.sprite(224, 60, 'menu', 'button.png');
-  resetButton.visible = true;
-  resetButton.inputEnabled = true;
-  resetGroup.add(resetButton);
-  const resetText:Phaser.Text = game.game.add.text(250, 63, 'Reset save', style2);
-  resetText.visible = true;
-  resetGroup.add(resetText);
-  resetButton.events.onInputUp.add(function() {
-    resetSave();
   });
 }
 
@@ -115,11 +77,10 @@ export function createMenu(game:MainGame):void{
   const topSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
   topMenu.add(topSprite);
   game.menuGroup.add(topMenu);
-  //const buttons1:any = [];
-  const buttons1:Array<Button> = [];
+  //const game.allToggleableButtons:any = [];
   const botMenu = game.game.add.group();
   game.menuGroup.add(botMenu);
-  createBottomMenu(game,botMenu, buttons1);
+  createBottomMenu(game, botMenu);
 
   game.modal.createModal({
       type: 'mainModal',
@@ -160,7 +121,7 @@ export function createMenu(game:MainGame):void{
     building.hide();
     building.onClick(Button.REGULAR, function(){
       game.needsupdate = true;
-      for (const button of buttons1) {
+      for (const button of game.allToggleableButtons) {
         button.unToggle();
       }
       game.option = index;
@@ -174,66 +135,13 @@ export function createMenu(game:MainGame):void{
     building.setToolTip(Button.REGULAR, toReadableString(b.getRequiredMaterials()));
     building.setToolTip(Button.TOGGLED, toReadableString(b.getRequiredMaterials()));
     buildingGroup.add(building.group);
-    buttons1.push(building);
+    game.allToggleableButtons.push(building);
     if (b.isEnabled()) {
       building.show();
       startingButtons++;
       building.group.y = 25 * startingButtons;
     }
   }
-
-  /*
-  const button1 = game.game.add.sprite(0, 0, 'menu', 'button.png');
-  const buildings:Phaser.Text = game.game.add.text(30, 3, 'Buildings', style);
-  const buildingGroup = game.game.add.group();
-  game.menuGroup.add(buildingGroup);
-  buildingGroup.visible = true;
-  let startingButtons = 0;
-  for (let index = 0; index < BUILDINGS.Length; index++) {
-    const b = BUILDINGCLASSES[index];
-    const bgroup = game.game.add.group();
-    buildingGroup.add(bgroup);
-    bgroup.visible = false;
-    const bbuttonRegular = game.game.add.sprite(0, 0,'menu', 'button2.png');
-    bgroup.add(bbuttonRegular);
-    bbuttonRegular.visible = true;
-    bbuttonRegular.inputEnabled = true;
-    const bbuttonClicked = game.game.add.sprite(0, 0,'menu', 'button2clicked.png');
-    bgroup.add(bbuttonClicked);
-    bbuttonClicked.visible = false;
-    bbuttonClicked.inputEnabled = true;
-    const btext:Phaser.Text = game.game.add.text(3, 3, b.title, style);
-    bgroup.add(btext);
-    if (b.isEnabled()) {
-      bgroup.visible = true;
-      startingButtons++;
-      bgroup.y = 25 * startingButtons;
-    }
-    buttons1.push({'group': bgroup, 'regular': bbuttonRegular, 'toggled': bbuttonClicked});
-    bbuttonRegular.events.onInputUp.add(function() {
-      game.needsupdate = true;
-      for (const button of buttons1) {
-        button.regular.visible = true;
-        button.toggled.visible = false;
-      }
-      game.option = index;
-      game.gamestate = 'building';
-      bbuttonRegular.visible = false;
-      bbuttonClicked.visible = true;
-    });
-    bbuttonClicked.events.onInputUp.add(function() {
-      game.needsupdate = true;
-      for (const button of buttons1) {
-        button.regular.visible = true;
-        button.toggled.visible = false;
-      }
-      game.option = -1;
-      game.gamestate = '';
-    });
-  }
-  game.menuGroup.add(button1);
-  game.menuGroup.add(buildings);
-*/
 
   // SETUP FOR TOWN BUILDINGS
   // -------------------
@@ -309,10 +217,10 @@ export function createMenu(game:MainGame):void{
         for (let index = 0; index < BUILDINGS.Length; index++) {
           if (BUILDINGCLASSES[index].isEnabled()) {
             visibleButtons++;
-            buttons1[index].group.y = 25 * visibleButtons;
-            buttons1[index].group.visible = true;
+            game.allToggleableButtons[index].group.y = 25 * visibleButtons;
+            game.allToggleableButtons[index].group.visible = true;
           } else {
-            buttons1[index].group.visible = false;
+            game.allToggleableButtons[index].group.visible = false;
           }
         }
 
@@ -367,7 +275,7 @@ export function createMenu(game:MainGame):void{
     buildingGroup.visible = false;
     townBuildingGroup.visible = true;
     researchGroup.visible = false;
-    for (const button of buttons1) {
+    for (const button of game.allToggleableButtons) {
       button.unToggle();
     }
   });
@@ -380,7 +288,7 @@ export function createMenu(game:MainGame):void{
     buildingGroup.visible = false;
     townBuildingGroup.visible = false;
     researchGroup.visible = true;
-    for (const button of buttons1) {
+    for (const button of game.allToggleableButtons) {
       button.unToggle();
     }
   });

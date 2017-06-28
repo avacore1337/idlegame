@@ -1,4 +1,5 @@
 import { Counter } from './Counter';
+import { Button } from './Button';
 import { Game } from './app';
 import { Square } from './Square';
 import { MaterialContainer } from './MaterialContainer';
@@ -28,6 +29,7 @@ export class MainGame extends Phaser.State {
   needsupdate:boolean;
   materialUpdate:number;
   modal:gameModal;
+  allToggleableButtons:Array<Button>;
 
   // materials:Counter<MATERIALS>;
   materialContainer:MaterialContainer;
@@ -45,6 +47,7 @@ export class MainGame extends Phaser.State {
   // }
 
   create():void {
+    this.allToggleableButtons = [];
     this.materialLabels = [];
     this.materialUpdate = 0;
     this.gamestate = '';
