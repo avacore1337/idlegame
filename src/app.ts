@@ -1,6 +1,6 @@
 import { MainGame } from './MainGame';
 import { Preload } from './Preload';
-import { Settings } from './Settings';
+import { MainMenu } from './MainMenu';
 
 export class Game extends Phaser.Game {
   wantLoad:boolean;
@@ -9,10 +9,10 @@ export class Game extends Phaser.Game {
     super(1200, 600, Phaser.CANVAS, 'gameDiv');
     this.wantLoad = true;
     this.state.add('preload', Preload);
-    this.state.add('mainMenu', Settings);
+    this.state.add('mainMenu', MainMenu);
     this.state.add('mainGame', MainGame);
     MainGame.myGame = this;
-    Settings.myGame = this;
+    MainMenu.myGame = this;
   }
 
   start(){
