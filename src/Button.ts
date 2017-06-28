@@ -43,13 +43,11 @@ export class Button {
     reg.push(regGroup);
     // Sprite
     const regImg:Phaser.Sprite = game.add.sprite(0, 0, key, image);
-    regImg.visible = true;
     regImg.inputEnabled = true;
     regGroup.add(regImg);
     reg.push(regImg);
     // Text
     const regTxt:Phaser.Text = game.add.text(26, 3, text, style);
-    regTxt.visible = true;
     regGroup.add(regTxt);
     // Tooltip
     reg.push(undefined);
@@ -84,13 +82,11 @@ export class Button {
         tog.push(togGroup);
         // Sprite
         const togImg:Phaser.Sprite = game.add.sprite(0, 0, key, toggledImage);
-        togImg.visible = true;
         togImg.inputEnabled = true;
         togGroup.add(togImg);
         tog.push(togImg);
         // Text
         const togTxt:Phaser.Text = game.add.text(26, 3, toggledText, toggledStyle);
-        togTxt.visible = true;
         togGroup.add(togTxt);
         // Tooltip
         tog.push(undefined);
@@ -114,13 +110,11 @@ export class Button {
         dis.push(disGroup);
         // Sprite
         const disImg:Phaser.Sprite = game.add.sprite(0, 0, key, disabledImage);
-        disImg.visible = true;
         disImg.inputEnabled = true;
         disGroup.add(disImg);
         dis.push(disImg);
         // Text
         const disTxt:Phaser.Text = game.add.text(26, 3, disabledText, disabledStyle);
-        disTxt.visible = true;
         disGroup.add(disTxt);
         // Tooltip
         dis.push(undefined);
@@ -136,7 +130,7 @@ export class Button {
     }
   }
 
-  onClick(callBack: () => void, button:number):boolean {
+  onClick(button:number, callBack: () => void):boolean {
     if(this.buttons[button] === undefined) {
       return false;
     }
@@ -146,37 +140,53 @@ export class Button {
       const toggled:boolean = self.toggled; // Since the callBack might change the toggle state
       callBack();
       if(!self.disabled && self.toggleAble) {
-        self.buttons[Button.REGULAR][Button.GROUP].vissible = toggled;
-        self.buttons[Button.TOGGLED][Button.GROUP].vissible = !toggled;
+        self.toggled = !self.toggled;
+        self.update();
       }
     });
     return true;
   }
 
   unToggle():void {
-    if(this.disabled) {
-      return;
-    }
-    if(this.toggleAble) {
-      this.buttons[Button.REGULAR][Button.GROUP].visible = true;
-      this.buttons[Button.TOGGLED][Button.GROUP].visible = false;
-      this.buttons[Button.DISABLED][Button.GROUP].visible = false;
-    }
+    this.toggled = false;
+    this.update();
   }
 
   disable():void {
-    this.buttons[Button.REGULAR][Button.GROUP].visible = false;
-    this.buttons[Button.TOGGLED][Button.GROUP].visible = false;
-    this.buttons[Button.DISABLED][Button.GROUP].visible = true;
+    this.disabled = true;
+    this.update();
   }
 
   enable():void {
-    this.buttons[Button.REGULAR][Button.GROUP].visible = true;
-    this.buttons[Button.TOGGLED][Button.GROUP].visible = false;
-    this.buttons[Button.DISABLED][Button.GROUP].visible = false;
+    this.disabled = false;
+    this.update();
   }
 
-  setToolTip(content:string, button:number):void {
+  update():void {
+    if(this.disabled) {
+      this.buttons[Button.REGULAR][Button.GROUP].visible = false;
+      if(this.toggleAble) {
+        this.buttons[Button.TOGGLED][Button.GROUP].visible = false;
+      }
+      this.buttons[Button.DISABLED][Button.GROUP].visible = true;
+    } else if(this.toggled) {
+      this.buttons[Button.REGULAR][Button.GROUP].visible = false;
+      this.buttons[Button.TOGGLED][Button.GROUP].visible = true;
+      if(this.disableAble) {
+        this.buttons[Button.DISABLED][Button.GROUP].visible = false;
+      }
+    } else {
+      this.buttons[Button.REGULAR][Button.GROUP].visible = true;
+      if(this.toggleAble) {
+        this.buttons[Button.TOGGLED][Button.GROUP].visible = false;
+      }
+      if(this.disableAble) {
+        this.buttons[Button.DISABLED][Button.GROUP].visible = false;
+      }
+    }
+  }
+
+  setToolTip(button:number, content:string):void {
     if(this.buttons[button] !== undefined) {
       if(this.buttons[button][Button.TOOLTIP] === undefined) {
         this.buttons[button][Button.TOOLTIP] = new Phasetips(this.game, {
