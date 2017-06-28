@@ -1,6 +1,6 @@
 
 export class Counter<T> {
-  private values: Map<T, number>;
+  public values: Map<T, number>;
   // x.set(5, 'woa');
   constructor(other?:Counter<T>) {
     this.values = new Map<T, number>();

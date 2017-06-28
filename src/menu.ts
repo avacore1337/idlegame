@@ -3,6 +3,7 @@ import { MATERIALSTRINGLIST, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUC
 import { saveGame, resetSave } from './SaveHandler';
 import { TechList } from './TechTree';
 import { Button } from './Button';
+import { toReadableString } from './util';
 
 function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any{
   const style = { font: '14px Arial', fill: '#000000', align: 'center' };
@@ -57,7 +58,7 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
   });
 */
   const buy:Button = new Button(game.game, 224, 0, 'menu', 'Buy', 'button.png', style2);
-  buy.onClick(function(){
+  buy.onClick(Button.REGULAR, function(){
     if(game.gamestate !== 'buying'){
       game.gamestate = 'buying';
       for (const button of buttons1) {
@@ -69,8 +70,8 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
       game.gamestate = '';
     }
     game.needsupdate = true;
-  }, Button.REGULAR);
-  buy.setToolTip('You need food to settle new areas.', Button.REGULAR);
+  });
+  buy.setToolTip(Button.REGULAR, 'You need food to settle new areas.');
   botMenu.add(buy.group);
 
   const saveGroup:Phaser.Group = game.game.add.group();
@@ -115,7 +116,8 @@ export function createMenu(game:MainGame):void{
   const topSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
   topMenu.add(topSprite);
   game.menuGroup.add(topMenu);
-  const buttons1:any = [];
+  //const buttons1:any = [];
+  const buttons1:Array<Button> = [];
   const botMenu = game.game.add.group();
   game.menuGroup.add(botMenu);
   createBottomMenu(game,botMenu, buttons1);
@@ -143,8 +145,45 @@ export function createMenu(game:MainGame):void{
   });
   // mainMenu.add(game.modal);
 
-  // SETUP FOR BUILDINGS
-  // -------------------
+  // -----------------------
+  // | SETUP FOR BUILDINGS |
+  // -----------------------
+  // The button at the top
+  const buildings = new Button(game.game, 0, 0, 'menu', 'Buildings', 'button.png', style);
+  game.menuGroup.add(buildings.group);
+  // The different buildings
+  let startingButtons = 0;
+  const buildingGroup = game.game.add.group();
+  game.menuGroup.add(buildingGroup);
+  for (let index = 0; index < BUILDINGS.Length; index++) {
+    const b = BUILDINGCLASSES[index];
+    const building:Button = new Button(game.game, 0, 0, 'menu', b.title, 'button2.png', style, {'toggleAble': true, 'disableAble': false, 'toggledImage': 'button2clicked.png'});
+    building.hide();
+    building.onClick(Button.REGULAR, function(){
+      game.needsupdate = true;
+      for (const button of buttons1) {
+        button.unToggle();
+      }
+      game.option = index;
+      game.gamestate = 'building';
+    });
+    building.onClick(Button.TOGGLED, function(){
+      game.needsupdate = true;
+      game.option = -1;
+      game.gamestate = '';
+    });
+    building.setToolTip(Button.REGULAR, toReadableString(b.getRequiredMaterials()));
+    building.setToolTip(Button.TOGGLED, toReadableString(b.getRequiredMaterials()));
+    buildingGroup.add(building.group);
+    buttons1.push(building);
+    if (b.isEnabled()) {
+      building.show();
+      startingButtons++;
+      building.group.y = 25 * startingButtons;
+    }
+  }
+
+  /*
   const button1 = game.game.add.sprite(0, 0, 'menu', 'button.png');
   const buildings:Phaser.Text = game.game.add.text(30, 3, 'Buildings', style);
   const buildingGroup = game.game.add.group();
@@ -195,7 +234,7 @@ export function createMenu(game:MainGame):void{
   }
   game.menuGroup.add(button1);
   game.menuGroup.add(buildings);
-
+*/
 
   // SETUP FOR TOWN BUILDINGS
   // -------------------
@@ -308,10 +347,9 @@ export function createMenu(game:MainGame):void{
   game.menuGroup.add(research);
 
   // Toggle between 'Buildings' / 'Town buildings' / 'Research'
-  button1.inputEnabled = true;
   button2.inputEnabled = true;
   button3.inputEnabled = true;
-  button1.events.onInputUp.add(function() {
+  buildings.onClick(Button.REGULAR, function() {
     game.needsupdate = true;
     if (game.gamestate !== 'building') {
       game.option = -1;
@@ -331,8 +369,7 @@ export function createMenu(game:MainGame):void{
     townBuildingGroup.visible = true;
     researchGroup.visible = false;
     for (const button of buttons1) {
-      button.regular.visible = true;
-      button.toggled.visible = false;
+      button.unToggle();
     }
   });
   button3.events.onInputUp.add(function() {
@@ -345,8 +382,7 @@ export function createMenu(game:MainGame):void{
     townBuildingGroup.visible = false;
     researchGroup.visible = true;
     for (const button of buttons1) {
-      button.regular.visible = true;
-      button.toggled.visible = false;
+      button.unToggle();
     }
   });
 

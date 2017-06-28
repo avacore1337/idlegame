@@ -38,8 +38,6 @@ export class Button {
     const reg:Array<any> = [];
     // Group
     const regGroup = game.add.group();
-    regGroup.x = x;
-    regGroup.y = y;
     reg.push(regGroup);
     // Sprite
     const regImg:Phaser.Sprite = game.add.sprite(0, 0, key, image);
@@ -77,8 +75,6 @@ export class Button {
         // Group
         const togGroup = game.add.group();
         togGroup.visible = false;
-        togGroup.x = x;
-        togGroup.y = y;
         tog.push(togGroup);
         // Sprite
         const togImg:Phaser.Sprite = game.add.sprite(0, 0, key, toggledImage);
@@ -105,8 +101,6 @@ export class Button {
         // Group
         const disGroup = game.add.group();
         disGroup.visible = false;
-        disGroup.x = x;
-        disGroup.y = y;
         dis.push(disGroup);
         // Sprite
         const disImg:Phaser.Sprite = game.add.sprite(0, 0, key, disabledImage);
@@ -128,6 +122,9 @@ export class Button {
       this.buttons.push(undefined); // Toggled
       this.buttons.push(undefined); // Disabled
     }
+
+    this.group.x = x;
+    this.group.y = y;
   }
 
   onClick(button:number, callBack: () => void):boolean {
