@@ -62,8 +62,7 @@ function createBottomMenu(game:MainGame, botMenu:Phaser.Group, buttons1:any):any
     if(game.gamestate !== 'buying'){
       game.gamestate = 'buying';
       for (const button of buttons1) {
-        button.regular.visible = true;
-        button.toggled.visible = false;
+        button.unToggle();
       }
     }
     else{
