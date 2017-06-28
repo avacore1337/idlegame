@@ -182,6 +182,7 @@ function createResearch(game:MainGame, headerStyle:object):Phaser.Group {
         }
       }
     });
+    research.setToolTip(Button.REGULAR, r.description);
     group.add(research.group);
     game.allButtons.push(research);
     if (r.researchable()) {

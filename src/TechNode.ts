@@ -1,12 +1,14 @@
 export class TechNode{
   name:string;
+  description:string;
   researched:boolean;
   requires:TechNode[];
   researchPointCost:number;
   effect: () => void;
 
-  constructor(name:string, requires:TechNode[], researchPointCost:number, effect: () => void){
+  constructor(name:string, description:string, requires:TechNode[], researchPointCost:number, effect: () => void){
     this.name = name;
+    this.description = description;
     this.requires = requires;
     this.researchPointCost = researchPointCost;
     this.effect = effect;
