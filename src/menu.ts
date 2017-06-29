@@ -1,10 +1,12 @@
 import { MainGame } from './MainGame';
+import { Tutorial } from './Tutorial';
 import { createBottomMenu } from './BottomMenu';
 import { createTopMenu } from './TopMenu';
 
 export function createMenu(game:MainGame):void {
   game.menuGroup = game.game.add.group();
   game.menuGroup.fixedToCamera = true;
+  const tutorial = new Tutorial(game);
 
   const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
   const basicStyle = { font: '14px Arial', fill: '#000000', align: 'left' };
@@ -31,6 +33,7 @@ export function createMenu(game:MainGame):void {
   mainMenu.add(mainMenuButton);
   mainMenuButton.inputEnabled = true;
   mainMenuButton.events.onInputUp.add(function() {
-    game.modal.showModal('mainModal');
+    //game.modal.showModal('mainModal');
+    tutorial.run();
   });
 }
