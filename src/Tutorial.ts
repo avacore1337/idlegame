@@ -10,47 +10,46 @@ export class Tutorial {
     const self = this;
     this.slides = game.modal;
 
-    // Lumbermill
-    this.slides.createModal({
-      type: 'tutorial' + this.length++,
-      fixedToCamera: true,
-      itemsArr: [{
-        type: 'text',
-        content: 'Hello World ' + this.length,
-        fontSize: 30,
-        offsetX: 0,
-        offsetY: 50,
-        callback: function() {
-          console.log('Called');
-          if (!self.done()) {
-            self.next();
-          } else {
-            alert('Done');
-          }
-        }
-      }]
-    });
+    const messages = [
+      'This is the first message',
+      'This is the second message',
+      'This is the third message'
+    ];
 
-    // Buy-button
-    this.slides.createModal({
-      type: 'tutorial' + this.length++,
-      fixedToCamera: true,
-      itemsArr: [{
-        type: 'text',
-        content: 'Hello World ' + this.length,
-        fontSize: 42,
-        color: '0xFEFF49',
-        offsetY: 50,
-        callback: function() {
-          console.log('Called');
-          if (!self.done()) {
+    for (const msg of messages) {
+      this.slides.createModal({
+        type: 'tutorial' + this.length++,
+        includeBackground: true,
+        backgroundOpacity: 0,
+        fixedToCamera: true,
+        itemsArr: [{
+          type: 'sprite',
+          content: 'parchment.png',
+          atlasParent: 'tutorial',
+          offsetX: 250,
+          offsetY: 170,
+          contentScale: 0.7
+        },
+        {
+          type: 'sprite',
+          content: 'next.png',
+          atlasParent: 'tutorial',
+          offsetX: 500,
+          offsetY: 240,
+          contentScale: 0.4,
+          callback: function() {
             self.next();
-          } else {
-            alert('Done');
           }
-        }
-      }]
-    });
+        },
+        {
+          type: 'text',
+          content: msg,
+          fontSize: 20,
+          offsetX: 50,
+          offsetY: 130
+        }]
+      });
+    }
   }
 
   public run():void {
@@ -62,12 +61,13 @@ export class Tutorial {
   }
 
   public done():boolean {
-    console.log('Current = ' + this.current + ' and Length = ' + this.length);
     return this.current === this.length;
   }
 
   public next():void {
-    this.slides.hideModal('tutorial' + this.current);
-    this.slides.showModal('tutorial' + ++this.current);
+    this.slides.hideModal('tutorial' + this.current++);
+    if (!this.done()) {
+      this.slides.showModal('tutorial' + this.current);
+    }
   }
 }

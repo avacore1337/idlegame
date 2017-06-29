@@ -26,11 +26,11 @@
 },
 {
 	"filename": "parchment.png",
-	"frame": {"x":0,"y":541,"w":600,"h":442},
+	"frame": {"x":0,"y":541,"w":1000,"h":442},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":600,"h":442},
-	"sourceSize": {"w":600,"h":442}
+	"spriteSourceSize": {"x":0,"y":0,"w":1000,"h":442},
+	"sourceSize": {"w":1000,"h":442}
 },
 {
 	"filename": "right_arrow.png",
@@ -53,8 +53,8 @@
 	"version": "1.0",
 	"image": "tutorial.png",
 	"format": "RGBA8888",
-	"size": {"w":776,"h":983},
+	"size": {"w":1000,"h":983},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:79674ac16768781d78af528245edc054:754c67f4224a1e43b732708b400a7e8a:79be00c7babd4ee577009a58f6978baa$"
+	"smartupdate": "$TexturePacker:SmartUpdate:e96294e8622f4e1f76db47bf9ba83fcb:bd7723d2aa86f05d14e13f13dd0504c2:79be00c7babd4ee577009a58f6978baa$"
 }
 }

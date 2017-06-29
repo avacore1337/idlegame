@@ -36,7 +36,7 @@
         <key>dataFormat</key>
         <string>phaser-json-array</string>
         <key>textureFileName</key>
-        <filename>tutorial.png</filename>
+        <filename>../public/assets/tutorial.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
