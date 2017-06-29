@@ -175,6 +175,7 @@ function createResearch(game:MainGame, headerStyle:object):Phaser.Group {
       }
     });
     research.setToolTip(Button.REGULAR, r.description);
+    research.setToolTip(Button.DISABLED, r.description);
     research.addUpdate(function(){
       if (r.researchable()) {
           research.show();
