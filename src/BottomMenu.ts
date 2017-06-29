@@ -5,8 +5,6 @@ import { Button } from './Button';
 import { ReincarnationMenu } from './ReincarnationMenu';
 
 export function createBottomMenu(game:MainGame, headerStyle:any, basicStyle:any):any {
-  const reincarnationMenu:ReincarnationMenu = ReincarnationMenu.Instance(game);
-  reincarnationMenu.show();
   const botMenu = game.game.add.group();
   botMenu.y = 320;
   game.menuGroup.add(botMenu);
@@ -45,6 +43,7 @@ export function createBottomMenu(game:MainGame, headerStyle:any, basicStyle:any)
   game.allButtons.push(buy);
 
   botMenu.add(buy.group);
+  botMenu.add(buy.labelGroup);
 
   const saveGroup:Phaser.Group = game.game.add.group();
   saveGroup.visible = true;
@@ -59,4 +58,18 @@ export function createBottomMenu(game:MainGame, headerStyle:any, basicStyle:any)
   saveButton.events.onInputUp.add(function() {
     saveGame(game);
   });
+
+  const reincarnationMenu:ReincarnationMenu = ReincarnationMenu.Instance(game);
+  const reincarnate:Button = new Button(game.game, 224, 60, 'menu', 'Evolve', 'button.png', headerStyle);
+  reincarnate.onClick(Button.REGULAR, function(){
+    reincarnationMenu.show();
+  });
+  reincarnate.addUpdate(function(){
+    //TODO add reincarnation criteria
+  });
+  reincarnate.setToolTip(Button.REGULAR, 'Here you can choose your evolution');
+  game.allButtons.push(reincarnate);
+
+  botMenu.add(reincarnate.group);
+  botMenu.add(reincarnate.labelGroup);
 }

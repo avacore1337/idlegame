@@ -92,6 +92,7 @@ function createBuildings(game:MainGame, headerStyle:object):Phaser.Group {
         building.show();
         game.visibleBuildings += 1;
         building.group.y = 25 * game.visibleBuildings;
+        building.labelGroup.y = 25 * game.visibleBuildings;
         } else {
           building.hide();
         }
@@ -100,11 +101,13 @@ function createBuildings(game:MainGame, headerStyle:object):Phaser.Group {
 
     });
     group.add(building.group);
+    group.add(building.labelGroup);
     game.allButtons.push(building);
     if (b.isEnabled()) {
       building.show();
       startingButtons++;
       building.group.y = 25 * startingButtons;
+      building.labelGroup.y = 25 * startingButtons;
     }
   }
   return group;
@@ -135,6 +138,7 @@ function createConstructions(game:MainGame, headerStyle:object):Phaser.Group {
         construction.show();
         game.visibleConstructions += 1;
         construction.group.y = 25 * game.visibleConstructions;
+        construction.labelGroup.y = 25 * game.visibleConstructions;
       } else {
         construction.hide();
       }
@@ -147,6 +151,7 @@ function createConstructions(game:MainGame, headerStyle:object):Phaser.Group {
       }
     });
     group.add(construction.group);
+    group.add(construction.labelGroup);
     game.allButtons.push(construction);
     if (c.isEnabled()) {
       construction.show();
@@ -181,6 +186,7 @@ function createResearch(game:MainGame, headerStyle:object):Phaser.Group {
           research.show();
           game.visibleTechs++;
           research.group.y = 25 * game.visibleTechs;
+          research.labelGroup.y = 25 * game.visibleTechs;
         } else {
           research.hide();
         }
@@ -193,6 +199,7 @@ function createResearch(game:MainGame, headerStyle:object):Phaser.Group {
         }
     });
     group.add(research.group);
+    group.add(research.labelGroup);
     game.allButtons.push(research);
     if (r.researchable()) {
       research.show();

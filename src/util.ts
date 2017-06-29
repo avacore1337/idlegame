@@ -15,3 +15,7 @@ export function toReadableString(counter:Counter<number>):string {
   }
   return ret.substring(0, ret.length - 1);
 }
+
+export function flatten<T>(matrix:T[][]):T[]{
+  return [].concat.apply([], matrix);
+}

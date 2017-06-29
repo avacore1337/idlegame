@@ -22,6 +22,7 @@ export class Button {
   toggleAble:boolean;
   disableAble:boolean;
   group:Phaser.Group;
+  labelGroup:Phaser.Group;
   updateCallback: () => void;
 
   constructor(game:Phaser.Game, x:number, y:number, key:any, text:string, image:string, style:any, options?:any) {
@@ -33,6 +34,7 @@ export class Button {
     this.toggleAble = false;
     this.disableAble = false;
     this.group = game.add.group();
+    this.labelGroup = game.add.group();
     this.updateCallback = function(){};
 
     // ------------------
@@ -140,6 +142,8 @@ export class Button {
 
     this.group.x = x;
     this.group.y = y;
+    this.labelGroup.x = x;
+    this.labelGroup.y = y;
   }
 
   onClick(button:number, callBack: () => void):boolean {
@@ -220,7 +224,7 @@ export class Button {
           context: content,
           position: 'right'
         });
-        this.buttons[button][Button.GROUP].add(this.buttons[button][Button.TOOLTIP].getGroup());
+        this.labelGroup.add(this.buttons[button][Button.TOOLTIP].getGroup());
       } else {
         this.buttons[button][Button.TOOLTIP].updateText(content);
       }

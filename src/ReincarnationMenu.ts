@@ -1,32 +1,43 @@
 import { MainGame } from './MainGame';
+import { Button } from './Button';
+import { geneTree } from './GeneTree';
 
 export class ReincarnationMenu {
   private static instance: ReincarnationMenu;
-  private readonly type = ''; // must be unique
-  // private readonly includeBackground = // maybe not optional
   private readonly backgroundColor;
+  private readonly foregroundColor;
   private readonly backgroundOpacity;
-  private readonly modalCloseOnInput;
-  private readonly modalBackgroundCallback;
-  private readonly itemsArr;
   private readonly modalGroup;
+  private readonly foregroundGroup;
+  private readonly backgroundGroup;
   private readonly mainGame:MainGame;
   private readonly game:Phaser.Game;
+  private readonly offsetHeight:number;
+  private readonly offsetWidth:number;
 
-  modal;
+  // private readonly background:Phaser.Graphics;
 
   private constructor(mainGame:MainGame){
     this.mainGame = mainGame;
     this.game = mainGame.game;
     this.modalGroup = this.game.add.group();
+    this.foregroundGroup = this.game.add.group();
+    this.backgroundGroup = this.game.add.group();
+    this.modalGroup.visible = false;
     this.backgroundColor = '0x000000';
-    this.backgroundOpacity = 0.7;
-    this.modalCloseOnInput = false;
-    this.modalBackgroundCallback = false;
-    this.itemsArr = [];
+    this.foregroundColor = '0x333333';
+    this.backgroundOpacity = 0.4;
     this.modalGroup.fixedToCamera = true;
     this.modalGroup.cameraOffset.x = 0;
     this.modalGroup.cameraOffset.y = 0;
+    this.offsetHeight = 50;
+    this.offsetWidth = 100;
+    this.modalGroup.add(this.backgroundGroup);
+    this.modalGroup.add(this.foregroundGroup);
+    this.generate();
+    this.foregroundGroup.x = this.offsetWidth;
+    this.foregroundGroup.y = this.offsetHeight;
+
   }
   public static Instance(mainGame:MainGame){
       // Do you need arguments? Make it a regular method instead.
@@ -41,6 +52,69 @@ export class ReincarnationMenu {
 
   public hide():void {
     this.modalGroup.visible = false;
+  }
+
+  private generate(){
+    this.generateBackground();
+    this.generateForeground();
+    this.generateButtons();
+  }
+
+  private generateBackground(){
+    const self = this;
+    const background = this.game.add.graphics(0, 0, this.backgroundGroup);
+    background.beginFill(this.backgroundColor, this.backgroundOpacity);
+    background.x = 0;
+    background.y = 0;
+    background.drawRect(0, 0, this.game.width, this.game.height);
+    background.inputEnabled = true;
+    background.events.onInputDown.add(function() {
+      self.hide();
+    });
+  }
+
+  private generateForeground(){
+    const foreground = this.game.add.graphics(0,0, this.foregroundGroup);
+    foreground.beginFill(this.foregroundColor, 1);
+    foreground.drawRect(0, 0, this.game.width - this.offsetWidth*2, this.game.height - this.offsetHeight*2);
+    foreground.inputEnabled = true;
+  }
+
+  private generateButtons(){
+    const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
+    const sectionWidth = (this.game.width - this.offsetWidth*2)/geneTree.length;
+    for (let i = 0; i < geneTree.length; i++) {
+        const category = geneTree[i];
+        const buttonGroup = this.game.add.group();
+        this.foregroundGroup.add(buttonGroup);
+        const labelGroup = this.game.add.group();
+        this.foregroundGroup.add(labelGroup);
+        for (let j = 0; j < category.length; j++) {
+          const tier = category[j];
+          const padding = ((sectionWidth - 111*tier.length)/tier.length)/2;
+          console.log(padding);
+          for (let k = 0; k < tier.length; k++) {
+            const gene = tier[k];
+            const button:Button = new Button(this.game, i*sectionWidth + 111*k + padding*(k*2 + 1), 100*j, 'menu', gene.name, 'button.png', headerStyle, {disableAble:true, disabledImage: 'buttondisabled.png'});
+            button.setToolTip(Button.REGULAR, gene.description);
+            button.onClick(Button.REGULAR, function(){
+              gene.buy();
+            });
+            button.addUpdate(function(){
+              if(gene.buyable()){
+                button.enable();
+              }
+              else{
+                button.disable();
+              }
+            });
+            this.mainGame.allButtons.push(button);
+
+            buttonGroup.add(button.group);
+            labelGroup.add(button.labelGroup);
+          }
+        }
+    }
   }
 }
 
@@ -64,7 +138,7 @@ export class ReincarnationMenu {
 //         createModal: function(options) {
 //             let type = options.type || ''; // must be unique
 //             let includeBackground = options.includeBackground; // maybe not optional
-//             let backgroundColor = options.backgroundColor || "0x000000";
+//             let backgroundColor = options.backgroundColor || '0x000000';
 //             let backgroundOpacity = options.backgroundOpacity === undefined ?
 //                 0.7 : options.backgroundOpacity;
 //             let modalCloseOnInput = options.modalCloseOnInput || false;
@@ -137,12 +211,12 @@ export class ReincarnationMenu {
 //                 let offsetX = item.offsetX || 0;
 //                 let offsetY = item.offsetY || 0;
 //                 let contentScale = item.contentScale || 1;
-//                 let content = item.content || "";
+//                 let content = item.content || ';
 //                 let centerX = game.width / 2;
 //                 let centerY = game.height / 2;
 //                 let callback = item.callback || false;
-//                 let textAlign = item.textAlign || "left";
-//                 let atlasParent = item.atlasParent || "";
+//                 let textAlign = item.textAlign || 'left';
+//                 let atlasParent = item.atlasParent || ';
 //                 let buttonHover = item.buttonHover || content;
 //                 let buttonActive = item.buttonActive || content;
 //                 let graphicColor = item.graphicColor || 0xffffff;
@@ -162,9 +236,9 @@ export class ReincarnationMenu {
 //
 //                 modalLabel = null;
 //
-//                 if (itemType === "text" || itemType === "bitmapText") {
+//                 if (itemType === 'text' || itemType === 'bitmapText') {
 //
-//                     if (itemType === "text") {
+//                     if (itemType === 'text') {
 //
 //                         let re = new RegExp(/[\{\}]/, 'g');
 //                         let arrOfBold = [];
@@ -182,13 +256,13 @@ export class ReincarnationMenu {
 //                                 }
 //                             }
 //
-//                             content = content.replace(re, "");
+//                             content = content.replace(re, ');
 //                         }
 //
 //                         modalLabel = game.add.text(0, 0, content, {
 //                             font: itemFontSize + 'px ' + itemFontfamily,
-//                             fill: "#" + String(itemColor).replace("0x", ""),
-//                             stroke: "#" + String(itemStroke).replace("0x", ""),
+//                             fill: '#' + String(itemColor).replace('0x', '),
+//                             stroke: '#' + String(itemStroke).replace('0x', '),
 //                             strokeThickness: itemStrokeThickness,
 //                             align: itemAlign
 //                         });
@@ -196,8 +270,8 @@ export class ReincarnationMenu {
 //                         modalLabel.update();
 //                         let indexMissing = 0;
 //                         for (let j = 0; j < arrOfBold.length; j += 2) {
-//                             modalLabel.addFontWeight("bold", arrOfBold[j] - indexMissing);
-//                             modalLabel.addFontWeight("normal", arrOfBold[j + 1] - indexMissing);
+//                             modalLabel.addFontWeight('bold', arrOfBold[j] - indexMissing);
+//                             modalLabel.addFontWeight('normal', arrOfBold[j + 1] - indexMissing);
 //                             indexMissing += 2;
 //                         }
 //                         modalLabel.x = ((game.width / 2) - (modalLabel.width / 2)) + offsetX;
@@ -211,26 +285,26 @@ export class ReincarnationMenu {
 //                         modalLabel.y = (centerY - (modalLabel.height / 2)) + offsetY;
 //                     }
 //
-//                 } else if (itemType === "image") {
+//                 } else if (itemType === 'image') {
 //                     modalLabel = game.add.image(0, 0, content);
 //                     modalLabel.scale.setTo(contentScale, contentScale);
 //                     modalLabel.contentType = 'image';
 //                     modalLabel.x = (centerX - ((modalLabel.width) / 2)) + offsetX;
 //                     modalLabel.y = (centerY - ((modalLabel.height) / 2)) + offsetY;
-//                 } else if (itemType === "tileSprite") {
+//                 } else if (itemType === 'tileSprite') {
 //                     modalLabel = game.add.tileSprite(itemX, itemY,
 //                         tileSpriteWidth, tileSpriteHeight, content, imageFrame);
 //                     modalLabel.scale.setTo(contentScale, contentScale);
 //                     modalLabel.anchor.setTo(itemAnchor.x, itemAnchor.y);
 //                     modalLabel.angle = itemAngle;
 //                     modalLabel.contentType = 'tileSprite';
-//                 } else if (itemType === "sprite") {
+//                 } else if (itemType === 'sprite') {
 //                     modalLabel = game.add.sprite(0, 0, atlasParent, content);
 //                     modalLabel.scale.setTo(contentScale, contentScale);
 //                     modalLabel.contentType = 'sprite';
 //                     modalLabel.x = (centerX - ((modalLabel.width) / 2)) + offsetX;
 //                     modalLabel.y = (centerY - ((modalLabel.height) / 2)) + offsetY;
-//                 } else if (itemType === "button") {
+//                 } else if (itemType === 'button') {
 //                     modalLabel = game.add.button(0, 0, atlasParent, callback,
 //                         this, buttonHover, content, buttonActive, content);
 //                     modalLabel.scale.setTo(contentScale, contentScale);
@@ -238,7 +312,7 @@ export class ReincarnationMenu {
 //                     modalLabel.x = (centerX - ((modalLabel.width) / 2)) + offsetX;
 //                     modalLabel.y = (centerY - ((modalLabel.height) / 2)) + offsetY;
 //
-//                 } else if (itemType === "graphics") {
+//                 } else if (itemType === 'graphics') {
 //                     modalLabel = game.add.graphics(graphicW, graphicH);
 //                     modalLabel.beginFill(graphicColor, graphicOpacity);
 //                     if (graphicRadius <= 0) {
@@ -251,21 +325,21 @@ export class ReincarnationMenu {
 //                     modalLabel.y = (centerY - ((modalLabel.height) / 2)) + offsetY;
 //                 }
 //
-//                 modalLabel["_offsetX"] = 0;
-//                 modalLabel["_offsetY"] = 0;
+//                 modalLabel['_offsetX'] = 0;
+//                 modalLabel['_offsetY'] = 0;
 //                 modalLabel.lockPosition = lockPosition;
 //                 modalLabel._offsetX = offsetX;
 //                 modalLabel._offsetY = offsetY;
 //
 //
-//                 if (callback !== false && itemType !== "button") {
+//                 if (callback !== false && itemType !== 'button') {
 //                     modalLabel.inputEnabled = true;
 //                     modalLabel.pixelPerfectClick = true;
 //                     modalLabel.priorityID = 10;
 //                     modalLabel.events.onInputDown.add(callback, modalLabel);
 //                 }
 //
-//                 if (itemType !== "bitmapText" && itemType !== "graphics") {
+//                 if (itemType !== 'bitmapText' && itemType !== 'graphics') {
 //                     modalLabel.bringToTop();
 //                     modalGroup.add(modalLabel);
 //                     modalLabel.bringToTop();
@@ -288,7 +362,7 @@ export class ReincarnationMenu {
 //
 //             }
 //
-//             if (item.contentType === "text") {
+//             if (item.contentType === 'text') {
 //                 item.text = value;
 //                 item.update();
 //                 if (item.lockPosition === true) {
@@ -297,7 +371,7 @@ export class ReincarnationMenu {
 //                     item.x = ((game.width / 2) - (item.width / 2)) + item._offsetX;
 //                     item.y = ((game.height / 2) - (item.height / 2)) + item._offsetY;
 //                 }
-//             } else if (item.contentType === "bitmapText") {
+//             } else if (item.contentType === 'bitmapText') {
 //                 item.text = value;
 //                 item.updateText();
 //                 if (item.lockPosition === true) {
@@ -306,7 +380,7 @@ export class ReincarnationMenu {
 //                     item.x = ((game.width / 2) - (item.width / 2)) + item._offsetX;
 //                     item.y = ((game.height / 2) - (item.height / 2)) + item._offsetY;
 //                 }
-//             } else if (item.contentType === "image") {
+//             } else if (item.contentType === 'image') {
 //                 item.loadTexture(value);
 //             }
 //
