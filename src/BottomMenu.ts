@@ -2,8 +2,11 @@ import { saveGame } from './SaveHandler';
 import { MainGame } from './MainGame';
 import { MATERIALSTRINGLIST } from './Constants';
 import { Button } from './Button';
+import { ReincarnationMenu } from './ReincarnationMenu';
 
 export function createBottomMenu(game:MainGame, headerStyle:any, basicStyle:any):any {
+  const reincarnationMenu:ReincarnationMenu = ReincarnationMenu.Instance(game);
+  reincarnationMenu.show();
   const botMenu = game.game.add.group();
   botMenu.y = 320;
   game.menuGroup.add(botMenu);
