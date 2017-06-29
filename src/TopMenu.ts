@@ -1,7 +1,7 @@
 import { toReadableString } from './util';
 import { MainGame } from './MainGame';
 import { Button } from './Button';
-import { BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from './Constants';
+import { MATERIALS, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from './Constants';
 import { TechList } from './TechTree';
 
 export function createTopMenu(game:MainGame, headerStyle:any, basicStyle:any):void {
@@ -166,10 +166,12 @@ function createResearch(game:MainGame, headerStyle:object):Phaser.Group {
     const research:Button = new Button(game.game, 0, 0, 'menu', r.name, 'button2.png', headerStyle);
     research.hide();
     research.onClick(Button.REGULAR, function():void {
-      const canAfford = true;
+      const canAfford = game.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
       if (canAfford) {
         game.needsupdate = true;
         r.research();
+        game.materialContainer.materials.subtract(MATERIALS.Research, r.researchPointCost);
+      } else {
       }
     });
     research.setToolTip(Button.REGULAR, r.description);
