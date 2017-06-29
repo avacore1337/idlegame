@@ -117,7 +117,7 @@ function createConstructions(game:MainGame, headerStyle:object):Phaser.Group {
   game.menuGroup.add(group);
   for (let index = 0; index < CONSTRUCTIONS.Length; index++) {
     const c = CONSTRUCTIONCLASSES[index];
-    const construction:Button = new Button(game.game, 0, 0, 'menu', c.title + ' ' + c.amount, 'button2.png', headerStyle, {disableAble:true, disabledImage:'button2disabled.png'});
+    const construction:Button = new Button(game.game, 0, 0, 'menu', c.title + ' ' + c.amount, 'button2.png', headerStyle, {'disableAble': true, 'disabledImage': 'button2disabled.png'});
     construction.hide();
     construction.onClick(Button.REGULAR, function():void {
       const canAfford = game.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
@@ -163,7 +163,7 @@ function createResearch(game:MainGame, headerStyle:object):Phaser.Group {
   group.visible = false;
   game.menuGroup.add(group);
   for(const r of TechList){
-    const research:Button = new Button(game.game, 0, 0, 'menu', r.name, 'button2.png', headerStyle);
+    const research:Button = new Button(game.game, 0, 0, 'menu', r.name, 'button2.png', headerStyle, {'disableAble': true, 'disabledImage': 'button2disabled.png'});
     research.hide();
     research.onClick(Button.REGULAR, function():void {
       const canAfford = game.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
@@ -182,6 +182,13 @@ function createResearch(game:MainGame, headerStyle:object):Phaser.Group {
           research.group.y = 25 * game.visibleTechs;
         } else {
           research.hide();
+        }
+        const canAfford = game.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
+        if(canAfford){
+          research.enable();
+        }
+        else {
+          research.disable();
         }
     });
     group.add(research.group);
