@@ -1,0 +1,60 @@
+{"frames": [
+
+{
+	"filename": "down_arrow.png",
+	"frame": {"x":241,"y":0,"w":241,"h":300},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":241,"h":300},
+	"sourceSize": {"w":241,"h":300}
+},
+{
+	"filename": "left_arrow.png",
+	"frame": {"x":300,"y":300,"w":300,"h":241},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":300,"h":241},
+	"sourceSize": {"w":300,"h":241}
+},
+{
+	"filename": "next.png",
+	"frame": {"x":482,"y":0,"w":294,"h":95},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":294,"h":95},
+	"sourceSize": {"w":294,"h":95}
+},
+{
+	"filename": "parchment.png",
+	"frame": {"x":0,"y":541,"w":600,"h":442},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":600,"h":442},
+	"sourceSize": {"w":600,"h":442}
+},
+{
+	"filename": "right_arrow.png",
+	"frame": {"x":0,"y":300,"w":300,"h":241},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":300,"h":241},
+	"sourceSize": {"w":300,"h":241}
+},
+{
+	"filename": "up_arrow.png",
+	"frame": {"x":0,"y":0,"w":241,"h":300},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":241,"h":300},
+	"sourceSize": {"w":241,"h":300}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "tutorial.png",
+	"format": "RGBA8888",
+	"size": {"w":776,"h":983},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:79674ac16768781d78af528245edc054:754c67f4224a1e43b732708b400a7e8a:79be00c7babd4ee577009a58f6978baa$"
+}
+}
