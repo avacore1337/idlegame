@@ -67,7 +67,7 @@ export class BottomMenu extends Menu {
     this.content.add(save.group);
     this.content.add(save.labelGroup);
 
-    const reincarnationMenu:ReincarnationMenu = ReincarnationMenu.Instance(game);
+    const reincarnationMenu:ReincarnationMenu = new ReincarnationMenu(game);
     const reincarnate:Button = new Button(this.game.game, 224, 60, 'menu', 'Evolve', 'button.png', headerStyle);
     this.buttons.push(reincarnate);
     reincarnate.onClick(Button.REGULAR, function(){

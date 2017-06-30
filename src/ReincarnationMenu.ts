@@ -3,7 +3,6 @@ import { Button } from './Button';
 import { geneTree } from './GeneTree';
 
 export class ReincarnationMenu {
-  private static instance: ReincarnationMenu;
   private readonly backgroundColor;
   private readonly foregroundColor;
   private readonly backgroundOpacity;
@@ -17,7 +16,7 @@ export class ReincarnationMenu {
 
   // private readonly background:Phaser.Graphics;
 
-  private constructor(mainGame:MainGame){
+  constructor(mainGame:MainGame){
     this.mainGame = mainGame;
     this.game = mainGame.game;
     this.modalGroup = this.game.add.group();
@@ -38,10 +37,6 @@ export class ReincarnationMenu {
     this.foregroundGroup.x = this.offsetWidth;
     this.foregroundGroup.y = this.offsetHeight;
 
-  }
-  public static Instance(mainGame:MainGame){
-      // Do you need arguments? Make it a regular method instead.
-      return this.instance || (this.instance = new this(mainGame));
   }
 
   public show():void {
@@ -92,7 +87,6 @@ export class ReincarnationMenu {
         for (let j = 0; j < category.length; j++) {
           const tier = category[j];
           const padding = ((sectionWidth - 111*tier.length)/tier.length)/2;
-          console.log(padding);
           for (let k = 0; k < tier.length; k++) {
             const gene = tier[k];
             const button:Button = new Button(this.game, i*sectionWidth + 111*k + padding*(k*2 + 1), 100*j, 'menu', gene.name, 'button.png', headerStyle, {disableAble:true, disabledImage: 'buttondisabled.png'});
