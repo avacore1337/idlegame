@@ -6,7 +6,7 @@ import { Menu } from './Menu';
 import { UpdateAble } from './UpdateAble';
 import { ReincarnationMenu } from './ReincarnationMenu';
 
-export class BottomMenu extends Menu implements UpdateAble {
+export class BottomMenu extends Menu {
 
   private materialUpdate:number;
   private materialLabels:Array<Phaser.Text>;

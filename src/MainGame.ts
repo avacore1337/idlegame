@@ -12,7 +12,8 @@ import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants'
 
 export class MainGame extends Phaser.State {
 
-  static myGame: Game;
+  static myGame:Game;
+  static era:number = 0;
   hexagonWidth:number = 70;
   hexagonHeight:number = 80;
   gridSizeX:number = 16;
@@ -33,24 +34,10 @@ export class MainGame extends Phaser.State {
   allButtons:Array<Button>;
   menus:Array<Menu>;
 
-  // materials:Counter<MATERIALS>;
   materialContainer:MaterialContainer;
-  materialLabels:Phaser.Text[]; // TODO ; These should not be here I don't think
-
-  // constructor() {
-  //   this.materialLabels = [];
-  //   this.materialUpdate = 0;
-  //   this.gamestate = '';
-  //   this.needsupdate = false;
-  //   this.hexMatrix = [];
-  //   for (let i = 0; i < this.gridSizeY; i++) {
-  //     this.hexMatrix.push([]);
-  //   }
-  // }
 
   create():void {
     this.allButtons = [];
-    this.materialLabels = [];
     this.materialUpdate = 0;
     this.gamestate = '';
     this.needsupdate = false;
@@ -74,8 +61,6 @@ export class MainGame extends Phaser.State {
 
     this.game.camera.x = cameraCenterX;
     this.game.camera.y = cameraCenterY;
-    // this.menuGroup.x = cameraCenterX;
-    // this.menuGroup.y = cameraCenterY;
     this.needsupdate = true;
   }
 
@@ -103,7 +88,6 @@ export class MainGame extends Phaser.State {
       this.materialContainer.materialGainBase = resourceGain;
 
       this.updateHexes();
-      //this.updateGUI();
     }
 
     // Update camera
@@ -118,18 +102,6 @@ export class MainGame extends Phaser.State {
     }
   }
 
-  /*updateGUI():void {
-    // console.log('updateGUI');
-    this.visibleTechs = 0;
-    this.visibleBuildings = 0;
-    this.visibleConstructions = 0;
-    for(const button of this.allButtons){
-      button.update();
-    }
-  }*/
-
-  render():void {
-    // this.game.debug.cameraInfo(this.game.camera, 32, 32);
-  }
+  render():void {}
 
 }

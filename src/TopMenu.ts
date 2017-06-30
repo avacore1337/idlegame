@@ -6,7 +6,7 @@ import { Button } from './Button';
 import { MATERIALS, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from './Constants';
 import { TechList } from './TechTree';
 
-export class TopMenu extends Menu implements UpdateAble {
+export class TopMenu extends Menu {
 
   private buttons:Array<Button>;
 
