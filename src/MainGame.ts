@@ -12,7 +12,7 @@ import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants'
 
 export class MainGame extends Phaser.State {
 
-  static myGame:Game;
+  static myGame:Phaser.Game;
   static era:number = 0;
   hexagonWidth:number = 70;
   hexagonHeight:number = 80;
@@ -37,6 +37,7 @@ export class MainGame extends Phaser.State {
   materialContainer:MaterialContainer;
 
   create():void {
+    MainGame.myGame = this.game;
     this.allButtons = [];
     this.materialUpdate = 0;
     this.gamestate = '';

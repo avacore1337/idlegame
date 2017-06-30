@@ -55,6 +55,7 @@ TechList.push(roads);
 // Iron age
 function ascendToIronAge():void {
   MainGame.era = 1;
+  MainGame.myGame.state.start('mainGame', true, false);
 }
 const ironAge = new TechNode('Iron age', 'Arise to the era of the iron.', stoneAge, [quaring, mining, tooling, burning, steelmaking, torch, roads], 300, ascendToIronAge);
 TechList.push(ironAge);

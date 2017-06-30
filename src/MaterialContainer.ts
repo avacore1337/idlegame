@@ -22,6 +22,7 @@ export class MaterialContainer {
       this.materials.add(MATERIALS.Wood, 50);
       this.materials.add(MATERIALS.Clay, 50);
       this.materials.add(MATERIALS.Food, 200);
+      this.materials.add(MATERIALS.Research, 20000);
     }
     this.materialGainFactors = [];
     for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {

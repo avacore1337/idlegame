@@ -59,7 +59,10 @@ export function newGame(game:MainGame):void {
   const centerHex = game.hexMatrix[centerX][centerY];
   calculateDistances(game, centerHex);
 
-  shuffle(start);
+  const tmpStart = start.slice();
+  shuffle(tmpStart);
+  const tmpSecond = second.slice();
+  shuffle(tmpSecond);
   for (let i = 0; i < game.gridSizeY; i++) {
     for (let j = 0; j < game.gridSizeX; j++) {
       const square = game.hexMatrix[i][j];
@@ -69,10 +72,10 @@ export function newGame(game:MainGame):void {
         square.addBuilding(BUILDINGS.Base);
       }
       else if(square.distance <= 1){
-        setSquare(square, start.pop());
+        setSquare(square, tmpStart.pop());
       }
       else if(square.distance <= 3){
-        setSquare(square, second.pop());
+        setSquare(square, tmpSecond.pop());
       } else{
         randomizeHex(square);
       }
