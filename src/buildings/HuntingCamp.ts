@@ -20,6 +20,11 @@ export class HuntingCamp extends Building {
     return HuntingCamp.enabled;
   }
 
+  static reset(){
+    HuntingCamp.enabled = true;
+    HuntingCamp.amount = 0;
+  }
+
   generateMaterials():Counter<MATERIALS>{
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Food, 0.1);

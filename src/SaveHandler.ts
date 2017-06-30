@@ -1,7 +1,7 @@
 import { MainGame } from './MainGame';
 import { MaterialContainer } from './MaterialContainer';
 import { TechList } from './TechTree';
-import { CONSTRUCTIONCLASSES, CONSTRUCTIONS } from './Constants';
+import { CONSTRUCTIONCLASSES, CONSTRUCTIONS, BUILDINGCLASSES } from './Constants';
 
 export function loadMaterials(game:MainGame):void{
   if (typeof(Storage) !== 'undefined') {
@@ -10,10 +10,10 @@ export function loadMaterials(game:MainGame):void{
       materials = JSON.parse(materials);
       game.materialContainer = new MaterialContainer(materials);
     } else {
-      game.materialContainer = new MaterialContainer(undefined);
+      game.materialContainer = new MaterialContainer();
     }
   } else {
-    game.materialContainer = new MaterialContainer(undefined);
+    game.materialContainer = new MaterialContainer();
   }
 }
 
@@ -73,6 +73,17 @@ export function loadRebirth(game:MainGame):void {
   localStorage.removeItem('restarting');
   localStorage.removeItem('newEra');
   localStorage.removeItem('newEvolutionPoints');
+  for (const technology of TechList) {
+    technology.researched = false;
+  }
+  for (const construction of CONSTRUCTIONCLASSES) {
+    construction.enabled = false;
+    construction.amount = 0;
+  }
+  CONSTRUCTIONCLASSES[CONSTRUCTIONS.Library].enabled = true;
+  for (const buildings of BUILDINGCLASSES) {
+    buildings.reset();
+  }
 }
 
 /* tslint:disable:no-string-literal */

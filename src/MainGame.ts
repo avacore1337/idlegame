@@ -47,6 +47,7 @@ export class MainGame extends Phaser.State {
     for (let i = 0; i < this.gridSizeY; i++) {
       this.hexMatrix.push([]);
     }
+    // game.era = parseInt(localStorage.getItem('era'));
 
     this.modal = new gameModal(this.game);
     loadMaterials(this);

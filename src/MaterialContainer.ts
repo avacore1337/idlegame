@@ -7,7 +7,7 @@ export class MaterialContainer {
   public materialGainBase:Counter<MATERIALS>;
   materialGainFactors:number[][];
 
-  constructor(pre:any){
+  constructor(pre?:any){
     this.materials = new Counter<MATERIALS>();
     this.materialGainBase = new Counter<MATERIALS>();
     for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {

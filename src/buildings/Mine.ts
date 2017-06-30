@@ -20,6 +20,12 @@ export class Mine extends Building {
     return Mine.enabled;
   }
 
+  static reset(){
+    Mine.enabled = false;
+    Mine.amount = 0;
+  }
+
+
   generateMaterials():Counter<MATERIALS>{
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     if(this.square.resourceType === RESOURCES.Copper){

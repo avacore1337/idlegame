@@ -20,6 +20,11 @@ export class Quary extends Building {
     return Quary.enabled;
   }
 
+  static reset(){
+    Quary.enabled = false;
+    Quary.amount = 0;
+  }
+
   generateMaterials():Counter<MATERIALS>{
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Stone, 1);

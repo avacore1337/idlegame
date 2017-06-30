@@ -19,6 +19,9 @@ export class Base extends Building {
     return Base.enabled;
   }
 
+  static reset(){
+  }
+
   generateMaterials():Counter<MATERIALS>{
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     return counter;
