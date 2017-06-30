@@ -1,75 +1,100 @@
 import { saveGame } from './SaveHandler';
 import { MainGame } from './MainGame';
-import { MATERIALSTRINGLIST } from './Constants';
+import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
 import { Button } from './Button';
+import { Menu } from './Menu';
+import { UpdateAble } from './UpdateAble';
 import { ReincarnationMenu } from './ReincarnationMenu';
 
-export function createBottomMenu(game:MainGame, headerStyle:any, basicStyle:any):any {
-  const botMenu = game.game.add.group();
-  botMenu.y = 320;
-  game.menuGroup.add(botMenu);
+export class BottomMenu extends Menu implements UpdateAble {
 
-  const botSprite = game.game.add.sprite(0, 0, 'menu', 'leftpanel.png');
-  botMenu.add(botSprite);
+  private materialUpdate:number;
+  private materialLabels:Array<Phaser.Text>;
 
-  // Display owned materials
-  // -----------------------
-  let visibleLabels = -1;
-  for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
-    const label:Phaser.Text = game.game.add.text(3, 3, MATERIALSTRINGLIST[i] + ' ' + game.materialContainer.materials.get(i).toFixed(2), headerStyle);
-    label.visible = false;
-    if (game.materialContainer.materials.get(i) > 0) {
-      visibleLabels++;
-      label.visible = true;
-      label.y += 30 * visibleLabels;
+  constructor(game:MainGame) {
+    super(game, 0, 320, 'menu', 'leftpanel.png');
+    this.materialUpdate = 0;
+    this.materialLabels = [];
+
+    const self = this;
+    const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
+    const basicStyle = { font: '14px Arial', fill: '#000000', align: 'left' };
+
+    // Initial setup of content
+    let visibleLabels = -1;
+    for (let i = 0; i < MATERIALS.Length; i++) {
+      const label:Phaser.Text = this.game.game.add.text(3, 3, MATERIALSTRINGLIST[i] + ' ' + game.materialContainer.materials.get(i).toFixed(2), headerStyle, this.content);
+      label.visible = false;
+      if (this.game.materialContainer.materials.get(i) > 0) {
+        visibleLabels++;
+        label.visible = true;
+        label.y += 20 * visibleLabels;
+      }
+      this.materialLabels.push(label);
     }
-    game.materialLabels.push(label);
-    botMenu.add(label);
+
+    const buy:Button = new Button(this.game.game, 224, 0, 'menu', 'Buy', 'button.png', headerStyle, {'toggleAble': true, 'toggledImage': 'buttonclicked.png'});
+    buy.onClick(Button.REGULAR, function():void {
+      self.game.gamestate = 'buying';
+      for (const button of self.game.allButtons) {
+        button.unToggle();
+      }
+      self.game.needsupdate = true;
+    });
+    buy.setToolTip(Button.REGULAR, 'You need food to settle new areas.');
+    buy.onClick(Button.TOGGLED, function():void {
+      self.game.gamestate = '';
+      self.game.needsupdate = true;
+    });
+    this.game.allButtons.push(buy);
+    this.content.add(buy.group);
+    this.content.add(buy.labelGroup);
+
+    const save:Button = new Button(this.game.game, 224, 30, 'menu', 'Save', 'button.png', headerStyle);
+    save.onClick(Button.REGULAR, function():void {
+      saveGame(self.game);
+    });
+    save.setToolTip(Button.REGULAR, 'Save your current gamestate.');
+    this.game.allButtons.push(save);
+    this.content.add(save.group);
+    this.content.add(save.labelGroup);
+
+    const reincarnationMenu:ReincarnationMenu = ReincarnationMenu.Instance(game);
+    const reincarnate:Button = new Button(this.game.game, 224, 60, 'menu', 'Evolve', 'button.png', headerStyle);
+    reincarnate.onClick(Button.REGULAR, function(){
+      reincarnationMenu.show();
+    });
+    reincarnate.addUpdate(function(){
+      //TODO add reincarnation criteria
+    });
+    reincarnate.setToolTip(Button.REGULAR, 'Here you can choose your evolution');
+    this.game.allButtons.push(reincarnate);
+    this.content.add(reincarnate.group);
+    this.content.add(reincarnate.labelGroup);
   }
 
-  const buy:Button = new Button(game.game, 224, 0, 'menu', 'Buy', 'button.png', headerStyle, {toggleAble:true, toggledImage:'buttonclicked.png'});
-  buy.onClick(Button.REGULAR, function(){
-    game.gamestate = 'buying';
-    for (const button of game.allButtons) {
-      button.unToggle();
+  update():void {
+    this.materialUpdate = (this.materialUpdate + 1) % 20;
+    if (this.materialUpdate === 0) {
+      this.game.materialContainer.gainMaterialsFraction(3);
+      let visibleLabels = -1;
+      const materials = this.game.materialContainer.materials;
+      const gains = this.game.materialContainer.getMaterialGains();
+      for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
+        let text = MATERIALSTRINGLIST[i] + ' ' + materials.get(i).toFixed(2);
+        text += '  (' + gains.get(i).toFixed(2) + '/s)';
+        this.materialLabels[i].setText(text);
+        this.materialLabels[i].y = 3;
+        this.materialLabels[i].visible = false;
+        if (materials.get(i) > 0) {
+          visibleLabels++;
+          this.materialLabels[i].visible = true;
+          this.materialLabels[i].y += 20 * visibleLabels;
+        }
+      }
+      for (const c of CONSTRUCTIONCLASSES) {
+        c.doThing(this.game);
+      }
     }
-    game.needsupdate = true;
-  });
-  buy.setToolTip(Button.REGULAR, 'You need food to settle new areas.');
-  buy.onClick(Button.TOGGLED, function(){
-    game.gamestate = '';
-    game.needsupdate = true;
-  });
-  game.allButtons.push(buy);
-
-  botMenu.add(buy.group);
-  botMenu.add(buy.labelGroup);
-
-  const saveGroup:Phaser.Group = game.game.add.group();
-  saveGroup.visible = true;
-  botMenu.add(saveGroup);
-  const saveButton:Phaser.Sprite = game.game.add.sprite(224, 30, 'menu', 'button.png');
-  saveButton.visible = true;
-  saveButton.inputEnabled = true;
-  saveGroup.add(saveButton);
-  const saveText:Phaser.Text = game.game.add.text(250, 33, 'Save game', basicStyle);
-  saveText.visible = true;
-  saveGroup.add(saveText);
-  saveButton.events.onInputUp.add(function() {
-    saveGame(game);
-  });
-
-  const reincarnationMenu:ReincarnationMenu = ReincarnationMenu.Instance(game);
-  const reincarnate:Button = new Button(game.game, 224, 60, 'menu', 'Evolve', 'button.png', headerStyle);
-  reincarnate.onClick(Button.REGULAR, function(){
-    reincarnationMenu.show();
-  });
-  reincarnate.addUpdate(function(){
-    //TODO add reincarnation criteria
-  });
-  reincarnate.setToolTip(Button.REGULAR, 'Here you can choose your evolution');
-  game.allButtons.push(reincarnate);
-
-  botMenu.add(reincarnate.group);
-  botMenu.add(reincarnate.labelGroup);
+  }
 }

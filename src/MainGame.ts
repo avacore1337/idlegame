@@ -1,4 +1,5 @@
 import { Counter } from './Counter';
+import { Menu } from './Menu';
 import { Button } from './Button';
 import { Game } from './app';
 import { Square } from './Square';
@@ -33,6 +34,7 @@ export class MainGame extends Phaser.State {
   visibleTechs:number;
   visibleBuildings:number;
   visibleConstructions:number;
+  menus:Array<Menu>;
 
   // materials:Counter<MATERIALS>;
   materialContainer:MaterialContainer;
@@ -58,6 +60,7 @@ export class MainGame extends Phaser.State {
     this.materialUpdate = 0;
     this.gamestate = '';
     this.needsupdate = false;
+    this.menus = [];
     // this.game = theGame;
     this.hexMatrix = [];
     for (let i = 0; i < this.gridSizeY; i++) {
@@ -84,7 +87,9 @@ export class MainGame extends Phaser.State {
 
   update():void {
 
-    // TODO : call update() on the bottom menu
+    for (const menu of this.menus) {
+      menu.update();
+    }
 
     if (this.needsupdate) {
       this.needsupdate = false;

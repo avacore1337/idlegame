@@ -1,6 +1,6 @@
 import { MainGame } from './MainGame';
 import { Tutorial } from './Tutorial';
-import { createBottomMenu } from './BottomMenu';
+import { BottomMenu } from './BottomMenu';
 import { createTopMenu } from './TopMenu';
 
 export function createMenu(game:MainGame):void {
@@ -11,7 +11,9 @@ export function createMenu(game:MainGame):void {
   const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
   const basicStyle = { font: '14px Arial', fill: '#000000', align: 'left' };
 
-  createBottomMenu(game, headerStyle, basicStyle);
+  const bottoMenu:BottomMenu = new BottomMenu(game);
+  game.menuGroup.add(bottoMenu.group);
+  //createBottomMenu(game, headerStyle, basicStyle);
   createTopMenu(game, headerStyle, basicStyle);
 
   game.modal.createModal({
