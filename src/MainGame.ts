@@ -4,7 +4,7 @@ import { Game } from './app';
 import { Square } from './Square';
 import { MaterialContainer } from './MaterialContainer';
 import { cameraControls } from './cameraControls';
-import { createMenu } from './menu';
+import { createMenu } from './menuHandler';
 import { generateHexGroup } from './hexes';
 import { loadMaterials } from './SaveHandler';
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
@@ -84,29 +84,7 @@ export class MainGame extends Phaser.State {
 
   update():void {
 
-    this.materialUpdate = (this.materialUpdate + 1) % 20;
-    if (this.materialUpdate === 0) {
-      this.materialContainer.gainMaterialsFraction(3);
-      let visibleLabels = -1;
-      const materials = this.materialContainer.materials;
-      const gains = this.materialContainer.getMaterialGains();
-      for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
-        let text = MATERIALSTRINGLIST[i] + ' ' + materials.get(i).toFixed(2);
-        text += '  (' + gains.get(i).toFixed(2) + '/s)';
-        this.materialLabels[i].setText(text);
-        this.materialLabels[i].y = 3;
-        this.materialLabels[i].visible = false;
-        if (materials.get(i) > 0) {
-          visibleLabels++;
-          this.materialLabels[i].visible = true;
-          this.materialLabels[i].y += 30 * visibleLabels;
-        }
-      }
-      for (const c of CONSTRUCTIONCLASSES) {
-        c.doThing(this);
-      }
-      this.updateGUI();
-    }
+    // TODO : call update() on the bottom menu
 
     if (this.needsupdate) {
       this.needsupdate = false;
