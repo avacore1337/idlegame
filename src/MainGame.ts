@@ -6,7 +6,7 @@ import { MaterialContainer } from './MaterialContainer';
 import { cameraControls } from './cameraControls';
 import { createMenu } from './menuHandler';
 import { generateHexGroup } from './hexes';
-import { loadMaterials } from './SaveHandler';
+import { loadGame } from './SaveHandler';
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
 
 export class MainGame extends Phaser.State {
@@ -49,7 +49,7 @@ export class MainGame extends Phaser.State {
     // game.era = parseInt(localStorage.getItem('era'));
 
     this.modal = new gameModal(this.game);
-    loadMaterials(this);
+    loadGame(this);
     this.game.stage.backgroundColor = '#ffffff';
     this.game.world.setBounds(0, 0, 1600, 1600);
     this.cursors = this.game.input.keyboard.createCursorKeys();

@@ -3,10 +3,10 @@ import { MaterialContainer } from './MaterialContainer';
 import { TechList } from './TechTree';
 import { CONSTRUCTIONCLASSES, CONSTRUCTIONS, BUILDINGCLASSES } from './Constants';
 
-export function loadMaterials(game:MainGame):void{
+export function loadMaterials(game:MainGame, restarting:boolean):void{
   if (typeof(Storage) !== 'undefined') {
     let materials = localStorage.getItem('materials');
-    if (materials !== null) {
+    if (materials !== null && !restarting) {
       materials = JSON.parse(materials);
       game.materialContainer = new MaterialContainer(materials);
     } else {
@@ -15,6 +15,31 @@ export function loadMaterials(game:MainGame):void{
   } else {
     game.materialContainer = new MaterialContainer();
   }
+}
+
+export function loadGame(game:MainGame):void{
+
+  const saveExists:boolean = localStorage.getItem('map') !== null;
+  const restarting:boolean = localStorage.getItem('restarting') === 'true';
+  if(saveExists){
+    game.era = parseInt(localStorage.getItem('era'));
+    game.evolutionPoints = parseInt(localStorage.getItem('evolutionPoints'));
+  }
+
+  loadMaterials(game, restarting);
+  // if (saveExists && !restarting) {
+  //   console.log('Loading old game');
+  //   loadMap(game);
+  //   loadConstructions(game);
+  //   loadTechnologies(game);
+  // }
+  // else{
+  //   console.log('making new game');
+  //   newGame(game);
+  //   if(restarting){
+  //     loadRebirth(game);
+  //   }
+  // }
 }
 
 export function loadMap(game:MainGame):void{
