@@ -2,7 +2,7 @@ import { GeneNode } from './GeneNode';
 // import { flatten } from './util';
 // import { Square } from './Square';
 // import { Mine, Quary } from './buildings/AllBuildings';
-import { MaterialContainer } from './MaterialContainer';
+// import { MaterialContainer } from './MaterialContainer';
 // import { ToolWorkshop, Kiln, Steelworks } from './constructions/AllConstructions';
 
 export let geneList:GeneNode[] = [];

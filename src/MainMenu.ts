@@ -1,4 +1,3 @@
-import { Game } from './app';
 import { Button } from './Button';
 import { resetSave } from './SaveHandler';
 

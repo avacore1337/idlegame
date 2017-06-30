@@ -3,7 +3,7 @@ import { MainGame } from './MainGame';
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
 import { Button } from './Button';
 import { Menu } from './Menu';
-import { UpdateAble } from './UpdateAble';
+// import { UpdateAble } from './UpdateAble';
 import { ReincarnationMenu } from './ReincarnationMenu';
 
 export class BottomMenu extends Menu {
@@ -20,7 +20,7 @@ export class BottomMenu extends Menu {
 
     const self = this;
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
-    const basicStyle = { font: '14px Arial', fill: '#000000', align: 'left' };
+    // const basicStyle = { font: '14px Arial', fill: '#000000', align: 'left' };
 
     // Initial setup of content
     let visibleLabels = -1;

@@ -1,7 +1,6 @@
 import { Counter } from './Counter';
 import { Menu } from './Menu';
 import { Button } from './Button';
-import { Game } from './app';
 import { Square } from './Square';
 import { MaterialContainer } from './MaterialContainer';
 import { cameraControls } from './cameraControls';

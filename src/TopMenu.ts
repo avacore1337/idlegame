@@ -1,6 +1,5 @@
 import { toReadableString } from './util';
 import { Menu } from './Menu';
-import { UpdateAble } from './UpdateAble';
 import { MainGame } from './MainGame';
 import { Button } from './Button';
 import { MATERIALS, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from './Constants';
