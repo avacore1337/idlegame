@@ -10,11 +10,13 @@ export class BottomMenu extends Menu implements UpdateAble {
 
   private materialUpdate:number;
   private materialLabels:Array<Phaser.Text>;
+  private buttons:Array<Button>;
 
   constructor(game:MainGame) {
     super(game, 0, 320, 'menu', 'leftpanel.png');
     this.materialUpdate = 0;
     this.materialLabels = [];
+    this.buttons = [];
 
     const self = this;
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
@@ -34,6 +36,7 @@ export class BottomMenu extends Menu implements UpdateAble {
     }
 
     const buy:Button = new Button(this.game.game, 224, 0, 'menu', 'Buy', 'button.png', headerStyle, {'toggleAble': true, 'toggledImage': 'buttonclicked.png'});
+    this.buttons.push(buy);
     buy.onClick(Button.REGULAR, function():void {
       self.game.gamestate = 'buying';
       for (const button of self.game.allButtons) {
@@ -46,21 +49,27 @@ export class BottomMenu extends Menu implements UpdateAble {
       self.game.gamestate = '';
       self.game.needsupdate = true;
     });
-    this.game.allButtons.push(buy);
+    buy.addUpdate(function():void {
+      if (self.game.gamestate !== 'buying') {
+        buy.unToggle();
+      }
+      self.game.needsupdate = true;
+    });
     this.content.add(buy.group);
     this.content.add(buy.labelGroup);
 
     const save:Button = new Button(this.game.game, 224, 30, 'menu', 'Save', 'button.png', headerStyle);
+    this.buttons.push(save);
     save.onClick(Button.REGULAR, function():void {
       saveGame(self.game);
     });
     save.setToolTip(Button.REGULAR, 'Save your current gamestate.');
-    this.game.allButtons.push(save);
     this.content.add(save.group);
     this.content.add(save.labelGroup);
 
     const reincarnationMenu:ReincarnationMenu = ReincarnationMenu.Instance(game);
     const reincarnate:Button = new Button(this.game.game, 224, 60, 'menu', 'Evolve', 'button.png', headerStyle);
+    this.buttons.push(reincarnate);
     reincarnate.onClick(Button.REGULAR, function(){
       reincarnationMenu.show();
     });
@@ -68,7 +77,6 @@ export class BottomMenu extends Menu implements UpdateAble {
       //TODO add reincarnation criteria
     });
     reincarnate.setToolTip(Button.REGULAR, 'Here you can choose your evolution');
-    this.game.allButtons.push(reincarnate);
     this.content.add(reincarnate.group);
     this.content.add(reincarnate.labelGroup);
   }
@@ -80,7 +88,7 @@ export class BottomMenu extends Menu implements UpdateAble {
       let visibleLabels = -1;
       const materials = this.game.materialContainer.materials;
       const gains = this.game.materialContainer.getMaterialGains();
-      for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
+      for (let i = 0; i < MATERIALS.Length; i++) {
         let text = MATERIALSTRINGLIST[i] + ' ' + materials.get(i).toFixed(2);
         text += '  (' + gains.get(i).toFixed(2) + '/s)';
         this.materialLabels[i].setText(text);
@@ -95,6 +103,10 @@ export class BottomMenu extends Menu implements UpdateAble {
       for (const c of CONSTRUCTIONCLASSES) {
         c.doThing(this.game);
       }
+    }
+
+    for (const button of this.buttons) {
+      button.update();
     }
   }
 }

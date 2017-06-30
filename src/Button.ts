@@ -1,8 +1,9 @@
 'use strict';
 
 import { MainGame } from './MainGame';
+import { UpdateAble } from './UpdateAble';
 
-export class Button {
+export class Button implements UpdateAble {
 
   public static readonly REGULAR:number = 0;
   public static readonly TOGGLED:number = 1;
@@ -25,7 +26,7 @@ export class Button {
   labelGroup:Phaser.Group;
   updateCallback: () => void;
 
-  constructor(game:Phaser.Game, x:number, y:number, key:any, text:string, image:string, style:any, options?:any) {
+  constructor(game:Phaser.Game, x:number, y:number, key:any, text:string, image:string, style:Phaser.PhaserTextStyle, options?:any) {
     const self = this;
     this.game = game;
     this.buttons = [];

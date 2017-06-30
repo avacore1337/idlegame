@@ -31,9 +31,6 @@ export class MainGame extends Phaser.State {
   materialUpdate:number;
   modal:gameModal;
   allButtons:Array<Button>;
-  visibleTechs:number;
-  visibleBuildings:number;
-  visibleConstructions:number;
   menus:Array<Menu>;
 
   // materials:Counter<MATERIALS>;
@@ -52,9 +49,6 @@ export class MainGame extends Phaser.State {
   // }
 
   create():void {
-    this.visibleTechs = 0;
-    this.visibleBuildings = 0;
-    this.visibleConstructions = 0;
     this.allButtons = [];
     this.materialLabels = [];
     this.materialUpdate = 0;
@@ -109,7 +103,7 @@ export class MainGame extends Phaser.State {
       this.materialContainer.materialGainBase = resourceGain;
 
       this.updateHexes();
-      this.updateGUI();
+      //this.updateGUI();
     }
 
     // Update camera
@@ -124,7 +118,7 @@ export class MainGame extends Phaser.State {
     }
   }
 
-  updateGUI():void {
+  /*updateGUI():void {
     // console.log('updateGUI');
     this.visibleTechs = 0;
     this.visibleBuildings = 0;
@@ -132,7 +126,7 @@ export class MainGame extends Phaser.State {
     for(const button of this.allButtons){
       button.update();
     }
-  }
+  }*/
 
   render():void {
     // this.game.debug.cameraInfo(this.game.camera, 32, 32);
