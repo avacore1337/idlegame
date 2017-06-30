@@ -1,7 +1,7 @@
 import { MainGame } from './MainGame';
 import { Square } from './Square';
 import { newGame } from './gameStart';
-import { loadMap, loadConstructions, loadTechnologies } from './SaveHandler';
+import { loadRebirth, loadMap, loadConstructions, loadTechnologies } from './SaveHandler';
 import { MATERIALS, BUILDINGCLASSES } from './Constants';
 
 function linkHexes(game:MainGame, square:Square, i:number, j:number, index:number){
@@ -75,7 +75,9 @@ export function generateHexGroup(game:MainGame):void {
   generateSquares(game);
   linkAllHexes(game);
 
-  if (localStorage.getItem('map') !== null) {
+  const saveExists:boolean = localStorage.getItem('map') !== null;
+  const restarting:boolean = localStorage.getItem('restarting') === 'true';
+  if (saveExists && !restarting) {
     console.log('Loading old game');
     loadMap(game);
     loadConstructions(game);
@@ -84,6 +86,9 @@ export function generateHexGroup(game:MainGame):void {
   else{
     console.log('making new game');
     newGame(game);
+    if(restarting){
+      loadRebirth(game);
+    }
   }
   placeHexes(game);
   game.hexagonGroup.x = (game.game.world.width - game.hexagonWidth * Math.ceil(game.gridSizeX)) / 2;

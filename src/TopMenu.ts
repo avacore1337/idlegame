@@ -206,7 +206,7 @@ export class TopMenu extends Menu {
         const canAfford = self.game.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
         if (canAfford) {
           self.game.needsupdate = true;
-          r.research();
+          r.research(self.game);
           self.game.materialContainer.materials.subtract(MATERIALS.Research, r.researchPointCost);
         } else {
         }

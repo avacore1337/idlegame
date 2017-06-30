@@ -201,6 +201,7 @@
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">menu/button.png</key>
             <key type="filename">menu/buttonclicked.png</key>
+            <key type="filename">menu/buttondisabled.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -215,6 +216,7 @@
             </struct>
             <key type="filename">menu/button2.png</key>
             <key type="filename">menu/button2clicked.png</key>
+            <key type="filename">menu/button2disabled.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

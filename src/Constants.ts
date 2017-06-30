@@ -87,5 +87,6 @@ export const enum RESOURCES {
 export const RESOURCESTRINGLIST = ['stone', 'horse', 'copper', 'iron', 'coal'];
 
 export const enum MATERIALMULITIPLIERINDEXES {
-  ToolWorkshop
+  ToolWorkshop,
+  BiggerBrain
 }

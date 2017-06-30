@@ -38,6 +38,8 @@ export function saveGame(game:MainGame):void{
     localStorage.setItem('map', JSON.stringify(game.hexMatrix));
     localStorage.setItem('constructions', getConstructionJSON());
     localStorage.setItem('technologies', getResearchJSON());
+    localStorage.setItem('era', game.era.toString());
+    localStorage.setItem('evolutionPoints', game.evolutionPoints.toString());
   }
 }
 
@@ -59,6 +61,19 @@ function getResearchJSON():string{
   return JSON.stringify(technologyData);
 }
 
+export function prepareRebirth(game:MainGame):void {
+  localStorage.setItem('restarting', 'true');
+  localStorage.setItem('newEra', game.era.toString());
+  localStorage.setItem('newEvolutionPoints', game.evolutionPoints.toString());
+}
+
+export function loadRebirth(game:MainGame):void {
+  game.era = parseInt(localStorage.getItem('newEra'));
+  game.evolutionPoints = parseInt(localStorage.getItem('newEvolutionPoints'));
+  localStorage.removeItem('restarting');
+  localStorage.removeItem('newEra');
+  localStorage.removeItem('newEvolutionPoints');
+}
 
 /* tslint:disable:no-string-literal */
 
@@ -82,7 +97,7 @@ export function loadTechnologies(game:MainGame):void {
       for (const technology of TechList) {
         if(technologies.indexOf(technology.name) !== -1){
           technology.researched = true;
-          technology.research();
+          technology.research(game);
         }
       }
     }
@@ -96,5 +111,7 @@ export function resetSave():void{
     localStorage.removeItem('map');
     localStorage.removeItem('constructions');
     localStorage.removeItem('technologies');
+    localStorage.removeItem('era');
+    localStorage.removeItem('evolutionPoints');
   }
 }
