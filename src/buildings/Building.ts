@@ -1,5 +1,5 @@
 import { Square } from '../board/Square';
-import { SQUARETYPES, MATERIALS } from '../Constants';
+import { SQUARETYPES, MATERIALS, BUILDINGS } from '../Constants';
 import { Counter } from '../Counter';
 
 export class Building {
@@ -8,6 +8,7 @@ export class Building {
   square:Square;
   title:string;
   spriteName:string;
+  type:BUILDINGS;
   constructor(){
     // this.allowedTerrains = theAllowedTerrains;
     // this.neededResources = theNeededResources;
