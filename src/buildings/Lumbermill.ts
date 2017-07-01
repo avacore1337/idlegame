@@ -21,11 +21,6 @@ export class Lumbermill extends Building {
     return Lumbermill.enabled;
   }
 
-  static reset(){
-    Lumbermill.enabled = true;
-    Lumbermill.amount = 0;
-  }
-
   generateMaterials():Counter<MATERIALS>{
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 1);

@@ -21,11 +21,6 @@ export class Claypit extends Building {
     return Claypit.enabled;
   }
 
-  static reset(){
-    Claypit.enabled = true;
-    Claypit.amount = 0;
-  }
-
   generateMaterials():Counter<MATERIALS>{
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Clay, 1);
