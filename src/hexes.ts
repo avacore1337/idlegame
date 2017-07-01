@@ -4,8 +4,8 @@ import { newGame } from './gameStart';
 import { loadRebirth, loadMap, loadConstructions, loadTechnologies } from './SaveHandler';
 import { MATERIALS, BUILDINGCLASSES } from './Constants';
 
-function linkHexes(game:MainGame, square:Square, i:number, j:number, index:number){
-  if(i < 0 || i >= game.gridSizeX || j < 0 || j >= game.gridSizeY){
+function linkHexes(game:MainGame, square:Square, i:number, j:number, index:number):void {
+  if (i < 0 || i >= game.gridSizeX || j < 0 || j >= game.gridSizeY) {
     return;
   }
   else{
@@ -15,7 +15,7 @@ function linkHexes(game:MainGame, square:Square, i:number, j:number, index:numbe
   }
 }
 
-function generateSquares(game:MainGame){
+function generateSquares(game:MainGame):void {
   for (let i = 0; i < game.gridSizeY; i++) {
     for (let j = 0; j < game.gridSizeX; j++) {
       const square:Square = new Square(game, j, i);
@@ -24,7 +24,7 @@ function generateSquares(game:MainGame){
   }
 }
 
-function linkAllHexes(game:MainGame){
+function linkAllHexes(game:MainGame):void {
   for (let i = 0; i < game.gridSizeX; i++) {
     for (let j = 0; j < game.gridSizeY; j++) {
         const offset = (i)%2;
@@ -35,7 +35,7 @@ function linkAllHexes(game:MainGame){
   }
 }
 
-function placeHexes(game:MainGame){
+function placeHexes(game:MainGame):void {
   for (let i = 0; i < game.gridSizeY; i++) {
     for (let j = 0; j < game.gridSizeX; j++) {
       const theSquare = game.hexMatrix[i][j];
@@ -50,7 +50,7 @@ function placeHexes(game:MainGame){
           //   button.update();
           // }
         }
-        if(game.gamestate ==='buying' && !theSquare.purchased && game.materialContainer.materials.get(MATERIALS.Food) >= 10*Math.pow(1.4, theSquare.distance) && theSquare.distance <= Square.buildDistance){
+        if (game.gamestate ==='buying' && !theSquare.purchased && game.materialContainer.materials.get(MATERIALS.Food) >= 10*Math.pow(1.4, theSquare.distance) && theSquare.distance <= Square.buildDistance) {
           game.materialContainer.materials.subtract(MATERIALS.Food, 10*Math.pow(1.4, theSquare.distance));
           theSquare.purchased = true;
           theSquare.revealNeighbours();
@@ -64,14 +64,10 @@ function placeHexes(game:MainGame){
 
 export function generateHexGroup(game:MainGame):void {
   game.hexagonGroup = game.game.add.group();
-  game.squareLayer = game.game.add.group();
-  game.borderLayer = game.game.add.group();
-  game.resourceLayer = game.game.add.group();
-  game.buildingLayer = game.game.add.group();
-  game.hexagonGroup.add(game.squareLayer);
-  game.hexagonGroup.add(game.borderLayer);
-  game.hexagonGroup.add(game.resourceLayer);
-  game.hexagonGroup.add(game.buildingLayer);
+  game.squareLayer = game.game.add.group(game.hexagonGroup);
+  game.borderLayer = game.game.add.group(game.hexagonGroup);
+  game.resourceLayer = game.game.add.group(game.hexagonGroup);
+  game.buildingLayer = game.game.add.group(game.hexagonGroup);
   generateSquares(game);
   linkAllHexes(game);
 
@@ -82,11 +78,10 @@ export function generateHexGroup(game:MainGame):void {
     loadMap(game);
     loadConstructions(game);
     loadTechnologies(game);
-  }
-  else{
+  } else {
     console.log('making new game');
     newGame(game);
-    if(restarting){
+    if (restarting) {
       loadRebirth(game);
     }
   }
