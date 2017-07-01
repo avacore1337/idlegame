@@ -1,4 +1,5 @@
 import { GeneNode } from './GeneNode';
+import { MainGame } from './MainGame';
 // import { flatten } from './util';
 // import { Square } from './Square';
 // import { Mine, Quary } from './buildings/AllBuildings';
@@ -41,7 +42,7 @@ function generateMindTree():GeneNode[][]{
 function generateMindTier1():GeneNode[]{
   const tier1:GeneNode[] = [];
 
-  function enableBiggerBrain(){
+  function enableBiggerBrain(game:MainGame):void{
     console.log('bigger brain');
   }
   const biggerBrain = new GeneNode('Bigger brain', '+20% research from buildings per level', [], 15, enableBiggerBrain);
@@ -52,13 +53,13 @@ function generateMindTier1():GeneNode[]{
 function generateMindTier2():GeneNode[]{
   const tier1:GeneNode[] = [];
 
-  function enableDedicatedThinker(){
+  function enableDedicatedThinker(game:MainGame):void{
     console.log('dedicated');
   }
   const dedicatedThinker = new GeneNode('Dedicated thinker', '+20% research when clicking per level', [[getGene('Bigger brain'), 10]], 15, enableDedicatedThinker);
   tier1.push(dedicatedThinker);
 
-  function enableDaydreaming(){
+  function enableDaydreaming(game:MainGame):void{
     console.log('works daydreaming');
   }
   const daydreaming = new GeneNode('Daydreaming', '1 research/s', [[getGene('Bigger brain'), 10]], 15, enableDaydreaming);
@@ -81,7 +82,7 @@ function generateBodyTree():GeneNode[][]{
 function generateBodyTier1():GeneNode[]{
   const tier1:GeneNode[] = [];
 
-  function enableBiggerBrain(){
+  function enableBiggerBrain(game:MainGame):void{
     console.log('brawn');
   }
   const biggerBrain = new GeneNode('Brawn', '+20% research from buildings per level', [], 15, enableBiggerBrain);
@@ -92,13 +93,13 @@ function generateBodyTier1():GeneNode[]{
 function generateBodyTier2():GeneNode[]{
   const tier1:GeneNode[] = [];
 
-  function enableDedicatedThinker(){
+  function enableDedicatedThinker(game:MainGame):void{
     console.log('strength');
   }
   const dedicatedThinker = new GeneNode('Strength', '+20% research when clicking per level', [[getGene('Brawn'), 10]], 15, enableDedicatedThinker);
   tier1.push(dedicatedThinker);
 
-  function enableDaydreaming(){
+  function enableDaydreaming(game:MainGame):void{
     console.log('muscles');
   }
   const daydreaming = new GeneNode('Muscles', '1 research/s', [[getGene('Brawn'), 10]], 15, enableDaydreaming);

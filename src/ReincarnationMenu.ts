@@ -76,6 +76,7 @@ export class ReincarnationMenu {
   }
 
   private generateButtons(){
+    const self = this;
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
     const sectionWidth = Math.round((this.game.width - this.offsetWidth*2)/geneTree.length);
     for (let i = 0; i < geneTree.length; i++) {
@@ -92,7 +93,7 @@ export class ReincarnationMenu {
             const button:Button = new Button(this.game, i*sectionWidth + 111*k + padding*(k*2 + 1), 100*j, 'menu', gene.name, 'button.png', headerStyle, {disableAble:true, disabledImage: 'buttondisabled.png'});
             button.setToolTip(Button.REGULAR, gene.description);
             button.onClick(Button.REGULAR, function(){
-              gene.buy();
+              gene.buy(self.mainGame);
             });
             button.addUpdate(function(){
               if(gene.buyable()){

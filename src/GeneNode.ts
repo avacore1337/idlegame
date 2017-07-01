@@ -1,3 +1,5 @@
+import { MainGame } from './MainGame';
+
 export class GeneNode{
   name:string;
   description:string;
@@ -5,9 +7,9 @@ export class GeneNode{
   maxLevel:number;
   requires:[GeneNode, number][];
   evolutionPointCost:number;
-  effect: () => void;
+  effect: (game:MainGame) => void;
 
-  constructor(name:string, description:string, requires:[GeneNode, number][], evolutionPointCost:number, effect: () => void){
+  constructor(name:string, description:string, requires:[GeneNode, number][], evolutionPointCost:number, effect: (game:MainGame) => void){
     this.name = name;
     this.description = description;
     this.requires = requires;
@@ -25,9 +27,9 @@ export class GeneNode{
     return true;
   }
 
-  buy():void{
+  buy(game:MainGame):void{
     this.level += 1;
-    this.effect();
+    this.effect(game);
   }
 
 }
