@@ -1,6 +1,7 @@
 import { MainGame } from './MainGame';
 import { MaterialContainer } from './MaterialContainer';
 import { TechList, EraList } from './TechTree';
+import { geneList } from './GeneTree';
 import { CONSTRUCTIONCLASSES, CONSTRUCTIONS, BUILDINGCLASSES } from './Constants';
 
 /** No documentation available */
@@ -27,7 +28,7 @@ export function loadGame(game:MainGame):void{
     game.era = parseInt(localStorage.getItem('era'));
     game.evolutionPoints = parseInt(localStorage.getItem('evolutionPoints'));
   }
-
+  loadGenes(game);
   /** No documentation available */
   loadMaterials(game, restarting);
   // if (saveExists && !restarting) {
@@ -68,6 +69,7 @@ export function saveGame(game:MainGame):void{
     localStorage.setItem('map', JSON.stringify(game.hexMatrix));
     localStorage.setItem('constructions', getConstructionJSON());
     localStorage.setItem('technologies', getResearchJSON());
+    localStorage.setItem('genes', getGeneJSON());
     localStorage.setItem('era', game.era.toString());
     localStorage.setItem('evolutionPoints', game.evolutionPoints.toString());
   }
@@ -91,6 +93,14 @@ function getResearchJSON():string{
     }
   }
   return JSON.stringify(technologyData);
+}
+
+function getGeneJSON():string{
+  const geneData:[string, number][] = [];
+  for (const gene of geneList) {
+    geneData.push([gene.name, gene.level]);
+  }
+  return JSON.stringify(geneData);
 }
 
 /** No documentation available */
@@ -153,6 +163,22 @@ export function loadTechnologies(game:MainGame):void {
     }
   }
 }
+
+export function loadGenes(game:MainGame):void {
+  if (typeof(Storage) !== 'undefined') {
+    const technologyData = localStorage.getItem('genes');
+    if (technologyData !== null) {
+      const technologies:[string, number][] = JSON.parse(technologyData);
+      for (const technology of geneList) {
+        for(const [name, level] of technologies){
+          if(technology.name ===  name){
+            technology.level = level;
+          }
+        }
+      }
+    }
+  }
+}
 /* tslint:enable:no-string-literal */
 
 /** No documentation available */
@@ -162,6 +188,7 @@ export function resetSave():void{
     localStorage.removeItem('map');
     localStorage.removeItem('constructions');
     localStorage.removeItem('technologies');
+    localStorage.removeItem('genes');
     localStorage.removeItem('era');
     localStorage.removeItem('evolutionPoints');
   }

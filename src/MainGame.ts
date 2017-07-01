@@ -73,6 +73,9 @@ export class MainGame extends Phaser.State {
     for (const menu of this.menus) {
       menu.update();
     }
+    for(const button of this.allButtons){
+      button.update();
+    }
 
     if (this.needsupdate) {
       this.needsupdate = false;
