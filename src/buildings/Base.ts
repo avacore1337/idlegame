@@ -1,4 +1,4 @@
-import { Square } from '../board/Square';
+import { Tile } from '../board/Tile';
 import { Building } from './Building';
 import { MATERIALS, BUILDINGS } from '../Constants';
 import { Counter } from '../Counter';
@@ -10,27 +10,32 @@ export class Base extends Building {
   static allowedTerrains = [];
   static neededResources = [];
   static amount:number = 0;
-  static type:BUILDINGS = BUILDINGS.Base;
+  type:BUILDINGS;
 
-  constructor(){
+  constructor() {
     super();
+    this.type = BUILDINGS.Base;
   }
 
-  static isEnabled():boolean{
+  static isEnabled():boolean {
     return Base.enabled;
   }
 
-  generateMaterials():Counter<MATERIALS>{
+  generateMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     return counter;
   }
 
-  static getRequiredMaterials():Counter<MATERIALS>{
+  demolish():void {
+    return;
+  }
+
+  static getRequiredMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     return counter;
   }
 
-  static canBuild(square:Square):boolean{
+  static canBuild(tile:Tile):boolean {
     return false;
   }
 

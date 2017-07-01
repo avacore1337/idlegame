@@ -1,5 +1,5 @@
 import { TechNode } from './TechNode';
-import { Square } from './board/Square';
+import { Tile } from './board/Tile';
 import { MainGame } from './MainGame';
 import { Mine, Quary, Lumbermill, Claypit, Farm, HuntingCamp } from './buildings/AllBuildings';
 import { prepareRebirth } from './SaveHandler';
@@ -52,13 +52,13 @@ const steelmaking = new TechNode('Steelmaking', 'Discover the physics behind ste
 TechList.push(steelmaking);
 
 function enableTorch(game:MainGame):void {
-  Square.buildDistance++;
+  Tile.buildDistance += 1;
 }
 const torch = new TechNode('Torch', 'Torches allow you to see further.', [stoneAgeEra, burning, tooling], 100, enableTorch);
 TechList.push(torch);
 
 function enableRoads(game:MainGame):void {
-  Square.buildDistance += 2;
+  Tile.buildDistance += 2;
 }
 const roads = new TechNode('Roads', 'Roads will allow for easier traveling.', [stoneAgeEra, mining], 100, enableRoads);
 TechList.push(roads);

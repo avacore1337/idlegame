@@ -54,7 +54,6 @@ export class BottomMenu extends Menu {
       if (self.game.gamestate !== 'buying') {
         buy.unToggle();
       }
-      self.game.needsupdate = true;
     });
     this.content.add(buy.group);
     this.content.add(buy.labelGroup);

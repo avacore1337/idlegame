@@ -1,102 +1,99 @@
-import { SQUARETYPES ,RESOURCES, BUILDINGS } from '../Constants';
+import { SQUARETYPES, RESOURCES, BUILDINGS, BUILDINGCLASSES, MATERIALS, DIRECTIONS } from '../Constants';
 import { MainGame } from '../MainGame';
-import { Square } from './Square';
+import { Tile } from './Tile';
+import { Board } from './Board';
 import { shuffle } from '../util';
 
-/** No documentation available */
-const start:Array<[SQUARETYPES, number]> = [
-  [SQUARETYPES.Forest, RESOURCES.Stone],
-  [SQUARETYPES.Forest, -1],
-  [SQUARETYPES.River, -1],
-  [SQUARETYPES.River, RESOURCES.Stone],
-  [SQUARETYPES.Plains, RESOURCES.Horse],
-  [SQUARETYPES.Field, -1]];
-/** No documentation available */
-const second:Array<[SQUARETYPES, number]> = []; // 6*2 + 6*3 == 30
-
-/** No documentation available */
-function generateSecond():void {
-  for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Forest, RESOURCES.Stone]);
-  }
-  for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Forest, -1]);
-  }
-  for (let i = 0; i < 4; i++) {
-    second.push([SQUARETYPES.River, -1]);
-  }
-  for (let i = 0; i < 4; i++) {
-    second.push([SQUARETYPES.Water, -1]);
-  }
-  for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Desert, RESOURCES.Stone]);
-  }
-  for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Desert, -1]);
-  }
-  for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Plains, -1]);
-  }
-  for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Plains, RESOURCES.Horse]);
-  }
-  for (let i = 0; i < 4; i++) {
-    second.push([SQUARETYPES.Field, -1]);
-  }
-  for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Mountain, RESOURCES.Copper]);
-  }
-  for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Mountain, RESOURCES.Iron]);
-  }
-  for (let i = 0; i < 2; i++) {
-    second.push([SQUARETYPES.Mountain, RESOURCES.Coal]);
-  }
-  shuffle(second);
+/** Generate the tiles with a distance of 1 to the base */
+function constantLayer():Array<[SQUARETYPES, number]> {
+  const tiles:Array<[SQUARETYPES, number]> = [
+    [SQUARETYPES.Forest, RESOURCES.Stone],
+    [SQUARETYPES.Forest, -1],
+    [SQUARETYPES.River, -1],
+    [SQUARETYPES.River, RESOURCES.Stone],
+    [SQUARETYPES.Plains, RESOURCES.Horse],
+    [SQUARETYPES.Field, -1]
+  ];
+  shuffle(tiles);
+  return tiles;
 }
 
-/** No documentation available */
-export function newGame(game:MainGame):void {
-  generateSecond();
-  const centerX = Math.floor(game.gridSizeX/2);
-  const centerY = Math.floor(game.gridSizeY/2);
-  const centerHex = game.hexMatrix[centerX][centerY];
-  calculateDistances(game, centerHex);
+/** Generate the tiles with a distance of 2 or 3 to the base */
+function pseudoLayer():Array<[SQUARETYPES, number]> {
+  const tiles:Array<[SQUARETYPES, number]> = [];
 
-  const tmpStart = start.slice();
-  shuffle(tmpStart);
-  const tmpSecond = second.slice();
-  shuffle(tmpSecond);
-  for (let i = 0; i < game.gridSizeY; i++) {
-    for (let j = 0; j < game.gridSizeX; j++) {
-      const square = game.hexMatrix[i][j];
-      square.reset();
-      if(square.distance === 0){
-        square.setType(SQUARETYPES.Base);
-        square.addBuilding(BUILDINGS.Base);
+  for (let i = 0; i < 2; i++) {
+    tiles.push([SQUARETYPES.Forest, RESOURCES.Stone]);
+  }
+  for (let i = 0; i < 2; i++) {
+    tiles.push([SQUARETYPES.Forest, -1]);
+  }
+  for (let i = 0; i < 4; i++) {
+    tiles.push([SQUARETYPES.River, -1]);
+  }
+  for (let i = 0; i < 4; i++) {
+    tiles.push([SQUARETYPES.Water, -1]);
+  }
+  for (let i = 0; i < 2; i++) {
+    tiles.push([SQUARETYPES.Desert, RESOURCES.Stone]);
+  }
+  for (let i = 0; i < 2; i++) {
+    tiles.push([SQUARETYPES.Desert, -1]);
+  }
+  for (let i = 0; i < 2; i++) {
+    tiles.push([SQUARETYPES.Plains, -1]);
+  }
+  for (let i = 0; i < 2; i++) {
+    tiles.push([SQUARETYPES.Plains, RESOURCES.Horse]);
+  }
+  for (let i = 0; i < 4; i++) {
+    tiles.push([SQUARETYPES.Field, -1]);
+  }
+  for (let i = 0; i < 2; i++) {
+    tiles.push([SQUARETYPES.Mountain, RESOURCES.Copper]);
+  }
+  for (let i = 0; i < 2; i++) {
+    tiles.push([SQUARETYPES.Mountain, RESOURCES.Iron]);
+  }
+  for (let i = 0; i < 2; i++) {
+    tiles.push([SQUARETYPES.Mountain, RESOURCES.Coal]);
+  }
+  shuffle(tiles);
+  return tiles;
+}
+
+/** Generate all tiles with a distance of more than 2 to the base */
+function randomLayer():Array<[SQUARETYPES, number]> {
+  const tiles:Array<[SQUARETYPES, number]> = [];
+  for (let i = 0; i < Board.WIDTH * Board.HEIGHT - (1+6+12+18); i++) {
+    const type:SQUARETYPES = Math.floor((Math.random() * (SQUARETYPES.Length - 1))); // Exclude base
+    if (type === SQUARETYPES.Plains) {
+      tiles.push([SQUARETYPES.Plains, RESOURCES.Horse]);
+    } else if (type === SQUARETYPES.Forest) {
+      tiles.push([SQUARETYPES.Forest, RESOURCES.Stone]);
+    } else if (type === SQUARETYPES.Mountain) {
+      const rnd = Math.floor(Math.random() * 100);
+      const coalPercentage = 10;
+      const copperPercentage = 10;
+      const ironPercentage = 10;
+      if (rnd < coalPercentage) {
+        tiles.push([SQUARETYPES.Mountain, RESOURCES.Coal]);
+      } else if (rnd < coalPercentage + copperPercentage) {
+        tiles.push([SQUARETYPES.Mountain, RESOURCES.Copper]);
+      } else if (rnd < coalPercentage + copperPercentage + ironPercentage) {
+        tiles.push([SQUARETYPES.Mountain, RESOURCES.Iron]);
+      } else {
+        tiles.push([SQUARETYPES.Mountain, -1]);
       }
-      else if(square.distance <= 1){
-        setSquare(square, tmpStart.pop());
-      }
-      else if(square.distance <= 3){
-        setSquare(square, tmpSecond.pop());
-      } else{
-        randomizeHex(square);
-      }
+    } else {
+      tiles.push([type, -1]);
     }
   }
-
-  centerHex.purchased = true;
-  centerHex.reveal();
-  for(const hex of centerHex.neighbours){
-      hex.purchased = true;
-      hex.reveal();
-      hex.revealNeighbours();
-  }
+  return tiles;
 }
 
-/** No documentation available */
-function calculateDistances(game:MainGame, centerHex:Square):void {
+/** Perform a BFS to determine each tile's distance to the base */
+function calculateDistances(centerHex:Tile):void {
   let distance = 0;
   let currentTiles = centerHex.setDistance(distance);
   let nextTiles = [];
@@ -112,36 +109,97 @@ function calculateDistances(game:MainGame, centerHex:Square):void {
   }
 }
 
-/** No documentation available */
-function randomizeHex(square:Square):void {
-  const squareType:SQUARETYPES = Math.floor((Math.random() * (SQUARETYPES.Length - 1))); //not including base
-  square.squareType = squareType;
-  square.setType(squareType);
-  if(square.squareType === SQUARETYPES.Plains){
-    square.setResource(RESOURCES.Horse);
-  }
-  if(square.squareType === SQUARETYPES.Forest){
-    square.setResource(RESOURCES.Stone);
-  }
-  if(square.squareType === SQUARETYPES.Mountain){
-    const rnd = Math.floor(Math.random() * 100);
-    const coalPercentage = 10;
-    const copperPercentage = 10;
-    const ironPercentage = 10;
-    if (rnd < coalPercentage) {
-      square.setResource(RESOURCES.Coal);
-    } else if (rnd < coalPercentage + copperPercentage) {
-      square.setResource(RESOURCES.Copper);
-    } else if (rnd < coalPercentage + copperPercentage + ironPercentage) {
-      square.setResource(RESOURCES.Iron);
+/** Set the neighbours of each tile */
+function linkAllHexes(board:Array<Array<Tile>>):void {
+  for (let y = 0; y < Board.HEIGHT; y++) {
+    for (let x = 0; x < Board.WIDTH; x++) {
+      const offset =  y % 2;
+      linkHexes(board[y][x], board[y - 1] === undefined ? undefined : board[y - 1][x - 1 + offset], DIRECTIONS.NW);
+      linkHexes(board[y][x], board[y - 1] === undefined ? undefined : board[y - 1][x + offset], DIRECTIONS.NE);
+      linkHexes(board[y][x], board[y] === undefined ? undefined : board[y][x + 1], DIRECTIONS.E);
     }
   }
 }
 
-/** No documentation available */
-function setSquare(square:Square, data:[SQUARETYPES, number]):void{
-  square.setType(data[0]);
-  if(data[1] !== -1){
-    square.setResource(data[1]);
+/** Help-function of linkAllHexes */
+function linkHexes(tile:Tile, otherTile:Tile, location:DIRECTIONS):void {
+  if (otherTile !== undefined) {
+    tile.setNeighbour(location, otherTile);
+    otherTile.setNeighbour(location + 3, tile);
+  }
+}
+
+/** Generate a new board. DOES NOT set the content of the tiles. */
+export function boardSkeleton(game:MainGame, parent:Phaser.Group):Array<Array<Tile>> {
+  const board:Array<Array<Tile>> = [];
+  for (let y = 0; y < Board.HEIGHT; y++) {
+    board.push([]);
+    for (let x = 0; x < Board.WIDTH; x++) {
+      const tile:Tile = new Tile(game, Tile.WIDTH * (x + 1/2* (y % 2)), (Tile.HEIGHT / 4 * 3) * y, parent);
+      board[y].push(tile);
+      tile.onclick(function():void {
+        if (game.gamestate === 'building') {
+          // -------------- REQUIREMENTS FOR BUILDING --------------
+          // You own the tile
+          // The chosen building can be built on a tile of this type
+          // You can afford to build the building
+          // No other building exist on the tile
+          if (tile.purchased &&
+            BUILDINGCLASSES[game.option].canBuild(tile) &&
+            game.materialContainer.materials.isSubset(BUILDINGCLASSES[game.option].getRequiredMaterials()) &&
+            tile.building === undefined) {
+            game.materialContainer.pay(BUILDINGCLASSES[game.option].getRequiredMaterials());
+            tile.addBuilding(game.option);
+            game.needsupdate = true;
+          }
+        } else if (game.gamestate === 'buying') {
+          // --------------- REQUIREMENTS FOR BUYING ---------------
+          // You do not own the tile
+          // The land is close enough to your base
+          // You can afford to buy the land
+          if (!tile.purchased &&
+            tile.distance <= Tile.buildDistance &&
+            game.materialContainer.materials.get(MATERIALS.Food) >= 10*Math.pow(1.4, tile.distance)) {
+            game.materialContainer.materials.subtract(MATERIALS.Food, 10*Math.pow(1.4, tile.distance));
+            tile.purchase();
+            game.needsupdate = true;
+          }
+        }
+      });
+    }
+  }
+  linkAllHexes(board);
+
+  const centerX = Math.floor(Board.WIDTH / 2);
+  const centerY = Math.floor(Board.HEIGHT / 2);
+  calculateDistances(board[centerY][centerX]);
+
+  return board;
+}
+
+/** Generates content for the given board */
+export function assignContent(board:Array<Array<Tile>>):void {
+  const layer1:Array<[SQUARETYPES, number]> = constantLayer();
+  const layer2:Array<[SQUARETYPES, number]> = pseudoLayer();
+  const layer3:Array<[SQUARETYPES, number]> = randomLayer();
+
+  for (const list of board) {
+    for (const tile of list) {
+      if (tile.distance >= 4) {
+        tile.setTile(layer3.pop());
+      } else if (tile.distance >= 2) {
+        tile.setTile(layer2.pop());
+      } else if (tile.distance >= 1) {
+        tile.setTile(layer1.pop());
+        tile.purchase();
+      } else {
+        const centerX = Math.floor(Board.WIDTH / 2);
+        const centerY = Math.floor(Board.HEIGHT / 2);
+        board[centerY][centerX].setTile([SQUARETYPES.Base, -1]);
+
+        tile.purchase();
+        board[centerY][centerX].addBuilding(BUILDINGS.Base);
+      }
+    }
   }
 }

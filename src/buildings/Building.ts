@@ -1,32 +1,34 @@
-import { Square } from '../board/Square';
+import { Tile } from '../board/Tile';
 import { SQUARETYPES, MATERIALS, BUILDINGS } from '../Constants';
 import { Counter } from '../Counter';
 
 export class Building {
   protected static allowedTerrains:Array<SQUARETYPES>;
   protected static neededResources:Array<number>;
-  square:Square;
+  tile:Tile;
   title:string;
   spriteName:string;
   type:BUILDINGS;
-  constructor(){
-    // this.allowedTerrains = theAllowedTerrains;
-    // this.neededResources = theNeededResources;
-  }
 
-  static isEnabled():boolean{
+  constructor() {}
+
+  static isEnabled():boolean {
     return false;
   }
 
-  setSquare(square: Square):void{
-    this.square = square;
+  setTile(tile:Tile):void {
+    this.tile = tile;
   }
 
   generateMaterials():Counter<MATERIALS>{
     return new Counter<MATERIALS>();
   }
 
-  static canBuild(square:Square):boolean{
+  demolish():void {
+    return;
+  }
+
+  static canBuild(tile:Tile):boolean {
     return false;
   }
 

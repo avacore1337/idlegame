@@ -1,4 +1,4 @@
-import { Square } from '../board/Square';
+import { Tile } from '../board/Tile';
 import { Building } from './Building';
 import { SQUARETYPES, MATERIALS, RESOURCES, EXPONENTS, BUILDINGS } from '../Constants';
 import { Counter } from '../Counter';
@@ -10,30 +10,34 @@ export class Mine extends Building {
   static allowedTerrains = [SQUARETYPES.Mountain];
   static neededResources = [RESOURCES.Copper, RESOURCES.Iron, RESOURCES.Coal];
   static amount:number = 0;
-  static type:BUILDINGS = BUILDINGS.Mine;
+  type:BUILDINGS;
 
   constructor(){
     super();
     Mine.amount += 1;
+    this.type = BUILDINGS.Mine;
   }
 
   static isEnabled():boolean{
     return Mine.enabled;
   }
 
-
   generateMaterials():Counter<MATERIALS>{
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
-    if(this.square.resourceType === RESOURCES.Copper){
+    if(this.tile.resource === RESOURCES.Copper){
       counter.add(MATERIALS.Copper, 1);
     }
-    if(this.square.resourceType === RESOURCES.Iron){
+    if(this.tile.resource === RESOURCES.Iron){
       counter.add(MATERIALS.Iron, 1);
     }
-    if(this.square.resourceType === RESOURCES.Coal){
+    if(this.tile.resource === RESOURCES.Coal){
       counter.add(MATERIALS.Coal, 1);
     }
     return counter;
+  }
+
+  demolish():void {
+    Mine.amount -= 1;
   }
 
   static getRequiredMaterials():Counter<MATERIALS>{
@@ -43,12 +47,12 @@ export class Mine extends Building {
     return counter.multiplyAll(Math.pow(EXPONENTS.Medium, this.amount));
   }
 
-  static canBuild(square:Square):boolean{
-    if (Mine.allowedTerrains.indexOf(square.squareType) !== -1) {
+  static canBuild(tile:Tile):boolean {
+    if (Mine.allowedTerrains.indexOf(tile.type) !== -1) {
       if(Mine.neededResources.length === 0){
         return true;
       }
-      if(Mine.neededResources.indexOf(square.resourceType) !== -1) {
+      if(Mine.neededResources.indexOf(tile.resource) !== -1) {
         return true;
       }
     }

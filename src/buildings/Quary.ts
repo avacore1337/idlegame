@@ -1,4 +1,4 @@
-import { Square } from '../board/Square';
+import { Tile } from '../board/Tile';
 import { Building } from './Building';
 import { SQUARETYPES, MATERIALS, RESOURCES, EXPONENTS, BUILDINGS } from '../Constants';
 import { Counter } from '../Counter';
@@ -10,11 +10,12 @@ export class Quary extends Building {
   static allowedTerrains = [SQUARETYPES.Forest, SQUARETYPES.Desert];
   static neededResources = [RESOURCES.Stone];
   static amount:number = 0;
-  static type:BUILDINGS = BUILDINGS.Quary;
+  type:BUILDINGS;
 
   constructor(){
     super();
     Quary.amount += 1;
+    this.type = BUILDINGS.Quary;
   }
 
   static isEnabled():boolean{
@@ -27,6 +28,10 @@ export class Quary extends Building {
     return counter;
   }
 
+  demolish():void {
+    Quary.amount -= 1;
+  }
+
   static getRequiredMaterials():Counter<MATERIALS>{
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 30);
@@ -34,12 +39,12 @@ export class Quary extends Building {
     return counter.multiplyAll(Math.pow(EXPONENTS.Medium, this.amount));
   }
 
-  static canBuild(square:Square):boolean{
-    if (Quary.allowedTerrains.indexOf(square.squareType) !== -1) {
+  static canBuild(tile:Tile):boolean {
+    if (Quary.allowedTerrains.indexOf(tile.type) !== -1) {
       if(Quary.neededResources.length === 0){
         return true;
       }
-      if(Quary.neededResources.indexOf(square.resourceType) !== -1) {
+      if(Quary.neededResources.indexOf(tile.resource) !== -1) {
         return true;
       }
     }

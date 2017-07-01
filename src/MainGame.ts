@@ -1,11 +1,11 @@
 import { Counter } from './Counter';
 import { Menu } from './gui/Menu';
 import { Button } from './gui/Button';
-import { Square } from './board/Square';
+import { Tile } from './board/Tile';
+import { Board } from './board/Board';
 import { MaterialContainer } from './MaterialContainer';
 import { cameraControls } from './cameraControls';
 import { createMenu } from './gui/menuHandler';
-import { generateHexGroup } from './board/hexes';
 import { loadGame } from './SaveHandler';
 import { EraList } from './TechTree';
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
@@ -15,18 +15,9 @@ export class MainGame extends Phaser.State {
 
   era:number = 0;
   evolutionPoints:number = 0;
-  hexagonWidth:number = 70;
-  hexagonHeight:number = 80;
-  gridSizeX:number = 16;
-  gridSizeY:number = 16;
   menuGroup:Phaser.Group;
-  hexagonGroup:Phaser.Group;
-  squareLayer:Phaser.Group;
-  borderLayer:Phaser.Group;
-  resourceLayer:Phaser.Group;
-  buildingLayer:Phaser.Group;
   cursors:Phaser.CursorKeys;
-  hexMatrix: Square[][];
+  board:Board;
   gamestate:string;
   option:number;
   needsupdate:boolean;
@@ -44,26 +35,22 @@ export class MainGame extends Phaser.State {
     this.gamestate = '';
     this.needsupdate = false;
     this.menus = [];
-    // this.game = theGame;
-    this.hexMatrix = [];
-    for (let i = 0; i < this.gridSizeY; i++) {
-      this.hexMatrix.push([]);
-    }
-    // game.era = parseInt(localStorage.getItem('era'));
+    this.game.world.setBounds(0, 0, 1600, 1600);
+    this.game.stage.backgroundColor = '#ffffff';
+
+    this.board = new Board(this);
+    loadGame(this);
 
     this.modal = new gameModal(this.game);
-    loadGame(this);
-    this.game.stage.backgroundColor = '#ffffff';
-    this.game.world.setBounds(0, 0, 1600, 1600);
     this.cursors = this.game.input.keyboard.createCursorKeys();
-    generateHexGroup(this);
     createMenu(this);
 
-    const cameraCenterX = (this.game.world.width - this.game.width)/2;
-    const cameraCenterY = (this.game.world.height - this.game.height)/2;
+    const cameraCenterX = (this.game.world.width - this.game.width) / 2;
+    const cameraCenterY = (this.game.world.height - this.game.height) / 2;
 
     this.game.camera.x = cameraCenterX;
     this.game.camera.y = cameraCenterY;
+
     this.needsupdate = true;
   }
 
@@ -84,9 +71,9 @@ export class MainGame extends Phaser.State {
       for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
           resourceGain.add(i, 0);
       }
-      for(const row of this.hexMatrix){
-        for(const hex of row){
-          resourceGain = resourceGain.addOther(hex.generateMaterials());
+      for (const row of this.board.board) {
+        for (const tile of row) {
+          resourceGain = resourceGain.addOther(tile.generateMaterials());
         }
       }
       for (const c of CONSTRUCTIONCLASSES) {
@@ -94,21 +81,12 @@ export class MainGame extends Phaser.State {
       }
       this.materialContainer.materialGainBase = resourceGain;
 
-      this.updateHexes();
+      this.board.update();
     }
 
     // Update camera
     cameraControls(this.game, this.cursors);
     EraList[this.era].research(this);
-  }
-
-  /** No documentation available */
-  updateHexes():void {
-    for(const row of this.hexMatrix){
-      for(const hex of row){
-        hex.update();
-      }
-    }
   }
 
   /** No documentation available */
