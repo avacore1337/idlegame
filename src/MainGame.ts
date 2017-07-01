@@ -1,11 +1,11 @@
 import { Counter } from './Counter';
-import { Menu } from './GUI/Menu';
-import { Button } from './GUI/Button';
-import { Square } from './Board/Square';
+import { Menu } from './gui/Menu';
+import { Button } from './gui/Button';
+import { Square } from './board/Square';
 import { MaterialContainer } from './MaterialContainer';
 import { cameraControls } from './cameraControls';
-import { createMenu } from './GUI/menuHandler';
-import { generateHexGroup } from './Board/hexes';
+import { createMenu } from './gui/menuHandler';
+import { generateHexGroup } from './board/hexes';
 import { loadGame } from './SaveHandler';
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
 
