@@ -1,6 +1,6 @@
 import { Square } from '../board/Square';
 import { Building } from './Building';
-import { SQUARETYPES, MATERIALS, EXPONENTS} from '../Constants';
+import { SQUARETYPES, MATERIALS, EXPONENTS, BUILDINGS } from '../Constants';
 import { Counter } from '../Counter';
 
 export class HuntingCamp extends Building {
@@ -10,6 +10,7 @@ export class HuntingCamp extends Building {
   static allowedTerrains = [SQUARETYPES.Field, SQUARETYPES.Forest, SQUARETYPES.Mountain, SQUARETYPES.Plains, SQUARETYPES.River];
   static neededResources = [];
   static amount:number = 0;
+  static type:BUILDINGS = BUILDINGS.HuntingCamp;
 
   constructor(){
     super();

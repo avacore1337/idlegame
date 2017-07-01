@@ -1,6 +1,6 @@
 import { Square } from '../board/Square';
 import { Building } from './Building';
-import { MATERIALS} from '../Constants';
+import { MATERIALS, BUILDINGS } from '../Constants';
 import { Counter } from '../Counter';
 
 export class Base extends Building {
@@ -10,6 +10,7 @@ export class Base extends Building {
   static allowedTerrains = [];
   static neededResources = [];
   static amount:number = 0;
+  static type:BUILDINGS = BUILDINGS.Base;
 
   constructor(){
     super();
