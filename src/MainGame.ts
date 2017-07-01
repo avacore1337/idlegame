@@ -9,6 +9,7 @@ import { generateHexGroup } from './GUI/hexes';
 import { loadGame } from './SaveHandler';
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
 
+/** No documentation available */
 export class MainGame extends Phaser.State {
 
   era:number = 0;
@@ -35,6 +36,7 @@ export class MainGame extends Phaser.State {
 
   materialContainer:MaterialContainer;
 
+  /** No documentation available */
   create():void {
     this.allButtons = [];
     this.materialUpdate = 0;
@@ -64,6 +66,7 @@ export class MainGame extends Phaser.State {
     this.needsupdate = true;
   }
 
+  /** No documentation available */
   update():void {
 
     for (const menu of this.menus) {
@@ -94,6 +97,7 @@ export class MainGame extends Phaser.State {
     cameraControls(this.game, this.cursors);
   }
 
+  /** No documentation available */
   updateHexes():void {
     for(const row of this.hexMatrix){
       for(const hex of row){
@@ -102,6 +106,7 @@ export class MainGame extends Phaser.State {
     }
   }
 
+  /** No documentation available */
   render():void {}
 
 }

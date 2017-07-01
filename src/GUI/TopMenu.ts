@@ -5,6 +5,7 @@ import { Button } from './Button';
 import { MATERIALS, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from '../Constants';
 import { TechList } from '../TechTree';
 
+/** No documentation available */
 export class TopMenu extends Menu {
 
   private buttons:Array<Button>;
@@ -13,6 +14,7 @@ export class TopMenu extends Menu {
   visibleBuildings:number;
   visibleConstructions:number;
 
+  /** No documentation available */
   constructor(game:MainGame) {
     super(game, 0, 0, 'menu', 'leftpanel.png');
 
@@ -30,6 +32,7 @@ export class TopMenu extends Menu {
     this.createTopBar(headerStyle, bGroup, cGroup, rGroup);
   }
 
+  /** No documentation available */
   update():void {
     this.visibleTechs = 0;
     this.visibleBuildings = 0;
@@ -39,6 +42,7 @@ export class TopMenu extends Menu {
     }
   }
 
+  /** No documentation available */
   private createTopBar(style:Phaser.PhaserTextStyle, bGroup:Phaser.Group, cGroup:Phaser.Group, rGroup:Phaser.Group):void {
     const self = this;
     const group = this.game.add.group();
@@ -88,6 +92,7 @@ export class TopMenu extends Menu {
     });
   }
 
+  /** No documentation available */
   private createBuildings(style:Phaser.PhaserTextStyle):Phaser.Group {
     const self = this;
     let startingButtons = 0;
@@ -141,6 +146,7 @@ export class TopMenu extends Menu {
     return group;
   }
 
+  /** No documentation available */
   private createConstructions(style:Phaser.PhaserTextStyle):Phaser.Group {
     const self = this;
     let startingButtons = 0;
@@ -191,6 +197,7 @@ export class TopMenu extends Menu {
     return group;
   }
 
+  /** No documentation available */
   private createResearch(style:Phaser.PhaserTextStyle):Phaser.Group {
     const self = this;
     let startingButtons = 0;

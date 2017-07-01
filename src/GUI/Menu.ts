@@ -1,6 +1,7 @@
 import { MainGame } from '../MainGame';
 import { Updateable } from '../Updateable';
 
+/** No documentation available */
 export class Menu implements Updateable {
 
   public group:Phaser.Group;
@@ -10,6 +11,7 @@ export class Menu implements Updateable {
 
   protected game:MainGame;
 
+  /** No documentation available */
   constructor(game:MainGame, x:number, y:number, textureKey:string, textureName:string) {
     this.game = game;
     this.game.menus.push(this);
@@ -20,5 +22,6 @@ export class Menu implements Updateable {
     this.group.y = y;
   }
 
+  /** No documentation available */
   update():void {}
 }

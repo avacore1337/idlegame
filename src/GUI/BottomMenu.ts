@@ -3,15 +3,16 @@ import { MainGame } from '../MainGame';
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from '../Constants';
 import { Button } from './Button';
 import { Menu } from './Menu';
-// import { Updateable } from './Updateable';
 import { ReincarnationMenu } from './ReincarnationMenu';
 
+/** No documentation available */
 export class BottomMenu extends Menu {
 
   private materialUpdate:number;
   private materialLabels:Array<Phaser.Text>;
   private buttons:Array<Button>;
 
+  /** No documentation available */
   constructor(game:MainGame) {
     super(game, 0, 320, 'menu', 'leftpanel.png');
     this.materialUpdate = 0;
@@ -81,6 +82,7 @@ export class BottomMenu extends Menu {
     this.content.add(reincarnate.labelGroup);
   }
 
+  /** No documentation available */
   update():void {
     this.materialUpdate = (this.materialUpdate + 1) % 20;
     if (this.materialUpdate === 0) {

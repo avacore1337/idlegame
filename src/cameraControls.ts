@@ -1,3 +1,4 @@
+/** No documentation available */
 export function cameraControls(game:Phaser.Game, cursors:Phaser.CursorKeys){
 
   if (cursors.up.isDown) {

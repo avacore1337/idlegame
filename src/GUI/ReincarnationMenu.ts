@@ -2,6 +2,7 @@ import { MainGame } from '../MainGame';
 import { Button } from './Button';
 import { geneTree } from '../GeneTree';
 
+/** No documentation available */
 export class ReincarnationMenu {
   private readonly backgroundColor;
   private readonly foregroundColor;
@@ -14,8 +15,7 @@ export class ReincarnationMenu {
   private readonly offsetHeight:number;
   private readonly offsetWidth:number;
 
-  // private readonly background:Phaser.Graphics;
-
+  /** No documentation available */
   constructor(mainGame:MainGame){
     this.mainGame = mainGame;
     this.game = mainGame.game;
@@ -39,22 +39,26 @@ export class ReincarnationMenu {
 
   }
 
+  /** No documentation available */
   public show():void {
     this.game.world.bringToTop(this.modalGroup);
     this.modalGroup.visible = true;
     // you can add animation here
   }
 
+  /** No documentation available */
   public hide():void {
     this.modalGroup.visible = false;
   }
 
+  /** No documentation available */
   private generate(){
     this.generateBackground();
     this.generateForeground();
     this.generateButtons();
   }
 
+  /** No documentation available */
   private generateBackground(){
     const self = this;
     const background = this.game.add.graphics(0, 0, this.backgroundGroup);
@@ -68,6 +72,7 @@ export class ReincarnationMenu {
     });
   }
 
+  /** No documentation available */
   private generateForeground(){
     const foreground = this.game.add.graphics(0,0, this.foregroundGroup);
     foreground.beginFill(this.foregroundColor, 1);
@@ -75,6 +80,7 @@ export class ReincarnationMenu {
     foreground.inputEnabled = true;
   }
 
+  /** No documentation available */
   private generateButtons(){
     const self = this;
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };

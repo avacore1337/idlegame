@@ -3,6 +3,7 @@ import { MainGame } from './MainGame';
 import { Square } from './Square';
 import { shuffle } from './util';
 
+/** No documentation available */
 const start:Array<[SQUARETYPES, number]> = [
   [SQUARETYPES.Forest, RESOURCES.Stone],
   [SQUARETYPES.Forest, -1],
@@ -10,8 +11,10 @@ const start:Array<[SQUARETYPES, number]> = [
   [SQUARETYPES.River, RESOURCES.Stone],
   [SQUARETYPES.Plains, RESOURCES.Horse],
   [SQUARETYPES.Field, -1]];
+/** No documentation available */
 const second:Array<[SQUARETYPES, number]> = []; // 6*2 + 6*3 == 30
 
+/** No documentation available */
 function generateSecond():void {
   for (let i = 0; i < 2; i++) {
     second.push([SQUARETYPES.Forest, RESOURCES.Stone]);
@@ -52,6 +55,7 @@ function generateSecond():void {
   shuffle(second);
 }
 
+/** No documentation available */
 export function newGame(game:MainGame):void {
   generateSecond();
   const centerX = Math.floor(game.gridSizeX/2);
@@ -91,6 +95,7 @@ export function newGame(game:MainGame):void {
   }
 }
 
+/** No documentation available */
 function calculateDistances(game:MainGame, centerHex:Square):void {
   let distance = 0;
   let currentTiles = centerHex.setDistance(distance);
@@ -107,6 +112,7 @@ function calculateDistances(game:MainGame, centerHex:Square):void {
   }
 }
 
+/** No documentation available */
 function randomizeHex(square:Square):void {
   const squareType:SQUARETYPES = Math.floor((Math.random() * (SQUARETYPES.Length - 1))); //not including base
   square.squareType = squareType;
@@ -132,6 +138,7 @@ function randomizeHex(square:Square):void {
   }
 }
 
+/** No documentation available */
 function setSquare(square:Square, data:[SQUARETYPES, number]):void{
   square.setType(data[0]);
   if(data[1] !== -1){

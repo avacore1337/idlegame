@@ -1,5 +1,6 @@
 import { MainGame } from './MainGame';
 
+/** No documentation available */
 export class GeneNode{
   name:string;
   description:string;
@@ -9,6 +10,7 @@ export class GeneNode{
   evolutionPointCost:number;
   effect: (game:MainGame) => void;
 
+  /** No documentation available */
   constructor(name:string, description:string, requires:[GeneNode, number][], evolutionPointCost:number, effect: (game:MainGame) => void){
     this.name = name;
     this.description = description;
@@ -18,6 +20,7 @@ export class GeneNode{
     this.level = 0;
   }
 
+  /** No documentation available */
   buyable(): boolean{
     for (const tech of this.requires) {
       if(tech[0].level < tech[1]){
@@ -27,6 +30,7 @@ export class GeneNode{
     return true;
   }
 
+  /** No documentation available */
   buy(game:MainGame):void{
     this.level += 1;
     this.effect(game);

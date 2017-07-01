@@ -1,8 +1,7 @@
-'use strict';
-
 import { MainGame } from '../MainGame';
 import { Updateable } from '../Updateable';
 
+/** No documentation available */
 export class Button implements Updateable {
 
   public static readonly REGULAR:number = 0;
@@ -26,6 +25,7 @@ export class Button implements Updateable {
   labelGroup:Phaser.Group;
   updateCallback: () => void;
 
+  /** No documentation available */
   constructor(game:Phaser.Game, x:number, y:number, key:any, text:string, image:string, style:Phaser.PhaserTextStyle, options?:any) {
     const self = this;
     this.game = game;
@@ -147,6 +147,7 @@ export class Button implements Updateable {
     this.labelGroup.y = y;
   }
 
+  /** No documentation available */
   onClick(button:number, callBack: () => void):boolean {
     if(this.buttons[button] === undefined) {
       return false;
@@ -164,29 +165,35 @@ export class Button implements Updateable {
     return true;
   }
 
+  /** No documentation available */
   unToggle():void {
     this.toggled = false;
     this.draw();
   }
 
+  /** No documentation available */
   disable():void {
     this.disabled = true;
     this.draw();
   }
 
+  /** No documentation available */
   enable():void {
     this.disabled = false;
     this.draw();
   }
 
+  /** No documentation available */
   addUpdate(callBack: () => void):void {
     this.updateCallback = callBack;
   }
 
+  /** No documentation available */
   update():void {
     this.updateCallback();
   }
 
+  /** No documentation available */
   draw():void {
     if(this.disabled) {
       this.buttons[Button.REGULAR][Button.GROUP].visible = false;
@@ -211,12 +218,14 @@ export class Button implements Updateable {
     }
   }
 
+  /** No documentation available */
   setText(button:number, content:string):void {
     const text = this.buttons[button][Button.TEXT];
     text.text = content;
     text.updateText();
   }
 
+  /** No documentation available */
   setToolTip(button:number, content:string):void {
     if(this.buttons[button] !== undefined) {
       if(this.buttons[button][Button.TOOLTIP] === undefined) {
@@ -232,10 +241,12 @@ export class Button implements Updateable {
     }
   }
 
+  /** No documentation available */
   hide():void {
     this.group.visible = false;
   }
 
+  /** No documentation available */
   show():void {
     this.group.visible = true;
   }

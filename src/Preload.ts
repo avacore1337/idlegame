@@ -1,5 +1,7 @@
+/** No documentation available */
 export class Preload extends Phaser.State {
 
+  /** No documentation available */
   create() {
     this.game.stage.backgroundColor = '#0000f0';
 

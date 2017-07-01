@@ -1,8 +1,10 @@
 import { Button } from './Button';
 import { resetSave } from '../SaveHandler';
 
+/** No documentation available */
 export class MainMenu extends Phaser.State {
 
+  /** No documentation available */
   preload() {
     this.game.load.enableParallel = true;
     this.game.load.atlasJSONHash('tiles', 'assets/tiles.png', 'assets/tiles.json');
@@ -12,6 +14,7 @@ export class MainMenu extends Phaser.State {
     this.game.load.atlasJSONHash('tutorial', 'assets/tutorial.png', 'assets/tutorial.json');
   }
 
+  /** No documentation available */
   create() {
     const self = this;
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };

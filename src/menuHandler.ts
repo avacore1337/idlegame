@@ -3,6 +3,7 @@ import { Tutorial } from './Tutorial';
 import { BottomMenu } from './GUI/BottomMenu';
 import { TopMenu } from './GUI/TopMenu';
 
+/** No documentation available */
 export function createMenu(game:MainGame):void {
   game.menuGroup = game.game.add.group();
   game.menuGroup.fixedToCamera = true;

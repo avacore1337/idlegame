@@ -6,10 +6,13 @@ import { MainGame } from './MainGame';
 // import { MaterialContainer } from './MaterialContainer';
 // import { ToolWorkshop, Kiln, Steelworks } from './constructions/AllConstructions';
 
+/** No documentation available */
 export let geneList:GeneNode[] = [];
+/** No documentation available */
 export const geneTree:GeneNode[][][] = generategeneTree();
 console.log(geneList);
 
+/** No documentation available */
 function getGene(name:string):GeneNode{
   for(const gene of geneList){
     if(gene.name === name){
@@ -19,6 +22,7 @@ function getGene(name:string):GeneNode{
   return null;
 }
 
+/** No documentation available */
 function generategeneTree():GeneNode[][][] {
   const theTechList:GeneNode[][][] = [];
   theTechList.push(generateMindTree());
@@ -26,6 +30,7 @@ function generategeneTree():GeneNode[][][] {
   return theTechList;
 }
 
+/** No documentation available */
 function generateMindTree():GeneNode[][]{
   const mindTree:GeneNode[][] = [];
 
@@ -39,6 +44,7 @@ function generateMindTree():GeneNode[][]{
   return mindTree;
 }
 
+/** No documentation available */
 function generateMindTier1():GeneNode[]{
   const tier1:GeneNode[] = [];
 
@@ -50,6 +56,7 @@ function generateMindTier1():GeneNode[]{
   return tier1;
 }
 
+/** No documentation available */
 function generateMindTier2():GeneNode[]{
   const tier1:GeneNode[] = [];
 
@@ -67,6 +74,7 @@ function generateMindTier2():GeneNode[]{
   return tier1;
 }
 
+/** No documentation available */
 function generateBodyTree():GeneNode[][]{
   const bodyTree:GeneNode[][] = [];
 
@@ -79,6 +87,7 @@ function generateBodyTree():GeneNode[][]{
   return bodyTree;
 }
 
+/** No documentation available */
 function generateBodyTier1():GeneNode[]{
   const tier1:GeneNode[] = [];
 
@@ -90,6 +99,7 @@ function generateBodyTier1():GeneNode[]{
   return tier1;
 }
 
+/** No documentation available */
 function generateBodyTier2():GeneNode[]{
   const tier1:GeneNode[] = [];
 

@@ -5,6 +5,7 @@ import { Mine, Quary } from './buildings/AllBuildings';
 import { prepareRebirth } from './SaveHandler';
 import { ToolWorkshop, Kiln, Steelworks } from './constructions/AllConstructions';
 
+/** No documentation available */
 export const TechList:Array<TechNode> = [];
 
 // Stone age

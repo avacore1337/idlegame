@@ -1,6 +1,7 @@
 import { MATERIALSTRINGLIST } from './Constants';
 import { Counter } from './Counter';
 
+/** No documentation available */
 export function shuffle(a:any[]):void {
   for (let i:number = a.length; i; i--) {
       const j:number = Math.floor(Math.random() * i);
@@ -8,6 +9,7 @@ export function shuffle(a:any[]):void {
   }
 }
 
+/** No documentation available */
 export function toReadableString(counter:Counter<number>):string {
   let ret:string = '';
   for (const key of counter.values.keys()){
@@ -16,6 +18,7 @@ export function toReadableString(counter:Counter<number>):string {
   return ret.substring(0, ret.length - 1);
 }
 
+/** No documentation available */
 export function flatten<T>(matrix:T[][]):T[]{
   return [].concat.apply([], matrix);
 }

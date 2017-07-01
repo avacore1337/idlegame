@@ -8,8 +8,10 @@ import { ToolWorkshop, Kiln, Steelworks, Library } from './constructions/AllCons
 //   }
 // }
 
+/** No documentation available */
 export const FACTORAMOUNT = 10;
 
+/** No documentation available */
 export const enum DIRECTIONS {
   NW,
   NE,
@@ -19,6 +21,7 @@ export const enum DIRECTIONS {
   W
 }
 
+/** No documentation available */
 export const enum MATERIALS {
   Wood,
   Clay,
@@ -31,8 +34,10 @@ export const enum MATERIALS {
   Food,
   Length
 }
+/** No documentation available */
 export const MATERIALSTRINGLIST = ['Wood', 'Clay', 'Stone', 'Iron', 'Brick', 'Coal', 'Copper', 'Research', 'Food'];
 
+/** No documentation available */
 export const enum SQUARETYPES {
   Plains,
   Desert,
@@ -45,6 +50,7 @@ export const enum SQUARETYPES {
   Length
 }
 
+/** No documentation available */
 export const enum EXPONENTS {
   Slow = 1.20,
   Medium = 1.35,
@@ -52,9 +58,12 @@ export const enum EXPONENTS {
   VeryFast = 1.7
 }
 
+/** No documentation available */
 export const SQUARETYPELIST = [SQUARETYPES.Plains, SQUARETYPES.Desert, SQUARETYPES.Forest, SQUARETYPES.River, SQUARETYPES.Water, SQUARETYPES.Field, SQUARETYPES.Mountain, SQUARETYPES.Base];
+/** No documentation available */
 export const SQUARESTRINGLIST = ['plains', 'desert', 'forest', 'river', 'water', 'field', 'mountain', 'base'];
 
+/** No documentation available */
 export const enum BUILDINGS {
   Lumbermill,
   Claypit,
@@ -65,8 +74,10 @@ export const enum BUILDINGS {
   Base,
   Length
 }
+/** No documentation available */
 export const BUILDINGCLASSES = [Lumbermill, Claypit, Quary, Mine, Farm, HuntingCamp, Base];
 
+/** No documentation available */
 export const enum CONSTRUCTIONS {
   Library,
   ToolWorkshop,
@@ -74,8 +85,10 @@ export const enum CONSTRUCTIONS {
   Steelworks,
   Length
 }
+/** No documentation available */
 export const CONSTRUCTIONCLASSES = [Library, ToolWorkshop, Kiln, Steelworks];
 
+/** No documentation available */
 export const enum RESOURCES {
   Stone,
   Horse,
@@ -84,8 +97,10 @@ export const enum RESOURCES {
   Coal,
   Length
 }
+/** No documentation available */
 export const RESOURCESTRINGLIST = ['stone', 'horse', 'copper', 'iron', 'coal'];
 
+/** No documentation available */
 export const enum MATERIALMULITIPLIERINDEXES {
   ToolWorkshop,
   BiggerBrain

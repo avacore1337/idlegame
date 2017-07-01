@@ -4,17 +4,18 @@ import { newGame } from '../gameStart';
 import { loadRebirth, loadMap, loadConstructions, loadTechnologies } from '../SaveHandler';
 import { MATERIALS, BUILDINGCLASSES } from '../Constants';
 
+/** Hello world */
 function linkHexes(game:MainGame, square:Square, i:number, j:number, index:number):void {
   if (i < 0 || i >= game.gridSizeX || j < 0 || j >= game.gridSizeY) {
     return;
-  }
-  else{
+  } else {
     const otherSquare = game.hexMatrix[i][j];
     square.neighbours[index] = otherSquare;
     otherSquare.neighbours[(index + 3) % 6] = square;
   }
 }
 
+/** Hello world */
 function generateSquares(game:MainGame):void {
   for (let i = 0; i < game.gridSizeY; i++) {
     for (let j = 0; j < game.gridSizeX; j++) {
@@ -24,6 +25,7 @@ function generateSquares(game:MainGame):void {
   }
 }
 
+/** Hello world */
 function linkAllHexes(game:MainGame):void {
   for (let i = 0; i < game.gridSizeX; i++) {
     for (let j = 0; j < game.gridSizeY; j++) {
@@ -35,6 +37,7 @@ function linkAllHexes(game:MainGame):void {
   }
 }
 
+/** Hello world */
 function placeHexes(game:MainGame):void {
   for (let i = 0; i < game.gridSizeY; i++) {
     for (let j = 0; j < game.gridSizeX; j++) {
@@ -62,6 +65,7 @@ function placeHexes(game:MainGame):void {
   }
 }
 
+/** Hello world */
 export function generateHexGroup(game:MainGame):void {
   game.hexagonGroup = game.game.add.group();
   game.squareLayer = game.game.add.group(game.hexagonGroup);

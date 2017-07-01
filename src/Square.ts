@@ -3,6 +3,7 @@ import { Counter } from './Counter';
 import { Building } from './buildings/AllBuildings';
 import { MATERIALS, SQUARETYPES, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from './Constants';
 
+/** No documentation available */
 export class Square {
   borders:Phaser.Sprite[];
   center:Phaser.Sprite;
@@ -26,6 +27,7 @@ export class Square {
 
   static buildDistance:number = 2;
 
+  /** No documentation available */
   constructor(game:MainGame, j:number, i:number){
     this.buildingType = -1;
     this.resourceType = -1;
@@ -53,6 +55,7 @@ export class Square {
     game.borderLayer.add(redborder);
   }
 
+  /** No documentation available */
   setType(squareType:SQUARETYPES):void {
     const old = this.center;
     this.center = this.game.game.add.sprite(this.x, this.y, 'tiles', SQUARESTRINGLIST[squareType] + '.png');
@@ -64,6 +67,7 @@ export class Square {
     this.squareType = squareType;
   }
 
+  /** No documentation available */
   setResource(resourceType:RESOURCES):void {
     if(this.resource != null){
       this.resource.destroy();
@@ -74,6 +78,7 @@ export class Square {
     this.resource.visible = false;
   }
 
+  /** No documentation available */
   update():void {
     if(this.revealed){
       let highlight = false;
@@ -98,6 +103,7 @@ export class Square {
     }
   }
 
+  /** No documentation available */
   reveal():void{
     this.revealed = true;
     this.center.visible = true;
@@ -110,12 +116,14 @@ export class Square {
     }
   }
 
+  /** No documentation available */
   revealNeighbours(){
     for (let k = 0; k < 6; k++) {
       this.neighbours[k].reveal();
     }
   }
 
+  /** No documentation available */
   addBuilding(building:BUILDINGS){
     this.buildingType = building;
     this.building = new BUILDINGCLASSES[building]();
@@ -130,6 +138,7 @@ export class Square {
     // this.buildingSprite.visible = true;
   }
 
+  /** No documentation available */
   generateMaterials():Counter<MATERIALS>{
     if(this.building != null){
       return this.building.generateMaterials();
@@ -139,6 +148,7 @@ export class Square {
     }
   }
 
+  /** No documentation available */
   setDistance(newDistance:number):Array<Square>{
     if (this.visited) {
       return [];
@@ -148,6 +158,7 @@ export class Square {
     return this.neighbours;
   }
 
+  /** No documentation available */
   toJSON():object {
     return {
       'purchased': this.purchased, // boolean
@@ -159,6 +170,7 @@ export class Square {
     };
   }
 
+  /** No documentation available */
   reset():void{
     this.buildingType = -1;
     this.squareType = -1;
@@ -167,6 +179,7 @@ export class Square {
   }
 
 /* tslint:disable:no-string-literal */
+  /** No documentation available */
   set(data:object):void {
     this.squareType = data['squareType'];
     this.setType(data['squareType']);

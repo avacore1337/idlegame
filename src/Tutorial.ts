@@ -1,11 +1,13 @@
 import { MainGame } from './MainGame';
 
+/** No documentation available */
 export class Tutorial {
 
   private slides:gameModal;
   private current:number = -1;
   private length:number = 0;
 
+  /** No documentation available */
   constructor(game:MainGame) {
     const self = this;
     this.slides = game.modal;
@@ -52,6 +54,7 @@ export class Tutorial {
     }
   }
 
+  /** No documentation available */
   public run():void {
     for (let i:number = 0; i < this.length; i++) {
       this.slides.hideModal('tutorial' + i);
@@ -60,10 +63,12 @@ export class Tutorial {
     this.slides.showModal('tutorial0');
   }
 
+  /** No documentation available */
   public done():boolean {
     return this.current === this.length;
   }
 
+  /** No documentation available */
   public next():void {
     this.slides.hideModal('tutorial' + this.current++);
     if (!this.done()) {
