@@ -1,7 +1,7 @@
-import { MainGame } from './MainGame';
-import { Counter } from './Counter';
-import { Building } from './buildings/AllBuildings';
-import { MATERIALS, SQUARETYPES, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from './Constants';
+import { MainGame } from '../MainGame';
+import { Counter } from '../Counter';
+import { Building } from '../buildings/AllBuildings';
+import { MATERIALS, SQUARETYPES, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST} from '../Constants';
 
 /** No documentation available */
 export class Square {

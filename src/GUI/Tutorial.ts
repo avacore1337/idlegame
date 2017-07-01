@@ -1,4 +1,4 @@
-import { MainGame } from './MainGame';
+import { MainGame } from '../MainGame';
 
 /** No documentation available */
 export class Tutorial {

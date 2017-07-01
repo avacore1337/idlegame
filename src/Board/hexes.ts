@@ -1,6 +1,6 @@
 import { MainGame } from '../MainGame';
-import { Square } from '../Square';
-import { newGame } from '../gameStart';
+import { Square } from './Square';
+import { newGame } from './gameStart';
 import { loadRebirth, loadMap, loadConstructions, loadTechnologies } from '../SaveHandler';
 import { MATERIALS, BUILDINGCLASSES } from '../Constants';
 

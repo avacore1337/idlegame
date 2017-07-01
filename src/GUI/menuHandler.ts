@@ -1,7 +1,7 @@
-import { MainGame } from './MainGame';
+import { MainGame } from '../MainGame';
 import { Tutorial } from './Tutorial';
-import { BottomMenu } from './GUI/BottomMenu';
-import { TopMenu } from './GUI/TopMenu';
+import { BottomMenu } from './BottomMenu';
+import { TopMenu } from './TopMenu';
 
 /** No documentation available */
 export function createMenu(game:MainGame):void {

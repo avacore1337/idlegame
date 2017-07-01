@@ -1,4 +1,4 @@
-import { Square } from '../Square';
+import { Square } from '../Board/Square';
 import { SQUARETYPES, MATERIALS } from '../Constants';
 import { Counter } from '../Counter';
 

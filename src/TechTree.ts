@@ -1,5 +1,5 @@
 import { TechNode } from './TechNode';
-import { Square } from './Square';
+import { Square } from './Board/Square';
 import { MainGame } from './MainGame';
 import { Mine, Quary } from './buildings/AllBuildings';
 import { prepareRebirth } from './SaveHandler';

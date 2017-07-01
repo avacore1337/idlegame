@@ -1,5 +1,5 @@
 import { MainGame } from '../MainGame';
-import { Updateable } from '../Updateable';
+import { Updateable } from '../Interfaces';
 
 /** No documentation available */
 export class Menu implements Updateable {
