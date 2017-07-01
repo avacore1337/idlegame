@@ -1,7 +1,7 @@
 import { MainGame } from './MainGame';
 import { Tutorial } from './Tutorial';
-import { BottomMenu } from './BottomMenu';
-import { TopMenu } from './TopMenu';
+import { BottomMenu } from './GUI/BottomMenu';
+import { TopMenu } from './GUI/TopMenu';
 
 export function createMenu(game:MainGame):void {
   game.menuGroup = game.game.add.group();

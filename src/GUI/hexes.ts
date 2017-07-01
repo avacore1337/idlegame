@@ -1,8 +1,8 @@
-import { MainGame } from './MainGame';
-import { Square } from './Square';
-import { newGame } from './gameStart';
-import { loadRebirth, loadMap, loadConstructions, loadTechnologies } from './SaveHandler';
-import { MATERIALS, BUILDINGCLASSES } from './Constants';
+import { MainGame } from '../MainGame';
+import { Square } from '../Square';
+import { newGame } from '../gameStart';
+import { loadRebirth, loadMap, loadConstructions, loadTechnologies } from '../SaveHandler';
+import { MATERIALS, BUILDINGCLASSES } from '../Constants';
 
 function linkHexes(game:MainGame, square:Square, i:number, j:number, index:number):void {
   if (i < 0 || i >= game.gridSizeX || j < 0 || j >= game.gridSizeY) {

@@ -1,6 +1,6 @@
-import { MainGame } from './MainGame';
+import { MainGame } from '../MainGame';
 import { Button } from './Button';
-import { geneTree } from './GeneTree';
+import { geneTree } from '../GeneTree';
 
 export class ReincarnationMenu {
   private readonly backgroundColor;

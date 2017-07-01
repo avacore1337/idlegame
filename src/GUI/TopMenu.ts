@@ -1,9 +1,9 @@
-import { toReadableString } from './util';
+import { toReadableString } from '../util';
 import { Menu } from './Menu';
-import { MainGame } from './MainGame';
+import { MainGame } from '../MainGame';
 import { Button } from './Button';
-import { MATERIALS, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from './Constants';
-import { TechList } from './TechTree';
+import { MATERIALS, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from '../Constants';
+import { TechList } from '../TechTree';
 
 export class TopMenu extends Menu {
 
@@ -115,7 +115,7 @@ export class TopMenu extends Menu {
       building.setToolTip(Button.TOGGLED, toReadableString(b.getRequiredMaterials()));
       building.addUpdate(function():void {
         if (b.isEnabled()) {
-          if (self.game.gamestate !== 'building') {
+          if (self.game.gamestate !== 'building' || self.game.option !== index) {
             building.unToggle();
           }
           building.show();

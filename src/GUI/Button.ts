@@ -1,9 +1,9 @@
 'use strict';
 
-import { MainGame } from './MainGame';
-import { UpdateAble } from './UpdateAble';
+import { MainGame } from '../MainGame';
+import { Updateable } from '../Updateable';
 
-export class Button implements UpdateAble {
+export class Button implements Updateable {
 
   public static readonly REGULAR:number = 0;
   public static readonly TOGGLED:number = 1;

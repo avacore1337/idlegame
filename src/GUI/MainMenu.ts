@@ -1,5 +1,5 @@
 import { Button } from './Button';
-import { resetSave } from './SaveHandler';
+import { resetSave } from '../SaveHandler';
 
 export class MainMenu extends Phaser.State {
 

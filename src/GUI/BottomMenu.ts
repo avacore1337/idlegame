@@ -1,9 +1,9 @@
-import { saveGame } from './SaveHandler';
-import { MainGame } from './MainGame';
-import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
+import { saveGame } from '../SaveHandler';
+import { MainGame } from '../MainGame';
+import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from '../Constants';
 import { Button } from './Button';
 import { Menu } from './Menu';
-// import { UpdateAble } from './UpdateAble';
+// import { Updateable } from './Updateable';
 import { ReincarnationMenu } from './ReincarnationMenu';
 
 export class BottomMenu extends Menu {

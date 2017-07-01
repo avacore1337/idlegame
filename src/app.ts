@@ -1,6 +1,6 @@
 import { MainGame } from './MainGame';
 import { Preload } from './Preload';
-import { MainMenu } from './MainMenu';
+import { MainMenu } from './GUI/MainMenu';
 
 export class Game extends Phaser.Game {
   wantLoad:boolean;

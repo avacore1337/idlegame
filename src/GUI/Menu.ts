@@ -1,7 +1,7 @@
-import { MainGame } from './MainGame';
-import { UpdateAble } from './UpdateAble';
+import { MainGame } from '../MainGame';
+import { Updateable } from '../Updateable';
 
-export class Menu implements UpdateAble {
+export class Menu implements Updateable {
 
   public group:Phaser.Group;
   protected background:Phaser.Sprite;
