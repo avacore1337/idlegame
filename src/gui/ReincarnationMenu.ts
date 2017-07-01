@@ -4,12 +4,12 @@ import { geneTree } from '../GeneTree';
 
 /** No documentation available */
 export class ReincarnationMenu {
-  private readonly backgroundColor;
-  private readonly foregroundColor;
-  private readonly backgroundOpacity;
-  private readonly modalGroup;
-  private readonly foregroundGroup;
-  private readonly backgroundGroup;
+  private readonly backgroundColor:number;
+  private readonly foregroundColor:number;
+  private readonly backgroundOpacity:number;
+  private readonly modalGroup:Phaser.Group;
+  private readonly foregroundGroup:Phaser.Group;
+  private readonly backgroundGroup:Phaser.Group;
   private readonly mainGame:MainGame;
   private readonly game:Phaser.Game;
   private readonly offsetHeight:number;
@@ -23,8 +23,8 @@ export class ReincarnationMenu {
     this.foregroundGroup = this.game.add.group();
     this.backgroundGroup = this.game.add.group();
     this.modalGroup.visible = false;
-    this.backgroundColor = '0x000000';
-    this.foregroundColor = '0x333333';
+    this.backgroundColor = 0x000000;
+    this.foregroundColor = 0x333333;
     this.backgroundOpacity = 0.4;
     this.modalGroup.fixedToCamera = true;
     this.modalGroup.cameraOffset.x = 0;
@@ -52,14 +52,14 @@ export class ReincarnationMenu {
   }
 
   /** No documentation available */
-  private generate(){
+  private generate():void {
     this.generateBackground();
     this.generateForeground();
     this.generateButtons();
   }
 
   /** No documentation available */
-  private generateBackground(){
+  private generateBackground():void {
     const self = this;
     const background = this.game.add.graphics(0, 0, this.backgroundGroup);
     background.beginFill(this.backgroundColor, this.backgroundOpacity);
@@ -73,7 +73,7 @@ export class ReincarnationMenu {
   }
 
   /** No documentation available */
-  private generateForeground(){
+  private generateForeground():void {
     const foreground = this.game.add.graphics(0,0, this.foregroundGroup);
     foreground.beginFill(this.foregroundColor, 1);
     foreground.drawRect(0, 0, this.game.width - this.offsetWidth*2, this.game.height - this.offsetHeight*2);
@@ -81,16 +81,33 @@ export class ReincarnationMenu {
   }
 
   /** No documentation available */
-  private generateButtons(){
+  private generateButtons():void {
     const self = this;
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
     const sectionWidth = Math.round((this.game.width - this.offsetWidth*2)/geneTree.length);
+    let leftmost = true;
+
+    const lineGroup = this.game.add.group();
+    this.foregroundGroup.add(lineGroup);
+    const buttonGroup = this.game.add.group();
+    this.foregroundGroup.add(buttonGroup);
+    const labelGroup = this.game.add.group();
+    this.foregroundGroup.add(labelGroup);
+
     for (let i = 0; i < geneTree.length; i++) {
         const category = geneTree[i];
-        const buttonGroup = this.game.add.group();
-        this.foregroundGroup.add(buttonGroup);
-        const labelGroup = this.game.add.group();
-        this.foregroundGroup.add(labelGroup);
+        // const line = Phaser.Line(sectionWidth*i, 0, sectionWidth*i, 500);
+        // const gfx = this.game.add.graphics(sectionWidth*i, 0);
+        if(leftmost){
+          leftmost = false;
+        }
+        else{
+          const width = 4;
+          const gfx = this.game.add.graphics(sectionWidth*i, 0);
+          gfx.lineStyle(width, 0x000000, 1);
+          gfx.lineTo(0, this.game.height - this.offsetHeight*2);
+          lineGroup.add(gfx);
+        }
         for (let j = 0; j < category.length; j++) {
           const tier = category[j];
           const padding = ((sectionWidth - 111*tier.length)/tier.length)/2;
