@@ -16,7 +16,6 @@ export class Building {
   static isEnabled():boolean{
     return false;
   }
-  static reset(){}
 
   setSquare(square: Square):void{
     this.square = square;
