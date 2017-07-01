@@ -7,6 +7,7 @@ import { cameraControls } from './cameraControls';
 import { createMenu } from './gui/menuHandler';
 import { generateHexGroup } from './board/hexes';
 import { loadGame } from './SaveHandler';
+import { EraList } from './TechTree';
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
 
 /** No documentation available */
@@ -95,6 +96,7 @@ export class MainGame extends Phaser.State {
 
     // Update camera
     cameraControls(this.game, this.cursors);
+    EraList[this.era].research(this);
   }
 
   /** No documentation available */

@@ -1,6 +1,6 @@
 import { MainGame } from './MainGame';
 import { MaterialContainer } from './MaterialContainer';
-import { TechList } from './TechTree';
+import { TechList, EraList } from './TechTree';
 import { CONSTRUCTIONCLASSES, CONSTRUCTIONS, BUILDINGCLASSES } from './Constants';
 
 /** No documentation available */
@@ -110,13 +110,17 @@ export function loadRebirth(game:MainGame):void {
   for (const technology of TechList) {
     technology.researched = false;
   }
+  for (const era of EraList) {
+    era.researched = false;
+  }
   for (const construction of CONSTRUCTIONCLASSES) {
     construction.enabled = false;
     construction.amount = 0;
   }
   CONSTRUCTIONCLASSES[CONSTRUCTIONS.Library].enabled = true;
-  for (const buildings of BUILDINGCLASSES) {
-    buildings.reset();
+  for (const building of BUILDINGCLASSES) {
+    building.enabled = false;
+    building.amount = 0;
   }
 }
 

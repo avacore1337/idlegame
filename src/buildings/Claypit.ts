@@ -4,7 +4,7 @@ import { SQUARETYPES, MATERIALS, EXPONENTS} from '../Constants';
 import { Counter } from '../Counter';
 
 export class Claypit extends Building {
-  static enabled:boolean = true;
+  static enabled:boolean = false;
   static title:string = 'Claypit';
   static spriteName:string = 'factory';
   static allowedTerrains = [SQUARETYPES.River];

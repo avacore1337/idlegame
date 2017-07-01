@@ -4,7 +4,7 @@ import { Counter } from '../Counter';
 import { MainGame } from '../MainGame';
 
 export class Library extends Construction {
-  static enabled:boolean = true;
+  static enabled:boolean = false;
   static title:string = 'Library';
   static amount:number = 0;
 

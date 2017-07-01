@@ -4,7 +4,7 @@ import { SQUARETYPES, MATERIALS, EXPONENTS} from '../Constants';
 import { Counter } from '../Counter';
 
 export class HuntingCamp extends Building {
-  static enabled:boolean = true;
+  static enabled:boolean = false;
   static title:string = 'Hunting camp';
   static spriteName:string = 'factory';
   static allowedTerrains = [SQUARETYPES.Field, SQUARETYPES.Forest, SQUARETYPES.Mountain, SQUARETYPES.Plains, SQUARETYPES.River];
