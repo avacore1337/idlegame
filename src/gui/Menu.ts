@@ -1,15 +1,19 @@
 import { GameState } from '../GameState';
 import { Updateable } from '../Interfaces';
 
-/** No documentation available */
 export abstract class Menu implements Updateable {
 
+  /** The group of this button */
   public group:Phaser.Group;
+  /** The sprite used as a background for this menu */
   protected background:Phaser.Sprite;
 
+  /** The group containing all the graphics of the menu except for the background-image */
   protected content:Phaser.Group;
 
+  /** The state of the game */
   protected state:GameState;
+  /** The main game object of the game */
   protected game:Phaser.Game;
 
   /** No documentation available */
@@ -24,6 +28,6 @@ export abstract class Menu implements Updateable {
     this.group.y = y;
   }
 
-  /** No documentation available */
+  /** Updates the menu */
   abstract update():void;
 }
