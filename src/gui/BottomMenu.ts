@@ -21,7 +21,6 @@ export class BottomMenu extends Menu {
 
     const self = this;
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
-    // const basicStyle = { font: '14px Arial', fill: '#000000', align: 'left' };
 
     // Initial setup of content
     let visibleLabels = -1;

@@ -7,7 +7,7 @@ export class Game extends Phaser.Game {
   wantLoad:boolean;
 
   /** No documentation available */
-  constructor(){
+  constructor() {
     super(1200, 600, Phaser.CANVAS, 'gameDiv');
     this.wantLoad = true;
     this.state.add('preload', Preload);
@@ -16,7 +16,7 @@ export class Game extends Phaser.Game {
   }
 
   /** No documentation available */
-  start(){
+  start():void {
     this.state.start('preload');
   }
 

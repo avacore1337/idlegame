@@ -9,7 +9,7 @@ export class MaterialContainer {
   materialGainFactors:number[][];
 
   /** No documentation available */
-  constructor(pre?:any){
+  constructor(pre?:any) {
     this.materials = new Counter<MATERIALS>();
     this.materialGainBase = new Counter<MATERIALS>();
     for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
@@ -37,13 +37,13 @@ export class MaterialContainer {
   }
 
   /** No documentation available */
-  gainMaterialsFraction(fraction:number):void{
+  gainMaterialsFraction(fraction:number):void {
     const gain = this.getMaterialGains();
     this.materials = this.materials.addOther(gain.divideAll(fraction));
   }
 
   /** No documentation available */
-  getMaterialGains():Counter<MATERIALS>{
+  getMaterialGains():Counter<MATERIALS> {
     const gain = new Counter(this.materialGainBase);
     for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
       for (let j = 0; j < FACTORAMOUNT; j++) {
@@ -54,7 +54,7 @@ export class MaterialContainer {
   }
 
   /** No documentation available */
-  pay(cost:Counter<MATERIALS>){
+  pay(cost:Counter<MATERIALS>):void {
     this.materials = this.materials.subtractOther(cost);
   }
 

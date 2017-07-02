@@ -1,7 +1,7 @@
 import { MainGame } from './MainGame';
 
 /** No documentation available */
-export class TechNode{
+export class TechNode {
   name:string;
   description:string;
   researched:boolean;
@@ -10,7 +10,7 @@ export class TechNode{
   effect: (game:MainGame) => void;
 
   /** No documentation available */
-  constructor(name:string, description:string, requires:TechNode[], researchPointCost:number, effect: (game:MainGame) => void){
+  constructor(name:string, description:string, requires:TechNode[], researchPointCost:number, effect: (game:MainGame) => void) {
     this.name = name;
     this.description = description;
     this.requires = requires;
@@ -20,7 +20,7 @@ export class TechNode{
   }
 
   /** No documentation available */
-  researchable(): boolean{
+  researchable():boolean {
     if (this.researched) {
       return false;
     }
@@ -33,7 +33,7 @@ export class TechNode{
   }
 
   /** No documentation available */
-  research(game:MainGame):void{
+  research(game:MainGame):void {
     this.effect(game);
     this.researched = true;
   }

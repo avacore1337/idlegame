@@ -19,6 +19,6 @@ export function toReadableString(counter:Counter<number>):string {
 }
 
 /** No documentation available */
-export function flatten<T>(matrix:T[][]):T[]{
+export function flatten<T>(matrix:T[][]):T[] {
   return [].concat.apply([], matrix);
 }

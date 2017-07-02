@@ -2,7 +2,7 @@
 export class Preload extends Phaser.State {
 
   /** No documentation available */
-  create() {
+  create():void {
     this.game.stage.backgroundColor = '#0000f0';
 
     const style = { font: '40px Arial', fill: '#ffffff', align: 'center' };

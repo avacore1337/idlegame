@@ -1,89 +1,89 @@
-import { SQUARETYPES, RESOURCES, BUILDINGS, BUILDINGCLASSES, MATERIALS, DIRECTIONS } from '../Constants';
+import { LAND, RESOURCES, BUILDINGS, BUILDINGCLASSES, MATERIALS, DIRECTIONS } from '../Constants';
 import { MainGame } from '../MainGame';
 import { Tile } from './Tile';
 import { Board } from './Board';
 import { shuffle } from '../util';
 
 /** Generate the tiles with a distance of 1 to the base */
-function constantLayer():Array<[SQUARETYPES, number]> {
-  const tiles:Array<[SQUARETYPES, number]> = [
-    [SQUARETYPES.Forest, RESOURCES.Stone],
-    [SQUARETYPES.Forest, -1],
-    [SQUARETYPES.River, -1],
-    [SQUARETYPES.River, RESOURCES.Stone],
-    [SQUARETYPES.Plains, RESOURCES.Horse],
-    [SQUARETYPES.Field, -1]
+function constantLayer():Array<[LAND, number]> {
+  const tiles:Array<[LAND, number]> = [
+    [LAND.Forest, RESOURCES.Stone],
+    [LAND.Forest, -1],
+    [LAND.River, -1],
+    [LAND.River, RESOURCES.Stone],
+    [LAND.Plains, RESOURCES.Horse],
+    [LAND.Field, -1]
   ];
   shuffle(tiles);
   return tiles;
 }
 
 /** Generate the tiles with a distance of 2 or 3 to the base */
-function pseudoLayer():Array<[SQUARETYPES, number]> {
-  const tiles:Array<[SQUARETYPES, number]> = [];
+function pseudoLayer():Array<[LAND, number]> {
+  const tiles:Array<[LAND, number]> = [];
 
   for (let i = 0; i < 2; i++) {
-    tiles.push([SQUARETYPES.Forest, RESOURCES.Stone]);
+    tiles.push([LAND.Forest, RESOURCES.Stone]);
   }
   for (let i = 0; i < 2; i++) {
-    tiles.push([SQUARETYPES.Forest, -1]);
+    tiles.push([LAND.Forest, -1]);
   }
   for (let i = 0; i < 4; i++) {
-    tiles.push([SQUARETYPES.River, -1]);
+    tiles.push([LAND.River, -1]);
   }
   for (let i = 0; i < 4; i++) {
-    tiles.push([SQUARETYPES.Water, -1]);
+    tiles.push([LAND.Water, -1]);
   }
   for (let i = 0; i < 2; i++) {
-    tiles.push([SQUARETYPES.Desert, RESOURCES.Stone]);
+    tiles.push([LAND.Desert, RESOURCES.Stone]);
   }
   for (let i = 0; i < 2; i++) {
-    tiles.push([SQUARETYPES.Desert, -1]);
+    tiles.push([LAND.Desert, -1]);
   }
   for (let i = 0; i < 2; i++) {
-    tiles.push([SQUARETYPES.Plains, -1]);
+    tiles.push([LAND.Plains, -1]);
   }
   for (let i = 0; i < 2; i++) {
-    tiles.push([SQUARETYPES.Plains, RESOURCES.Horse]);
+    tiles.push([LAND.Plains, RESOURCES.Horse]);
   }
   for (let i = 0; i < 4; i++) {
-    tiles.push([SQUARETYPES.Field, -1]);
+    tiles.push([LAND.Field, -1]);
   }
   for (let i = 0; i < 2; i++) {
-    tiles.push([SQUARETYPES.Mountain, RESOURCES.Copper]);
+    tiles.push([LAND.Mountain, RESOURCES.Copper]);
   }
   for (let i = 0; i < 2; i++) {
-    tiles.push([SQUARETYPES.Mountain, RESOURCES.Iron]);
+    tiles.push([LAND.Mountain, RESOURCES.Iron]);
   }
   for (let i = 0; i < 2; i++) {
-    tiles.push([SQUARETYPES.Mountain, RESOURCES.Coal]);
+    tiles.push([LAND.Mountain, RESOURCES.Coal]);
   }
   shuffle(tiles);
   return tiles;
 }
 
 /** Generate all tiles with a distance of more than 2 to the base */
-function randomLayer():Array<[SQUARETYPES, number]> {
-  const tiles:Array<[SQUARETYPES, number]> = [];
+function randomLayer():Array<[LAND, number]> {
+  const tiles:Array<[LAND, number]> = [];
   for (let i = 0; i < Board.WIDTH * Board.HEIGHT - (1+6+12+18); i++) {
-    const type:SQUARETYPES = Math.floor((Math.random() * (SQUARETYPES.Length - 1))); // Exclude base
-    if (type === SQUARETYPES.Plains) {
-      tiles.push([SQUARETYPES.Plains, RESOURCES.Horse]);
-    } else if (type === SQUARETYPES.Forest) {
-      tiles.push([SQUARETYPES.Forest, RESOURCES.Stone]);
-    } else if (type === SQUARETYPES.Mountain) {
+    const type:LAND = Math.floor((Math.random() * (LAND.Length - 1))); // Exclude base
+    if (type === LAND.Plains) {
+      tiles.push([LAND.Plains, RESOURCES.Horse]);
+    } else if (type === LAND.Forest) {
+      tiles.push([LAND.Forest, RESOURCES.Stone]);
+    } else if (type === LAND.Mountain) {
       const rnd = Math.floor(Math.random() * 100);
       const coalPercentage = 10;
       const copperPercentage = 10;
       const ironPercentage = 10;
       if (rnd < coalPercentage) {
-        tiles.push([SQUARETYPES.Mountain, RESOURCES.Coal]);
+        tiles.push([LAND.Mountain, RESOURCES.Coal]);
       } else if (rnd < coalPercentage + copperPercentage) {
-        tiles.push([SQUARETYPES.Mountain, RESOURCES.Copper]);
+        tiles.push([LAND.Mountain, RESOURCES.Copper]);
       } else if (rnd < coalPercentage + copperPercentage + ironPercentage) {
-        tiles.push([SQUARETYPES.Mountain, RESOURCES.Iron]);
+        tiles.push([LAND.Mountain, RESOURCES.Iron]);
       } else {
-        tiles.push([SQUARETYPES.Mountain, -1]);
+        tiles.push([LAND.Mountain, -1]);
       }
     } else {
       tiles.push([type, -1]);
@@ -179,9 +179,9 @@ export function boardSkeleton(game:MainGame, parent:Phaser.Group):Array<Array<Ti
 
 /** Generates content for the given board */
 export function assignContent(board:Array<Array<Tile>>):void {
-  const layer1:Array<[SQUARETYPES, number]> = constantLayer();
-  const layer2:Array<[SQUARETYPES, number]> = pseudoLayer();
-  const layer3:Array<[SQUARETYPES, number]> = randomLayer();
+  const layer1:Array<[LAND, number]> = constantLayer();
+  const layer2:Array<[LAND, number]> = pseudoLayer();
+  const layer3:Array<[LAND, number]> = randomLayer();
 
   for (const list of board) {
     for (const tile of list) {
@@ -195,7 +195,7 @@ export function assignContent(board:Array<Array<Tile>>):void {
       } else {
         const centerX = Math.floor(Board.WIDTH / 2);
         const centerY = Math.floor(Board.HEIGHT / 2);
-        board[centerY][centerX].setTile([SQUARETYPES.Base, -1]);
+        board[centerY][centerX].setTile([LAND.Base, -1]);
 
         tile.purchase();
         board[centerY][centerX].addBuilding(BUILDINGS.Base);

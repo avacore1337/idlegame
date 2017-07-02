@@ -38,7 +38,7 @@ export const enum MATERIALS {
 export const MATERIALSTRINGLIST = ['Wood', 'Clay', 'Stone', 'Iron', 'Brick', 'Coal', 'Copper', 'Research', 'Food'];
 
 /** No documentation available */
-export const enum SQUARETYPES {
+export const enum LAND {
   Plains,
   Desert,
   Forest,
@@ -59,9 +59,7 @@ export const enum EXPONENTS {
 }
 
 /** No documentation available */
-export const SQUARETYPELIST = [SQUARETYPES.Plains, SQUARETYPES.Desert, SQUARETYPES.Forest, SQUARETYPES.River, SQUARETYPES.Water, SQUARETYPES.Field, SQUARETYPES.Mountain, SQUARETYPES.Base];
-/** No documentation available */
-export const SQUARESTRINGLIST = ['plains', 'desert', 'forest', 'river', 'water', 'field', 'mountain', 'base'];
+export const LANDSTRINGLIST = ['plains', 'desert', 'forest', 'river', 'water', 'field', 'mountain', 'base'];
 
 /** No documentation available */
 export const enum BUILDINGS {

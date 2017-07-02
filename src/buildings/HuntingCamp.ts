@@ -1,13 +1,14 @@
 import { Tile } from '../board/Tile';
 import { Building } from './Building';
-import { SQUARETYPES, MATERIALS, EXPONENTS, BUILDINGS } from '../Constants';
+import { LAND, MATERIALS, EXPONENTS, BUILDINGS } from '../Constants';
 import { Counter } from '../Counter';
 
+/** No documentation available */
 export class HuntingCamp extends Building {
   static enabled:boolean = false;
   static title:string = 'Hunting camp';
   static spriteName:string = 'factory';
-  static allowedTerrains = [SQUARETYPES.Field, SQUARETYPES.Forest, SQUARETYPES.Mountain, SQUARETYPES.Plains, SQUARETYPES.River];
+  static allowedTerrains = [LAND.Field, LAND.Forest, LAND.Mountain, LAND.Plains, LAND.River];
   static neededResources = [];
   static amount:number = 0;
   type:BUILDINGS;
@@ -18,27 +19,32 @@ export class HuntingCamp extends Building {
     this.type = BUILDINGS.HuntingCamp;
   }
 
+  /** No documentation available */
   static isEnabled():boolean{
     return HuntingCamp.enabled;
   }
 
-  generateMaterials():Counter<MATERIALS>{
+  /** No documentation available */
+  generateMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Food, 0.1);
     return counter;
   }
 
+  /** No documentation available */
   demolish():void {
     HuntingCamp.amount -= 1;
   }
 
-  static getRequiredMaterials():Counter<MATERIALS>{
+  /** No documentation available */
+  static getRequiredMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 1);
     // return counter;
     return counter.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));
   }
 
+  /** No documentation available */
   static canBuild(tile:Tile):boolean {
     if (HuntingCamp.allowedTerrains.indexOf(tile.type) !== -1) {
       if(HuntingCamp.neededResources.length === 0){
@@ -50,5 +56,4 @@ export class HuntingCamp extends Building {
     }
     return false;
   }
-
 }

@@ -64,12 +64,12 @@ export class Tutorial {
   }
 
   /** No documentation available */
-  public done():boolean {
+  private done():boolean {
     return this.current === this.length;
   }
 
   /** No documentation available */
-  public next():void {
+  private next():void {
     this.slides.hideModal('tutorial' + this.current++);
     if (!this.done()) {
       this.slides.showModal('tutorial' + this.current);

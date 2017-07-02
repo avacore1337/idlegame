@@ -2,7 +2,7 @@ import { MainGame } from '../MainGame';
 import { Counter } from '../Counter';
 import { Updateable, Clickable } from '../Interfaces';
 import { Building } from '../buildings/AllBuildings';
-import { MATERIALS, SQUARETYPES, SQUARESTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST, DIRECTIONS } from '../Constants';
+import { MATERIALS, LAND, LANDSTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST, DIRECTIONS } from '../Constants';
 
 /** No documentation available */
 export class Tile implements Updateable, Clickable {
@@ -12,7 +12,7 @@ export class Tile implements Updateable, Clickable {
 
   public static buildDistance:number = 2;
 
-  public type:SQUARETYPES;
+  public type:LAND;
   public distance:number;
   public resource:RESOURCES;
   public building:Building;
@@ -68,11 +68,11 @@ export class Tile implements Updateable, Clickable {
   }
 
   /** Set the type of land and resource for this tile */
-  public setTile(data:[SQUARETYPES, RESOURCES]):void {
+  public setTile(data:[LAND, RESOURCES]):void {
     this.type = data[0];
 
     const self = this;
-    const background = this.game.game.add.sprite(0, 0, 'tiles', SQUARESTRINGLIST[data[0]] + '.png', this.content);
+    const background = this.game.game.add.sprite(0, 0, 'tiles', LANDSTRINGLIST[data[0]] + '.png', this.content);
     background.inputEnabled = true;
     background.events.onInputUp.add(function() {self.click();});
     background.input.pixelPerfectClick = true;
@@ -162,7 +162,7 @@ export class Tile implements Updateable, Clickable {
     return {
       'purchased': this.purchased, // boolean
       'revealed': this.revealed, // boolean
-      'squareType': this.type, // SQUARETYPES (enum)
+      'TILEType': this.type, // LAND (enum)
       'resourceType': this.resource, // RESOURCES (enum)
       'distance': this.distance, // Building
       'buildingType': this.building === undefined ? -1 : this.building.type // BUILDINGS (enum)
@@ -171,7 +171,7 @@ export class Tile implements Updateable, Clickable {
 
   /** No documentation available */
   public demolish():void {
-    if (this.type !== SQUARETYPES.Base) {
+    if (this.type !== LAND.Base) {
       this.building.demolish();
       this.building = undefined;
     }
@@ -180,7 +180,7 @@ export class Tile implements Updateable, Clickable {
   /** No documentation available */
   public setFromJSON(data:any):void {
     console.log('Loading game, can a(n) ' + (typeof data.resourceType) + ' be interpreted as an integer?');
-    this.setTile([data.squareType, data.resourceType]);
+    this.setTile([data.TILEType, data.resourceType]);
     this.addBuilding(data.buildingType);
     if (data.purchased) {
       this.purchased = true;

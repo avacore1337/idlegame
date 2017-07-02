@@ -5,7 +5,7 @@ import { resetSave } from '../SaveHandler';
 export class MainMenu extends Phaser.State {
 
   /** No documentation available */
-  preload() {
+  preload():void {
     this.game.load.enableParallel = true;
     this.game.load.atlasJSONHash('tiles', 'assets/tiles.png', 'assets/tiles.json');
     this.game.load.atlasJSONHash('resources', 'assets/resources.png', 'assets/resources.json');
@@ -15,7 +15,7 @@ export class MainMenu extends Phaser.State {
   }
 
   /** No documentation available */
-  create() {
+  create():void {
     const self = this;
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
     const newGame:Button = new Button(this.game, 535, 260, 'menu', 'New Game', 'button.png', headerStyle);

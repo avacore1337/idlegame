@@ -3,6 +3,7 @@ import { MATERIALS, EXPONENTS } from '../Constants';
 import { Counter } from '../Counter';
 import { MainGame } from '../MainGame';
 
+/** No documentation available */
 export class Kiln extends Construction {
   static enabled:boolean = false;
   static title:string = 'Kiln';
@@ -12,10 +13,12 @@ export class Kiln extends Construction {
     super();
   }
 
+  /** No documentation available */
   static isEnabled():boolean{
     return Kiln.enabled;
   }
 
+  /** No documentation available */
   static doThing(game:MainGame):void {
     if(game.materialContainer.materials.get(MATERIALS.Clay) > Kiln.amount*0.2){
       game.materialContainer.materials.subtract(MATERIALS.Clay, Kiln.amount*0.2);
@@ -23,16 +26,19 @@ export class Kiln extends Construction {
     }
   }
 
-  static generateMaterials():Counter<MATERIALS>{
+  /** No documentation available */
+  static generateMaterials():Counter<MATERIALS> {
     return new Counter<MATERIALS>();
   }
 
+  /** No documentation available */
   static build(game:MainGame):void {
     game.materialContainer.pay(this.getRequiredMaterials());
     Kiln.amount += 1;
   }
 
-  static getRequiredMaterials():Counter<MATERIALS>{
+  /** No documentation available */
+  static getRequiredMaterials():Counter<MATERIALS> {
     const cost = new Counter<MATERIALS>();
     cost.add(MATERIALS.Clay, 10);
     return cost.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));

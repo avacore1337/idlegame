@@ -1,13 +1,14 @@
 import { Tile } from '../board/Tile';
 import { Building } from './Building';
-import { SQUARETYPES, MATERIALS, EXPONENTS, BUILDINGS } from '../Constants';
+import { LAND, MATERIALS, EXPONENTS, BUILDINGS } from '../Constants';
 import { Counter } from '../Counter';
 
+/** No documentation available */
 export class Lumbermill extends Building {
   static enabled:boolean = false;
   static title:string = 'Lumbermill';
   static spriteName:string = 'factory';
-  static allowedTerrains = [SQUARETYPES.Forest];
+  static allowedTerrains = [LAND.Forest];
   static neededResources = [];
   static amount:number = 0;
   type:BUILDINGS;
@@ -18,27 +19,32 @@ export class Lumbermill extends Building {
     this.type = BUILDINGS.Lumbermill;
   }
 
+  /** No documentation available */
   static isEnabled():boolean{
     return Lumbermill.enabled;
   }
 
-  generateMaterials():Counter<MATERIALS>{
+  /** No documentation available */
+  generateMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 1);
     return counter;
   }
 
+  /** No documentation available */
   demolish():void {
     Lumbermill.amount -= 1;
   }
 
-  static getRequiredMaterials():Counter<MATERIALS>{
+  /** No documentation available */
+  static getRequiredMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 10);
     // return counter;
     return counter.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));
   }
 
+  /** No documentation available */
   static canBuild(tile:Tile):boolean {
     if (Lumbermill.allowedTerrains.indexOf(tile.type) !== -1) {
       if(Lumbermill.neededResources.length === 0){
@@ -50,5 +56,4 @@ export class Lumbermill extends Building {
     }
     return false;
   }
-
 }

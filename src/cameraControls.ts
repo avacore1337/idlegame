@@ -1,5 +1,5 @@
 /** No documentation available */
-export function cameraControls(game:Phaser.Game, cursors:Phaser.CursorKeys){
+export function cameraControls(game:Phaser.Game, cursors:Phaser.CursorKeys):void {
 
   if (cursors.up.isDown) {
     game.camera.y -= 4;

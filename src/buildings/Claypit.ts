@@ -1,13 +1,14 @@
 import { Tile } from '../board/Tile';
 import { Building } from './Building';
-import { SQUARETYPES, MATERIALS, EXPONENTS, BUILDINGS } from '../Constants';
+import { LAND, MATERIALS, EXPONENTS, BUILDINGS } from '../Constants';
 import { Counter } from '../Counter';
 
+/** No documentation available */
 export class Claypit extends Building {
   static enabled:boolean = false;
   static title:string = 'Claypit';
   static spriteName:string = 'factory';
-  static allowedTerrains = [SQUARETYPES.River];
+  static allowedTerrains = [LAND.River];
   static neededResources = [];
   static amount:number = 0;
   type:BUILDINGS;
@@ -18,20 +19,24 @@ export class Claypit extends Building {
     this.type = BUILDINGS.Claypit;
   }
 
+  /** No documentation available */
   static isEnabled():boolean {
     return Claypit.enabled;
   }
 
+  /** No documentation available */
   generateMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Clay, 1);
     return counter;
   }
 
+  /** No documentation available */
   demolish():void {
     Claypit.amount -= 1;
   }
 
+  /** No documentation available */
   static getRequiredMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 10);
@@ -39,6 +44,7 @@ export class Claypit extends Building {
     return counter.multiplyAll(Math.pow(EXPONENTS.Slow, this.amount));
   }
 
+  /** No documentation available */
   static canBuild(tile:Tile):boolean {
     if (Claypit.allowedTerrains.indexOf(tile.type) !== -1) {
       if (Claypit.neededResources.length === 0) {
@@ -50,5 +56,4 @@ export class Claypit extends Building {
     }
     return false;
   }
-
 }

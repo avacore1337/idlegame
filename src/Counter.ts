@@ -13,7 +13,7 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  add(key:T, amount:number):Counter<T>{
+  add(key:T, amount:number):Counter<T> {
     if(this.values.has(key)){
       this.values.set(key, amount + this.values.get(key));
     }
@@ -24,12 +24,12 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  get(key:T):number{
+  get(key:T):number {
     return this.values.get(key);
   }
 
   /** No documentation available */
-  subtract(key:T, amount:number):Counter<T>{
+  subtract(key:T, amount:number):Counter<T> {
     if(this.values.has(key)){
       this.values.set(key, this.values.get(key) - amount);
     }
@@ -40,12 +40,12 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  has(key:T):boolean{
+  has(key:T):boolean {
     return this.values.has(key);
   }
 
   /** No documentation available */
-  addOther(other:Counter<T>):Counter<T>{
+  addOther(other:Counter<T>):Counter<T> {
     const newCounter = new Counter<T>(this);
     for (const key of other.values.keys()) {
       newCounter.add(key, other.values.get(key));
@@ -54,7 +54,7 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  subtractOther(other:Counter<T>):Counter<T>{
+  subtractOther(other:Counter<T>):Counter<T> {
     const newCounter = new Counter<T>(this);
     for (const key of other.values.keys()) {
       newCounter.subtract(key, other.values.get(key));
@@ -63,7 +63,7 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  positive():Counter<T>{
+  positive():Counter<T> {
     const newCounter = new Counter<T>();
     for (const key of this.values.keys()) {
       if(this.values.get(key) > 0){
@@ -74,7 +74,7 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  divideAll(divisor:number):Counter<T>{
+  divideAll(divisor:number):Counter<T> {
     const newCounter = new Counter<T>();
     for (const key of this.values.keys()) {
       newCounter.values.set(key, this.values.get(key)/divisor);
@@ -83,7 +83,7 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  negative():Counter<T>{
+  negative():Counter<T> {
     const newCounter = new Counter<T>();
     for (const key of this.values.keys()) {
       if(this.values.get(key) < 0){
@@ -94,7 +94,7 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  isSubset(other:Counter<T>):boolean{
+  isSubset(other:Counter<T>):boolean {
     for (const key of other.values.keys()) {
       if(!this.values.has(key) || this.values.get(key) < other.values.get(key)){
         return false;
@@ -104,7 +104,7 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  toString():string{
+  toString():string {
     let ret:string = '';
     for (const key of this.values.keys()){
       ret += key + ': ' + this.values.get(key) + '\n';
@@ -113,7 +113,7 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  toJSON():string{
+  toJSON():string {
     let ret:string = '{';
     for (const key of this.values.keys()){
       ret += '"' + key + '":"' + this.values.get(key) + '", ';
@@ -125,7 +125,7 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  multiplyAll(multiplier:number):Counter<T>{
+  multiplyAll(multiplier:number):Counter<T> {
     const newCounter = new Counter<T>();
     for (const key of this.values.keys()) {
       newCounter.values.set(key, this.values.get(key)*multiplier);
@@ -134,7 +134,7 @@ export class Counter<T> {
   }
 
   /** No documentation available */
-  multiply(key:T, multiplier:number):void{
+  multiply(key:T, multiplier:number):void {
     this.values.set(key, this.values.get(key)*multiplier);
   }
 
