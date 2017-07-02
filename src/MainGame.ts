@@ -86,6 +86,8 @@ export class MainGame extends Phaser.State {
   }
 
   /** No documentation available */
-  render():void {}
+  render():void {
+    return;
+  }
 
 }

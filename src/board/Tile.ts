@@ -55,7 +55,7 @@ export class Tile implements Updateable, Clickable {
     this.center = undefined;
     this.buildingSprite = undefined;
     this.revealed = false;
-    this.effect = function():void {};
+    this.effect = function():void {return;};
 
     this.content = game.add.group(parent);
     this.content.x = x;

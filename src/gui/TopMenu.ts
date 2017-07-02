@@ -214,7 +214,6 @@ export class TopMenu extends Menu {
           self.game.needsupdate = true;
           r.research(self.game);
           self.game.materialContainer.materials.subtract(MATERIALS.Research, r.researchPointCost);
-        } else {
         }
       });
       research.setToolTip(Button.REGULAR, r.description);

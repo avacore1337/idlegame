@@ -2,7 +2,7 @@ import { MainGame } from '../MainGame';
 import { Updateable } from '../Interfaces';
 
 /** No documentation available */
-export class Menu implements Updateable {
+export abstract class Menu implements Updateable {
 
   public group:Phaser.Group;
   protected background:Phaser.Sprite;
@@ -23,5 +23,5 @@ export class Menu implements Updateable {
   }
 
   /** No documentation available */
-  update():void {}
+  abstract update():void;
 }

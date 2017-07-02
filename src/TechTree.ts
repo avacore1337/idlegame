@@ -87,7 +87,6 @@ function startIronAge(game:MainGame):void {
 const ironAgeEra = new TechNode('', '', [], 0, startIronAge);
 EraList.push(ironAgeEra);
 
-
 function enableEdges(game:MainGame):void {
   console.log('not implemented');
 }

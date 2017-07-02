@@ -11,7 +11,7 @@ export class Building {
   spriteName:string;
   type:BUILDINGS;
 
-  constructor() {}
+  constructor() {return;}
 
   /** No documentation available */
   static isEnabled():boolean {

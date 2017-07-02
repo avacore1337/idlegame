@@ -27,6 +27,7 @@ export class Library extends Construction {
 
   /** No documentation available */
   static doThing(game:MainGame):void {
+    return;
   }
 
   /** No documentation available */

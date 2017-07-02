@@ -36,7 +36,7 @@ export class Button implements Updateable {
     this.disableAble = false;
     this.group = game.add.group();
     this.labelGroup = game.add.group();
-    this.updateCallback = function(){};
+    this.updateCallback = function(){return;};
 
     // ------------------
     // | REGULAR BUTTON |

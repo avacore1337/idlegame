@@ -18,13 +18,13 @@
         "no-debugger": true,
         "no-duplicate-super": true,
         "no-duplicate-variable": true,
-        "no-empty": false,
+        "no-empty": true,
         "no-eval": true,
         "no-reference": true,
         "no-shadowed-variable": true,
         "no-string-literal": true,
         "no-string-throw": true,
-        "no-switch-case-fall-through": false,
+        "no-switch-case-fall-through": true,
         "no-trailing-whitespace": true,
         "no-unused-expression": true,
         "no-unused-variable": true,
@@ -67,7 +67,7 @@
             "trace"
           ]
         },*/
-        "no-consecutive-blank-lines": false
+        "no-consecutive-blank-lines": true
     },
     "jsRules": {
         "max-line-length": {
@@ -155,7 +155,7 @@ export const rules = {
     "no-empty-interface": true,
     "no-eval": true,
     "no-internal-module": true,
-    "no-invalid-this": false,
+    "no-invalid-this": [true, "check-function-in-method"],
     "no-misused-new": true,
     "no-namespace": true,
     "no-parameter-properties": false,
@@ -164,7 +164,7 @@ export const rules = {
     "no-shadowed-variable": true,
     "no-string-literal": true,
     "no-string-throw": true,
-    "no-switch-case-fall-through": false,
+    "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
     "no-unsafe-finally": true,
@@ -232,7 +232,7 @@ export const rules = {
     "triple-equals": {
         options: ["allow-null-check"],
     },
-    "typedef": false,
+    "typedef": [true, "call-signature", "arrow-call-signature", "parameter", "arrow-parameter", "property-declaration", "variable-declaration", "member-variable-declaration", "object-destructuring", "array-destructuring"],
     "typedef-whitespace": {
         options: [
             {
@@ -308,7 +308,7 @@ export const jsRules = {
     "no-shadowed-variable": true,
     "no-string-literal": true,
     "no-string-throw": true,
-    "no-switch-case-fall-through": false,
+    "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
     // disable this rule as it is very heavy performance-wise and not that useful
