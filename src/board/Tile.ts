@@ -4,18 +4,24 @@ import { Updateable, Clickable } from '../Interfaces';
 import { Building } from '../buildings/AllBuildings';
 import { MATERIALS, LAND, LANDSTRINGLIST, BUILDINGS, BUILDINGCLASSES, RESOURCES, RESOURCESTRINGLIST, DIRECTIONS } from '../Constants';
 
-/** No documentation available */
 export class Tile implements Updateable, Clickable {
 
+  /** The width of the hexagon-sprites */
   public static readonly WIDTH:number = 70;
+  /** The height of the hexagon-sprites */
   public static readonly HEIGHT:number = 80;
-
+  /** The distance from the base the user is allowed to construct buildings */
   public static buildDistance:number = 2;
 
+  /** The type of land this tile has. Is set to -1 if no type has been specified */
   public type:LAND;
+  /** The distance to the base. Is set to -1 if it has not yet been assigned through setDistance() */
   public distance:number;
+  /** The resource found on this tile. Is set to -1 if there is none */
   public resource:RESOURCES;
+  /** The building on this tile. Is set to undefined if there is none */
   public building:Building;
+  /** Wheter or not the tile has been purchased */
   public purchased:boolean;
 
   private game:MainGame;
@@ -29,7 +35,13 @@ export class Tile implements Updateable, Clickable {
 
   private visited:boolean;
 
-  /** No documentation available */
+  /**
+   * Tiles contain all logic and graphics for each individual tile
+   * @param game {MainGame} - The main game object of the game
+   * @param x {number} - The x coordinate of this tile on the screen
+   * @param y {number} - The y coordinate of this tile on the screen
+   * @param parent {Phaser.Group} - The parent group which the tiles should be added to
+   */
   constructor(game:MainGame, x:number, y:number, parent:Phaser.Group) {
     this.type = -1;
     this.distance = -1;
@@ -67,7 +79,10 @@ export class Tile implements Updateable, Clickable {
     this.content.visible = true;
   }
 
-  /** Set the type of land and resource for this tile */
+  /**
+   * Set the type of land and resource for this tile
+   * @param data {[LAND, RESOURCES]} - An array containing the type of land and resource this tile should have
+   */
   public setTile(data:[LAND, RESOURCES]):void {
     this.type = data[0];
 
