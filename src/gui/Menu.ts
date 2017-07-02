@@ -16,7 +16,14 @@ export abstract class Menu implements Updateable {
   /** The main game object of the game */
   protected game:Phaser.Game;
 
-  /** No documentation available */
+  /**
+   * A menu controls a group of graphical entities
+   * @param state {GameState} - The state of the game
+   * @param x {number} - The x coordinate of the menu on the screen
+   * @param y {number} - The y coordinate of the menu on the screen
+   * @param textureKey {string} - The key used to register the image of the menu-background in the atlasJSONHash
+   * @param textureName {string} - The value used to register the image of the menu-background in the atlasJSONHash
+   */
   constructor(state:GameState, x:number, y:number, textureKey:string, textureName:string) {
     this.state = state;
     this.game = state.game;
