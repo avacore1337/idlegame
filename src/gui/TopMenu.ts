@@ -5,7 +5,6 @@ import { Button } from './Button';
 import { MATERIALS, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from '../Constants';
 import { TechList } from '../TechTree';
 
-/** No documentation available */
 export class TopMenu extends Menu {
 
   private buttons:Array<Button>;
@@ -17,7 +16,10 @@ export class TopMenu extends Menu {
   private static readonly xPosition:number = 0;
   private static readonly yPosition:number = 0;
 
-  /** No documentation available */
+  /**
+   * TopMenu will create and handle the top menu where the buildings and research is bought
+   * @param game {GameState} - The main game object of the game
+   */
   constructor(state:GameState) {
     super(state, TopMenu.xPosition, TopMenu.yPosition, 'menu', 'leftpanel.png');
 
@@ -35,8 +37,8 @@ export class TopMenu extends Menu {
     this.createTopBar(headerStyle, bGroup, cGroup, rGroup);
   }
 
-  /** No documentation available */
-  update():void {
+  /** Update the graphical items stored on this menu */
+  public update():void {
     this.visibleTechs = 0;
     this.visibleBuildings = 0;
     this.visibleConstructions = 0;
@@ -45,7 +47,7 @@ export class TopMenu extends Menu {
     }
   }
 
-  /** No documentation available */
+  /** Create the three buttons at the top of the menu */
   private createTopBar(style:Phaser.PhaserTextStyle, bGroup:Phaser.Group, cGroup:Phaser.Group, rGroup:Phaser.Group):void {
     const group = this.state.add.group();
     const buildings = new Button(this.game, 0, 0, 'menu', 'Buildings', 'button.png', style);
@@ -94,7 +96,7 @@ export class TopMenu extends Menu {
     });
   }
 
-  /** No documentation available */
+  /** Create and fill the group containing the building-buttons */
   private createBuildings(style:Phaser.PhaserTextStyle):Phaser.Group {
     let startingButtons = 0;
     const group = this.game.add.group();
@@ -147,7 +149,7 @@ export class TopMenu extends Menu {
     return group;
   }
 
-  /** No documentation available */
+  /** Create and fill the group containing the construction-buttons */
   private createConstructions(style:Phaser.PhaserTextStyle):Phaser.Group {
     let startingButtons = 0;
     const group = this.game.add.group();
@@ -197,7 +199,7 @@ export class TopMenu extends Menu {
     return group;
   }
 
-  /** No documentation available */
+  /** Create and fill the group containing the research-buttons */
   private createResearch(style:Phaser.PhaserTextStyle):Phaser.Group {
     let startingButtons = 0;
     const group = this.game.add.group();
