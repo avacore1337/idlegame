@@ -12,7 +12,7 @@ export function loadGame(game:MainGame):void {
   if (typeof(Storage) !== 'undefined') {
     const saveExists:boolean = localStorage.getItem('map') !== null;
     const restarting:boolean = localStorage.getItem('restarting') === 'true';
-    if (saveExists) {
+    if (saveExists || restarting) {
       game.era = parseInt(localStorage.getItem('era'));
       game.evolutionPoints = parseInt(localStorage.getItem('evolutionPoints'));
 
