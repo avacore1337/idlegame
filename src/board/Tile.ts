@@ -81,7 +81,7 @@ export class Tile implements Updateable, Clickable {
 
   /**
    * Set the type of land and resource for this tile
-   * @param data {[LAND, RESOURCES]} - An array containing the type of land and resource this tile should have
+   * @param data {[LAND, RESOURCES]} - An array of length 2 containing the type of land and resource this tile should have
    */
   public setTile(data:[LAND, RESOURCES]):void {
     this.type = data[0];
@@ -105,7 +105,7 @@ export class Tile implements Updateable, Clickable {
     redborder.visible = false;
   }
 
-  /** No documentation available */
+  /** Update the graphics of this tile if required */
   public update():void {
     if (this.revealed) {
       let highlight = false;
@@ -153,7 +153,10 @@ export class Tile implements Updateable, Clickable {
     }
   }
 
-  /** Returns a counter containing the materials this tile produces in one game-tick */
+  /**
+   * Returns a counter containing the materials this tile produces in one game-tick
+   * @returns {Counter<MATERIALS>} - The counter containing the materials this tile produces in one game-tick
+   */
   public generateMaterials():Counter<MATERIALS> {
     if (this.building !== undefined) {
       return this.building.generateMaterials();
@@ -172,7 +175,7 @@ export class Tile implements Updateable, Clickable {
     return this.neighbours;
   }
 
-  /** Export the content of the tile as JSON */
+  /** Export the content of the tile as JSON-data */
   public toJSON():object {
     return {
       'purchased': this.purchased, // boolean
@@ -184,7 +187,10 @@ export class Tile implements Updateable, Clickable {
     };
   }
 
-  /** No documentation available */
+  /**
+   * Demolish the building found on this tile.
+   * Note that the building on the home base can not be demolished.
+   */
   public demolish():void {
     if (this.type !== LAND.Base) {
       this.building.demolish();
@@ -192,9 +198,11 @@ export class Tile implements Updateable, Clickable {
     }
   }
 
-  /** No documentation available */
+  /**
+   * Returns a counter containing the materials this tile produces in one game-tick
+   * @param data {any} - JSON-data containing information about this tile's new data
+   */
   public fromJSON(data:any):void {
-    console.log('Loading game, can a(n) ' + (typeof data.resourceType) + ' be interpreted as an integer?');
     this.setTile([data.TILEType, data.resourceType]);
     this.addBuilding(data.buildingType);
     if (data.purchased) {
@@ -206,12 +214,19 @@ export class Tile implements Updateable, Clickable {
     this.distance = data.distance;
   }
 
-  /** Save a reference to the neighbour at the given location */
+  /**
+   * Save a reference to the neighbour at the given location
+   * @param index {DIRECTIONS} - The location of the neighbour compared to this tile
+   * @param neighbour {Tile} - The new neighbour of this tile
+   */
   public setNeighbour(index:DIRECTIONS, neighbour:Tile):void {
     this.neighbours[index] = neighbour;
   }
 
-  /** Register an event that should be triggered if the tile is clicked */
+  /**
+   * Register an event that should be triggered if the tile is clicked
+   * @param callback {() => void} - The function to call if the tile is pressed
+   */
   public onclick(callback: () => void):void {
     this.effect = callback;
   }
