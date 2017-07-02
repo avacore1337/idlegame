@@ -1,22 +1,12 @@
-import { Construction } from './Construction';
 import { MATERIALS, EXPONENTS } from '../Constants';
 import { Counter } from '../Counter';
 import { MainGame } from '../MainGame';
 
 /** No documentation available */
-export class Steelworks extends Construction {
+export class Steelworks {
   static enabled:boolean = false;
   static title:string = 'Steelworks';
   static amount:number = 0;
-
-  constructor(){
-    super();
-  }
-
-  /** No documentation available */
-  static isEnabled():boolean{
-    return Steelworks.enabled;
-  }
 
   /** No documentation available */
   static doThing(game:MainGame):void {

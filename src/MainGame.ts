@@ -1,7 +1,6 @@
 import { Counter } from './Counter';
 import { Menu } from './gui/Menu';
 import { Button } from './gui/Button';
-import { Tile } from './board/Tile';
 import { Board } from './board/Board';
 import { MaterialContainer } from './MaterialContainer';
 import { cameraControls } from './cameraControls';

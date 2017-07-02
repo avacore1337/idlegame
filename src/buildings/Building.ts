@@ -14,11 +14,6 @@ export class Building {
   constructor() {return;}
 
   /** No documentation available */
-  static isEnabled():boolean {
-    return false;
-  }
-
-  /** No documentation available */
   setTile(tile:Tile):void {
     this.tile = tile;
   }

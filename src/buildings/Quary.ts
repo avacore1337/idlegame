@@ -20,11 +20,6 @@ export class Quary extends Building {
   }
 
   /** No documentation available */
-  static isEnabled():boolean{
-    return Quary.enabled;
-  }
-
-  /** No documentation available */
   generateMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Stone, 1);

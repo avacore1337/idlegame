@@ -20,11 +20,6 @@ export class Claypit extends Building {
   }
 
   /** No documentation available */
-  static isEnabled():boolean {
-    return Claypit.enabled;
-  }
-
-  /** No documentation available */
   generateMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Clay, 1);

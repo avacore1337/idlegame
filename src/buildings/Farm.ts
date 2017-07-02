@@ -20,11 +20,6 @@ export class Farm extends Building {
   }
 
   /** No documentation available */
-  static isEnabled():boolean{
-    return Farm.enabled;
-  }
-
-  /** No documentation available */
   generateMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Food, 1);

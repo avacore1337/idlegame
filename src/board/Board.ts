@@ -3,8 +3,7 @@ import { Tile } from './Tile';
 import { boardSkeleton, newContent } from './gameStart';
 import { Counter } from '../Counter';
 import { Updateable } from '../Interfaces';
-import { loadGame } from '../SaveHandler';
-import { MATERIALS, BUILDINGCLASSES } from '../Constants';
+import { MATERIALS } from '../Constants';
 
 export class Board implements Updateable {
 

@@ -1,22 +1,12 @@
-import { Construction } from './Construction';
 import { MATERIALS, EXPONENTS } from '../Constants';
 import { Counter } from '../Counter';
 import { MainGame } from '../MainGame';
 
 /** No documentation available */
-export class Library extends Construction {
+export class Library {
   static enabled:boolean = false;
   static title:string = 'Library';
   static amount:number = 0;
-
-  constructor(){
-    super();
-  }
-
-  /** No documentation available */
-  static isEnabled():boolean{
-    return Library.enabled;
-  }
 
   /** No documentation available */
   static generateMaterials():Counter<MATERIALS> {

@@ -1,22 +1,12 @@
-import { Construction } from './Construction';
 import { MATERIALS, EXPONENTS, MATERIALMULITIPLIERINDEXES } from '../Constants';
 import { Counter } from '../Counter';
 import { MainGame } from '../MainGame';
 
 /** No documentation available */
-export class ToolWorkshop extends Construction {
+export class ToolWorkshop {
   static enabled:boolean = false;
   static title:string = 'Tool workshop';
   static amount:number = 0;
-
-  constructor(){
-    super();
-  }
-
-  /** No documentation available */
-  static isEnabled():boolean{
-    return ToolWorkshop.enabled;
-  }
 
   /** No documentation available */
   static doThing(game:MainGame):void {

@@ -1,23 +1,13 @@
-import { Construction } from './Construction';
 import { MATERIALS, EXPONENTS } from '../Constants';
 import { Counter } from '../Counter';
 import { prepareRebirth } from '../SaveHandler';
 import { MainGame } from '../MainGame';
 
 /** No documentation available */
-export class Portal extends Construction {
+export class Portal {
   static enabled:boolean = false;
   static title:string = 'Portal';
   static amount:number = 0;
-
-  constructor(){
-    super();
-  }
-
-  /** No documentation available */
-  static isEnabled():boolean{
-    return Portal.enabled;
-  }
 
   /** No documentation available */
   static generateMaterials():Counter<MATERIALS> {
