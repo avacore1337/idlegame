@@ -50,7 +50,7 @@ export class BottomMenu extends Menu {
       self.game.needsupdate = true;
     });
     buy.addUpdate(function():void {
-      if (self.game.gamestate !== 'buying') {
+      if (self.game.gamestate !== 'buying' && buy.toggled) {
         buy.unToggle();
       }
     });
