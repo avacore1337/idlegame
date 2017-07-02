@@ -3,7 +3,7 @@ import { Tutorial } from './Tutorial';
 import { BottomMenu } from './BottomMenu';
 import { TopMenu } from './TopMenu';
 
-/** No documentation available */
+/** Creates the menus shown during the main part of the game */
 export function createMenu(state:GameState):void {
   state.menuGroup = state.game.add.group();
   state.menuGroup.fixedToCamera = true;
