@@ -119,7 +119,8 @@ export class ReincarnationMenu {
             gene.buy(self.mainGame);
           });
           button.addUpdate(function(){
-            if(gene.buyable()){
+            const affordable = gene.evolutionPointCost <= self.mainGame.evolutionPoints;
+            if(gene.buyable() && affordable){
               button.enable();
             }
             else{

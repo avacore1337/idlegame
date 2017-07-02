@@ -1,5 +1,5 @@
 import { Lumbermill, Claypit, Quary, Mine, Farm, HuntingCamp, Base } from './buildings/AllBuildings';
-import { ToolWorkshop, Kiln, Steelworks, Library } from './constructions/AllConstructions';
+import { ToolWorkshop, Kiln, Steelworks, Library, Portal } from './constructions/AllConstructions';
 
 // export class Constants {
 //   static GAMESIZE: number = 15;
@@ -81,10 +81,11 @@ export const enum CONSTRUCTIONS {
   ToolWorkshop,
   Kiln,
   Steelworks,
+  Portal,
   Length
 }
 /** No documentation available */
-export const CONSTRUCTIONCLASSES = [Library, ToolWorkshop, Kiln, Steelworks];
+export const CONSTRUCTIONCLASSES = [Library, ToolWorkshop, Kiln, Steelworks, Portal];
 
 /** No documentation available */
 export const enum RESOURCES {

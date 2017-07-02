@@ -3,7 +3,7 @@ import { Tile } from './board/Tile';
 import { MainGame } from './MainGame';
 import { Mine, Quary, Lumbermill, Claypit, Farm, HuntingCamp } from './buildings/AllBuildings';
 import { prepareRebirth } from './SaveHandler';
-import { Library, ToolWorkshop, Kiln, Steelworks } from './constructions/AllConstructions';
+import { Library, ToolWorkshop, Kiln, Steelworks, Portal } from './constructions/AllConstructions';
 
 /** No documentation available */
 export const TechList:Array<TechNode> = [];
@@ -71,6 +71,13 @@ function ascendToIronAge(game:MainGame):void {
 }
 const ironAge = new TechNode('Iron age', 'Arise to the era of the iron.', [stoneAgeEra, quaring, mining, tooling, burning, steelmaking, torch, roads], 300, ascendToIronAge);
 TechList.push(ironAge);
+
+// Iron age
+function enabelPortal(game:MainGame):void {
+  Portal.enabled = true;
+}
+const portal = new TechNode('Portal', 'You will finally understand what this mysterios object is.', [stoneAgeEra, quaring, mining, tooling, burning, steelmaking, torch, roads], 300, enabelPortal);
+TechList.push(portal);
 
 function startIronAge(game:MainGame):void {
   Quary.enabled = true;
