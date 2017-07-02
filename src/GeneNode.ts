@@ -37,4 +37,18 @@ export class GeneNode {
     this.effect(state);
   }
 
+  getTooltipText():string {
+    const cost = '\n costs: ' + this.evolutionPointCost + ' for next level';
+    if(this.buyable()){
+      return this.description + cost;
+    }
+    else {
+      let requirementText = '\nRequires: ';
+      for(const requirement of this.requires){
+        requirementText += '\n' + requirement[0].name + ' level ' + requirement[1];
+      }
+      return this.description + requirementText + cost;
+    }
+  }
+
 }

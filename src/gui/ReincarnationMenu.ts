@@ -112,11 +112,18 @@ export class ReincarnationMenu {
         for (let k = 0; k < tier.length; k++) {
           const gene = tier[k];
           const button:Button = new Button(this.game, i*sectionWidth + 111*k + padding*(k*2 + 1), 100*j, 'menu', gene.name, 'button.png', headerStyle, {disableAble:true, disabledImage: 'buttondisabled.png'});
-          button.setToolTip(Button.REGULAR, gene.description);
+          button.setToolTip(Button.REGULAR, gene.getTooltipText());
+          button.setToolTip(Button.DISABLED, gene.getTooltipText());
           button.onClick(Button.REGULAR, () => {
             gene.buy(this.mainGame);
           });
           button.addUpdate(() => {
+            button.setToolTip(Button.REGULAR, gene.getTooltipText());
+            button.setToolTip(Button.DISABLED, gene.getTooltipText());
+            if(gene.level !== 0){
+              button.setText(Button.REGULAR, gene.name + ': ' + gene.level);
+              button.setText(Button.DISABLED, gene.name + ': ' + gene.level);
+            }
             const affordable = gene.evolutionPointCost <= this.mainGame.evolutionPoints;
             if(gene.buyable() && affordable){
               button.enable();

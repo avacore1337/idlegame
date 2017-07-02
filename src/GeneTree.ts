@@ -51,7 +51,7 @@ function generateMindTier1():GeneNode[] {
   function enableBiggerBrain(state:GameState):void {
     console.log('bigger brain');
   }
-  const biggerBrain = new GeneNode('Bigger brain', '+20% research from buildings per level', [], 15, enableBiggerBrain);
+  const biggerBrain = new GeneNode('Bigger brain', '+20% research from buildings per level.', [], 15, enableBiggerBrain);
   tier1.push(biggerBrain);
   return tier1;
 }
@@ -63,13 +63,13 @@ function generateMindTier2():GeneNode[] {
   function enableDedicatedThinker(state:GameState):void {
     console.log('dedicated');
   }
-  const dedicatedThinker = new GeneNode('Dedicated thinker', '+20% research when clicking per level', [[getGene('Bigger brain'), 10]], 15, enableDedicatedThinker);
+  const dedicatedThinker = new GeneNode('Dedicated thinker', '+20% research when clicking per level.', [[getGene('Bigger brain'), 10]], 15, enableDedicatedThinker);
   tier1.push(dedicatedThinker);
 
   function enableDaydreaming(state:GameState):void {
     console.log('works daydreaming');
   }
-  const daydreaming = new GeneNode('Daydreaming', '1 research/s', [[getGene('Bigger brain'), 10]], 15, enableDaydreaming);
+  const daydreaming = new GeneNode('Daydreaming', '1 research/s.', [[getGene('Bigger brain'), 10]], 15, enableDaydreaming);
   tier1.push(daydreaming);
   return tier1;
 }
@@ -94,7 +94,7 @@ function generateBodyTier1():GeneNode[] {
   function enableBiggerBrain(state:GameState):void {
     console.log('brawn');
   }
-  const biggerBrain = new GeneNode('Brawn', '+20% research from buildings per level', [], 15, enableBiggerBrain);
+  const biggerBrain = new GeneNode('Brawn', '+20% research from buildings per level.', [], 15, enableBiggerBrain);
   tier1.push(biggerBrain);
   return tier1;
 }
@@ -106,13 +106,13 @@ function generateBodyTier2():GeneNode[] {
   function enableDedicatedThinker(state:GameState):void {
     console.log('strength');
   }
-  const dedicatedThinker = new GeneNode('Strength', '+20% research when clicking per level', [[getGene('Brawn'), 10]], 15, enableDedicatedThinker);
+  const dedicatedThinker = new GeneNode('Strength', '+20% research when clicking per level.', [[getGene('Brawn'), 10]], 15, enableDedicatedThinker);
   tier1.push(dedicatedThinker);
 
   function enableDaydreaming(state:GameState):void {
     console.log('muscles');
   }
-  const daydreaming = new GeneNode('Muscles', '1 research/s', [[getGene('Brawn'), 10]], 15, enableDaydreaming);
+  const daydreaming = new GeneNode('Muscles', '1 research/s.', [[getGene('Brawn'), 10]], 15, enableDaydreaming);
   tier1.push(daydreaming);
   return tier1;
 }
