@@ -32,6 +32,7 @@ export class GeneNode {
 
   /** No documentation available */
   buy(game:MainGame):void {
+    game.evolutionPoints -= this.evolutionPointCost;
     this.level += 1;
     this.effect(game);
   }
