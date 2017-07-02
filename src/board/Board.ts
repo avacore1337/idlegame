@@ -1,4 +1,4 @@
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 import { Tile } from './Tile';
 import { boardSkeleton, newContent } from './gameStart';
 import { Counter } from '../Counter';
@@ -16,17 +16,17 @@ export class Board implements Updateable {
 
   /**
    * Board handle everything related to the main game-board
-   * @param game {MainGame} - The main game object of the game
+   * @param game {GameState} - The main game object of the game
   */
-  constructor(game:MainGame) {
-    const group:Phaser.Group = game.add.group();
-    this.board = boardSkeleton(game, group);
+  constructor(state:GameState) {
+    const group:Phaser.Group = state.add.group();
+    this.board = boardSkeleton(state, group);
 
-    group.x = Math.floor((game.game.world.width - Tile.WIDTH * Board.WIDTH) / 2);
+    group.x = Math.floor((state.game.world.width - Tile.WIDTH * Board.WIDTH) / 2);
     if (Board.WIDTH % 2 === 0) {
       group.x -= Math.floor(Tile.WIDTH / 4);
     }
-    group.y = (game.game.world.height - Math.ceil(Board.HEIGHT / 2) * Tile.HEIGHT - Math.floor(Board.HEIGHT / 2) * Tile.HEIGHT / 2) / 2;
+    group.y = (state.game.world.height - Math.ceil(Board.HEIGHT / 2) * Tile.HEIGHT - Math.floor(Board.HEIGHT / 2) * Tile.HEIGHT / 2) / 2;
     if (Board.HEIGHT % 2 === 0) {
       group.y -= Math.floor(Tile.HEIGHT / 8);
     }

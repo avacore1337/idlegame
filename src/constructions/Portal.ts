@@ -1,7 +1,7 @@
 import { MATERIALS, EXPONENTS } from '../Constants';
 import { Counter } from '../Counter';
 import { prepareRebirth } from '../SaveHandler';
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 
 /** No documentation available */
 export class Portal {
@@ -17,15 +17,15 @@ export class Portal {
   }
 
   /** No documentation available */
-  static doThing(game:MainGame):void {
+  static doThing(state:GameState):void {
     return;
   }
 
   /** No documentation available */
-  static build(game:MainGame):void {
-      game.evolutionPoints += Math.floor(Math.pow(game.materialContainer.materials.get(MATERIALS.Food), 0.6));
-      prepareRebirth(game);
-      game.game.state.start('mainGame', true, false);
+  static build(state:GameState):void {
+      state.evolutionPoints += Math.floor(Math.pow(state.materialContainer.materials.get(MATERIALS.Food), 0.6));
+      prepareRebirth(state);
+      state.game.state.start('mainGame', true, false);
   }
 
   /** No documentation available */

@@ -1,4 +1,4 @@
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 import { Counter } from '../Counter';
 import { Updateable, Clickable } from '../Interfaces';
 import { Building } from '../buildings/AllBuildings';
@@ -24,7 +24,7 @@ export class Tile implements Updateable, Clickable {
   /** Wheter or not the tile has been purchased */
   public purchased:boolean;
 
-  private game:MainGame;
+  private state:GameState;
   private borders:Phaser.Sprite[];
   private neighbours:Array<Tile>;
   private center:Phaser.Sprite;
@@ -37,19 +37,19 @@ export class Tile implements Updateable, Clickable {
 
   /**
    * Tiles contain all logic and graphics for each individual tile
-   * @param game {MainGame} - The main game object of the game
+   * @param game {GameState} - The main game object of the game
    * @param x {number} - The x coordinate of this tile on the screen
    * @param y {number} - The y coordinate of this tile on the screen
    * @param parent {Phaser.Group} - The parent group which the tiles should be added to
    */
-  constructor(game:MainGame, x:number, y:number, parent:Phaser.Group) {
+  constructor(state:GameState, x:number, y:number, parent:Phaser.Group) {
     this.type = -1;
     this.distance = -1;
     this.resource = -1;
     this.building = undefined;
     this.purchased = false;
 
-    this.game = game;
+    this.state = state;
     this.borders = [];
     this.neighbours = [null, null, null, null, null, null];
     this.center = undefined;
@@ -57,7 +57,7 @@ export class Tile implements Updateable, Clickable {
     this.revealed = false;
     this.effect = () => {return;};
 
-    this.content = game.add.group(parent);
+    this.content = state.add.group(parent);
     this.content.x = x;
     this.content.y = y;
     this.content.visible = false;
@@ -86,19 +86,19 @@ export class Tile implements Updateable, Clickable {
   public setTile(data:[LAND, RESOURCES]):void {
     this.type = data[0];
 
-    const background = this.game.game.add.sprite(0, 0, 'tiles', LANDSTRINGLIST[data[0]] + '.png', this.content);
+    const background = this.state.game.add.sprite(0, 0, 'tiles', LANDSTRINGLIST[data[0]] + '.png', this.content);
     background.inputEnabled = true;
     background.events.onInputUp.add(() => {this.click();});
     background.input.pixelPerfectClick = true;
 
     if (data[1] !== -1) {
       this.resource = data[1];
-      this.game.game.add.sprite(28, 35, 'resources', RESOURCESTRINGLIST[data[1]] + '.png', this.content);
+      this.state.game.add.sprite(28, 35, 'resources', RESOURCESTRINGLIST[data[1]] + '.png', this.content);
     }
 
     // Set the graphics of the borders
-    const blueborder = this.game.game.add.sprite(0, 0, 'tiles', 'blueborder.png', this.content);
-    const redborder = this.game.game.add.sprite(0, 0, 'tiles', 'redborder.png', this.content);
+    const blueborder = this.state.game.add.sprite(0, 0, 'tiles', 'blueborder.png', this.content);
+    const redborder = this.state.game.add.sprite(0, 0, 'tiles', 'redborder.png', this.content);
     this.borders = [blueborder, redborder];
     blueborder.visible = true;
     redborder.visible = false;
@@ -108,13 +108,13 @@ export class Tile implements Updateable, Clickable {
   public update():void {
     if (this.revealed) {
       let highlight = false;
-      if (this.game.gamestate === 'buying' && !this.purchased) {
+      if (this.state.gamestate === 'buying' && !this.purchased) {
         if (this.distance <= Tile.buildDistance) {
           highlight = true;
         }
       }
-      if (this.game.gamestate === 'building' && this.purchased && this.building === undefined) {
-        if(BUILDINGCLASSES[this.game.option].canBuild(this)){
+      if (this.state.gamestate === 'building' && this.purchased && this.building === undefined) {
+        if(BUILDINGCLASSES[this.state.option].canBuild(this)){
           highlight = true;
         }
       }
@@ -146,9 +146,9 @@ export class Tile implements Updateable, Clickable {
     this.building = new BUILDINGCLASSES[building]();
     this.building.setTile(this);
     if (building === BUILDINGS.Base) {
-      this.buildingSprite = this.game.game.add.sprite(10 ,20, 'buildings', BUILDINGCLASSES[building].spriteName + '.png', this.content);
+      this.buildingSprite = this.state.game.add.sprite(10 ,20, 'buildings', BUILDINGCLASSES[building].spriteName + '.png', this.content);
     } else {
-      this.buildingSprite = this.game.game.add.sprite(18 ,23, 'buildings', BUILDINGCLASSES[building].spriteName + '.png', this.content);
+      this.buildingSprite = this.state.game.add.sprite(18 ,23, 'buildings', BUILDINGCLASSES[building].spriteName + '.png', this.content);
     }
   }
 

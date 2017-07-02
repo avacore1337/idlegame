@@ -1,4 +1,4 @@
-import { MainGame } from './MainGame';
+import { GameState } from './GameState';
 import { Board } from './board/Board';
 import { Tile } from './board/Tile';
 import { newContent } from './board/gameStart';
@@ -8,42 +8,42 @@ import { geneList } from './GeneTree';
 import { CONSTRUCTIONCLASSES, CONSTRUCTIONS, BUILDINGCLASSES } from './Constants';
 
 /** Load data from localStorage */
-export function loadGame(game:MainGame):void {
+export function loadGame(state:GameState):void {
   if (typeof(Storage) !== 'undefined') {
     const saveExists:boolean = localStorage.getItem('map') !== null;
     const restarting:boolean = localStorage.getItem('restarting') === 'true';
     if (saveExists || restarting) {
-      game.era = parseInt(localStorage.getItem('era'));
-      game.evolutionPoints = parseInt(localStorage.getItem('evolutionPoints'));
+      state.era = parseInt(localStorage.getItem('era'));
+      state.evolutionPoints = parseInt(localStorage.getItem('evolutionPoints'));
 
       if (restarting) {
         console.log('Restarting');
-        game.board.requestNewContent();
-        loadRebirth(game);
+        state.board.requestNewContent();
+        loadRebirth(state);
       } else {
-        console.log('Loading old game');
-        loadMap(game.board);
-        loadConstructions(game);
-        loadTechnologies(game);
+        console.log('Loading old state');
+        loadMap(state.board);
+        loadConstructions(state);
+        loadTechnologies(state);
       }
-      loadGenes(game);
+      loadGenes(state);
     } else {
-      game.board.requestNewContent();
+      state.board.requestNewContent();
     }
-    loadMaterials(game, restarting);
+    loadMaterials(state, restarting);
   } else {
     alert('Your browser does not support this game');
   }
 }
 
 /** No documentation available */
-function loadMaterials(game:MainGame, restarting:boolean):void {
+function loadMaterials(state:GameState, restarting:boolean):void {
   let materials = localStorage.getItem('materials');
   if (materials !== null && !restarting) {
     materials = JSON.parse(materials);
-    game.materialContainer = new MaterialContainer(materials);
+    state.materialContainer = new MaterialContainer(materials);
   } else {
-    game.materialContainer = new MaterialContainer();
+    state.materialContainer = new MaterialContainer();
   }
 }
 
@@ -57,14 +57,14 @@ function loadMap(board:Board):void {
 }
 
 /** No documentation available */
-export function saveGame(game:MainGame):void {
-  localStorage.setItem('materials', JSON.stringify(game.materialContainer.materials.toJSON()));
-  localStorage.setItem('map', JSON.stringify(game.board));
+export function saveGame(state:GameState):void {
+  localStorage.setItem('materials', JSON.stringify(state.materialContainer.materials.toJSON()));
+  localStorage.setItem('map', JSON.stringify(state.board));
   localStorage.setItem('constructions', getConstructionJSON());
   localStorage.setItem('technologies', getResearchJSON());
   localStorage.setItem('genes', getGeneJSON());
-  localStorage.setItem('era', game.era.toString());
-  localStorage.setItem('evolutionPoints', game.evolutionPoints.toString());
+  localStorage.setItem('era', state.era.toString());
+  localStorage.setItem('evolutionPoints', state.evolutionPoints.toString());
 }
 
 /** No documentation available */
@@ -96,16 +96,16 @@ function getGeneJSON():string {
 }
 
 /** No documentation available */
-export function prepareRebirth(game:MainGame):void {
+export function prepareRebirth(state:GameState):void {
   localStorage.setItem('restarting', 'true');
-  localStorage.setItem('newEra', game.era.toString());
-  localStorage.setItem('newEvolutionPoints', game.evolutionPoints.toString());
+  localStorage.setItem('newEra', state.era.toString());
+  localStorage.setItem('newEvolutionPoints', state.evolutionPoints.toString());
 }
 
 /** No documentation available */
-function loadRebirth(game:MainGame):void {
-  game.era = parseInt(localStorage.getItem('newEra'));
-  game.evolutionPoints = parseInt(localStorage.getItem('newEvolutionPoints'));
+function loadRebirth(state:GameState):void {
+  state.era = parseInt(localStorage.getItem('newEra'));
+  state.evolutionPoints = parseInt(localStorage.getItem('newEvolutionPoints'));
   localStorage.removeItem('restarting');
   localStorage.removeItem('newEra');
   localStorage.removeItem('newEvolutionPoints');
@@ -127,7 +127,7 @@ function loadRebirth(game:MainGame):void {
 }
 
 /** No documentation available */
-function loadConstructions(game:MainGame):void {
+function loadConstructions(state:GameState):void {
   const constructionsData = localStorage.getItem('constructions');
   if (constructionsData !== null) {
     const constructions:Array<[CONSTRUCTIONS, number]> = JSON.parse(constructionsData);
@@ -138,20 +138,20 @@ function loadConstructions(game:MainGame):void {
 }
 
 /** No documentation available */
-function loadTechnologies(game:MainGame):void {
+function loadTechnologies(state:GameState):void {
   const technologyData = localStorage.getItem('technologies');
   if (technologyData !== null) {
     const technologies:string[] = JSON.parse(technologyData);
     for (const technology of TechList) {
       if(technologies.indexOf(technology.name) !== -1){
         technology.researched = true;
-        technology.research(game);
+        technology.research(state);
       }
     }
   }
 }
 
-function loadGenes(game:MainGame):void {
+function loadGenes(state:GameState):void {
   const technologyData = localStorage.getItem('genes');
   if (technologyData !== null) {
     const technologies:[string, number][] = JSON.parse(technologyData);

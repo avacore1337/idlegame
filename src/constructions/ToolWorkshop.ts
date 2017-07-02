@@ -1,6 +1,6 @@
 import { MATERIALS, EXPONENTS, MATERIALMULITIPLIERINDEXES } from '../Constants';
 import { Counter } from '../Counter';
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 
 /** No documentation available */
 export class ToolWorkshop {
@@ -9,10 +9,10 @@ export class ToolWorkshop {
   static amount:number = 0;
 
   /** No documentation available */
-  static doThing(game:MainGame):void {
-    game.materialContainer.materialGainFactors[MATERIALS.Wood][MATERIALMULITIPLIERINDEXES.ToolWorkshop] = 1 + this.amount*0.02;
-    game.materialContainer.materialGainFactors[MATERIALS.Stone][MATERIALMULITIPLIERINDEXES.ToolWorkshop] = 1 + this.amount*0.02;
-    game.materialContainer.materialGainFactors[MATERIALS.Clay][MATERIALMULITIPLIERINDEXES.ToolWorkshop] = 1 + this.amount*0.02;
+  static doThing(state:GameState):void {
+    state.materialContainer.materialGainFactors[MATERIALS.Wood][MATERIALMULITIPLIERINDEXES.ToolWorkshop] = 1 + this.amount*0.02;
+    state.materialContainer.materialGainFactors[MATERIALS.Stone][MATERIALMULITIPLIERINDEXES.ToolWorkshop] = 1 + this.amount*0.02;
+    state.materialContainer.materialGainFactors[MATERIALS.Clay][MATERIALMULITIPLIERINDEXES.ToolWorkshop] = 1 + this.amount*0.02;
   }
 
   /** No documentation available */
@@ -21,8 +21,8 @@ export class ToolWorkshop {
   }
 
   /** No documentation available */
-  static build(game:MainGame):void {
-    game.materialContainer.pay(this.getRequiredMaterials());
+  static build(state:GameState):void {
+    state.materialContainer.pay(this.getRequiredMaterials());
     ToolWorkshop.amount += 1;
   }
 

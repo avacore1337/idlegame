@@ -1,5 +1,5 @@
 import { saveGame } from '../SaveHandler';
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from '../Constants';
 import { Button } from './Button';
 import { Menu } from './Menu';
@@ -16,10 +16,10 @@ export class BottomMenu extends Menu {
 
   /**
    * BottomMenu will create and handle the bottom menu where the resources are displayed
-   * @param game {MainGame} - The main game object of the game
+   * @param game {GameState} - The main game object of the game
    */
-  constructor(game:MainGame) {
-    super(game, BottomMenu.xPosition, BottomMenu.yPosition, 'menu', 'leftpanel.png');
+  constructor(state:GameState) {
+    super(state, BottomMenu.xPosition, BottomMenu.yPosition, 'menu', 'leftpanel.png');
     this.materialUpdate = 0;
     this.materialLabels = [];
     this.buttons = [];
@@ -29,9 +29,9 @@ export class BottomMenu extends Menu {
     // Initial setup of content
     let visibleLabels = -1;
     for (let i = 0; i < MATERIALS.Length; i++) {
-      const label:Phaser.Text = this.game.game.add.text(3, 3, MATERIALSTRINGLIST[i] + ' ' + game.materialContainer.materials.get(i).toFixed(2), headerStyle, this.content);
+      const label:Phaser.Text = this.game.add.text(3, 3, MATERIALSTRINGLIST[i] + ' ' + state.materialContainer.materials.get(i).toFixed(2), headerStyle, this.content);
       label.visible = false;
-      if (this.game.materialContainer.materials.get(i) > 0) {
+      if (this.state.materialContainer.materials.get(i) > 0) {
         visibleLabels++;
         label.visible = true;
         label.y += 20 * visibleLabels;
@@ -39,39 +39,39 @@ export class BottomMenu extends Menu {
       this.materialLabels.push(label);
     }
 
-    const buy:Button = new Button(this.game.game, 224, 0, 'menu', 'Buy', 'button.png', headerStyle, {'toggleAble': true, 'toggledImage': 'buttonclicked.png'});
+    const buy:Button = new Button(this.game, 224, 0, 'menu', 'Buy', 'button.png', headerStyle, {'toggleAble': true, 'toggledImage': 'buttonclicked.png'});
     this.buttons.push(buy);
     buy.onClick(Button.REGULAR, () => {
-      this.game.gamestate = 'buying';
-      for (const button of this.game.allButtons) {
+      this.state.gamestate = 'buying';
+      for (const button of this.state.allButtons) {
         button.unToggle();
       }
-      this.game.needsupdate = true;
+      this.state.needsupdate = true;
     });
     buy.setToolTip(Button.REGULAR, 'You need food to settle new areas.');
     buy.onClick(Button.TOGGLED, () => {
-      this.game.gamestate = '';
-      this.game.needsupdate = true;
+      this.state.gamestate = '';
+      this.state.needsupdate = true;
     });
     buy.addUpdate(() => {
-      if (this.game.gamestate !== 'buying' && buy.toggled) {
+      if (this.state.gamestate !== 'buying' && buy.toggled) {
         buy.unToggle();
       }
     });
     this.content.add(buy.group);
     this.content.add(buy.labelGroup);
 
-    const save:Button = new Button(this.game.game, 224, 30, 'menu', 'Save', 'button.png', headerStyle);
+    const save:Button = new Button(this.game, 224, 30, 'menu', 'Save', 'button.png', headerStyle);
     this.buttons.push(save);
     save.onClick(Button.REGULAR, () => {
-      saveGame(this.game);
+      saveGame(this.state);
     });
     save.setToolTip(Button.REGULAR, 'Save your current gamestate.');
     this.content.add(save.group);
     this.content.add(save.labelGroup);
 
-    const reincarnationMenu:ReincarnationMenu = new ReincarnationMenu(game);
-    const reincarnate:Button = new Button(this.game.game, 224, 60, 'menu', 'Evolve', 'button.png', headerStyle);
+    const reincarnationMenu:ReincarnationMenu = new ReincarnationMenu(state);
+    const reincarnate:Button = new Button(this.game, 224, 60, 'menu', 'Evolve', 'button.png', headerStyle);
     this.buttons.push(reincarnate);
     reincarnate.onClick(Button.REGULAR, () => {
       reincarnationMenu.show();
@@ -88,10 +88,10 @@ export class BottomMenu extends Menu {
   public update():void {
     this.materialUpdate = (this.materialUpdate + 1) % 20;
     if (this.materialUpdate === 0) {
-      this.game.materialContainer.gainMaterialsFraction(3);
+      this.state.materialContainer.gainMaterialsFraction(3);
       let visibleLabels = -1;
-      const materials = this.game.materialContainer.materials;
-      const gains = this.game.materialContainer.getMaterialGains();
+      const materials = this.state.materialContainer.materials;
+      const gains = this.state.materialContainer.getMaterialGains();
       for (let i = 0; i < MATERIALS.Length; i++) {
         let text = MATERIALSTRINGLIST[i] + ' ' + materials.get(i).toFixed(2);
         text += '  (' + gains.get(i).toFixed(2) + '/s)';
@@ -105,7 +105,7 @@ export class BottomMenu extends Menu {
         }
       }
       for (const c of CONSTRUCTIONCLASSES) {
-        c.doThing(this.game);
+        c.doThing(this.state);
       }
     }
 

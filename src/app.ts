@@ -1,4 +1,4 @@
-import { MainGame } from './MainGame';
+import { GameState } from './GameState';
 import { Preload } from './Preload';
 import { MainMenu } from './gui/MainMenu';
 
@@ -12,7 +12,7 @@ export class Game extends Phaser.Game {
     this.wantLoad = true;
     this.state.add('preload', Preload);
     this.state.add('mainMenu', MainMenu);
-    this.state.add('mainGame', MainGame);
+    this.state.add('mainGame', GameState);
   }
 
   /** No documentation available */

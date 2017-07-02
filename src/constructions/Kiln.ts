@@ -1,6 +1,6 @@
 import { MATERIALS, EXPONENTS } from '../Constants';
 import { Counter } from '../Counter';
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 
 /** No documentation available */
 export class Kiln{
@@ -9,10 +9,10 @@ export class Kiln{
   static amount:number = 0;
 
   /** No documentation available */
-  static doThing(game:MainGame):void {
-    if(game.materialContainer.materials.get(MATERIALS.Clay) > Kiln.amount*0.2){
-      game.materialContainer.materials.subtract(MATERIALS.Clay, Kiln.amount*0.2);
-      game.materialContainer.materialGainBase.add(MATERIALS.Brick, Kiln.amount*0.1);
+  static doThing(state:GameState):void {
+    if(state.materialContainer.materials.get(MATERIALS.Clay) > Kiln.amount*0.2){
+      state.materialContainer.materials.subtract(MATERIALS.Clay, Kiln.amount*0.2);
+      state.materialContainer.materialGainBase.add(MATERIALS.Brick, Kiln.amount*0.1);
     }
   }
 
@@ -22,8 +22,8 @@ export class Kiln{
   }
 
   /** No documentation available */
-  static build(game:MainGame):void {
-    game.materialContainer.pay(this.getRequiredMaterials());
+  static build(state:GameState):void {
+    state.materialContainer.pay(this.getRequiredMaterials());
     Kiln.amount += 1;
   }
 

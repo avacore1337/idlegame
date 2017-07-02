@@ -10,7 +10,7 @@ import { EraList } from './TechTree';
 import { MATERIALS, MATERIALSTRINGLIST, CONSTRUCTIONCLASSES } from './Constants';
 
 /** No documentation available */
-export class MainGame extends Phaser.State {
+export class GameState extends Phaser.State {
 
   era:number = 0;
   evolutionPoints:number = 0;

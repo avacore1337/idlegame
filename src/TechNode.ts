@@ -1,4 +1,4 @@
-import { MainGame } from './MainGame';
+import { GameState } from './GameState';
 
 /** No documentation available */
 export class TechNode {
@@ -7,10 +7,10 @@ export class TechNode {
   researched:boolean;
   requires:TechNode[];
   researchPointCost:number;
-  effect: (game:MainGame) => void;
+  effect: (state:GameState) => void;
 
   /** No documentation available */
-  constructor(name:string, description:string, requires:TechNode[], researchPointCost:number, effect: (game:MainGame) => void) {
+  constructor(name:string, description:string, requires:TechNode[], researchPointCost:number, effect: (state:GameState) => void) {
     this.name = name;
     this.description = description;
     this.requires = requires;
@@ -33,8 +33,8 @@ export class TechNode {
   }
 
   /** No documentation available */
-  research(game:MainGame):void {
-    this.effect(game);
+  research(state:GameState):void {
+    this.effect(state);
     this.researched = true;
   }
 

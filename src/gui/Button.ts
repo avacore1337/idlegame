@@ -1,4 +1,4 @@
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 import { Updateable } from '../Interfaces';
 
 /** No documentation available */

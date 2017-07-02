@@ -1,6 +1,6 @@
 import { MATERIALS, EXPONENTS } from '../Constants';
 import { Counter } from '../Counter';
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 
 /** No documentation available */
 export class Library {
@@ -16,13 +16,13 @@ export class Library {
   }
 
   /** No documentation available */
-  static doThing(game:MainGame):void {
+  static doThing(state:GameState):void {
     return;
   }
 
   /** No documentation available */
-  static build(game:MainGame):void {
-    game.materialContainer.pay(this.getRequiredMaterials());
+  static build(state:GameState):void {
+    state.materialContainer.pay(this.getRequiredMaterials());
     Library.amount += 1;
   }
 

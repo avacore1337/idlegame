@@ -1,4 +1,4 @@
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 
 /** No documentation available */
 export class Tutorial {
@@ -8,8 +8,8 @@ export class Tutorial {
   private length:number = 0;
 
   /** No documentation available */
-  constructor(game:MainGame) {
-    this.slides = game.modal;
+  constructor(state:GameState) {
+    this.slides = state.modal;
 
     const messages = [
       'This is the first message',

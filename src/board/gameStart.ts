@@ -1,5 +1,5 @@
 import { LAND, RESOURCES, BUILDINGS, BUILDINGCLASSES, MATERIALS, DIRECTIONS } from '../Constants';
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 import { Tile } from './Tile';
 import { Board } from './Board';
 import { shuffle } from '../util';
@@ -151,43 +151,43 @@ function linkHexes(tile:Tile, otherTile:Tile, location:DIRECTIONS):void {
 
 /**
  * Generate a new board. DOES NOT set the content of the tiles
- * @param game {MainGame} - The main game object of the game
+ * @param game {GameState} - The main game object of the game
  * @param parent {Phaser.Group} - The parent group which the tiles should be added to
  * @returns {Array<Array<Tile>>} - Returns a matrix containing new tiles which have not been assigned any data yet
  */
-export function boardSkeleton(game:MainGame, parent:Phaser.Group):Array<Array<Tile>> {
+export function boardSkeleton(state:GameState, parent:Phaser.Group):Array<Array<Tile>> {
   const board:Array<Array<Tile>> = [];
   for (let y = 0; y < Board.HEIGHT; y++) {
     board.push([]);
     for (let x = 0; x < Board.WIDTH; x++) {
-      const tile:Tile = new Tile(game, Tile.WIDTH * (x + 1/2* (y % 2)), (Tile.HEIGHT / 4 * 3) * y, parent);
+      const tile:Tile = new Tile(state, Tile.WIDTH * (x + 1/2* (y % 2)), (Tile.HEIGHT / 4 * 3) * y, parent);
       board[y].push(tile);
       tile.onclick(() => {
-        if (game.gamestate === 'building') {
+        if (state.gamestate === 'building') {
           // -------------- REQUIREMENTS FOR BUILDING --------------
           // You own the tile
           // The chosen building can be built on a tile of this type
           // You can afford to build the building
           // No other building exist on the tile
           if (tile.purchased &&
-            BUILDINGCLASSES[game.option].canBuild(tile) &&
-            game.materialContainer.materials.isSubset(BUILDINGCLASSES[game.option].getRequiredMaterials()) &&
+            BUILDINGCLASSES[state.option].canBuild(tile) &&
+            state.materialContainer.materials.isSubset(BUILDINGCLASSES[state.option].getRequiredMaterials()) &&
             tile.building === undefined) {
-            game.materialContainer.pay(BUILDINGCLASSES[game.option].getRequiredMaterials());
-            tile.addBuilding(game.option);
-            game.needsupdate = true;
+            state.materialContainer.pay(BUILDINGCLASSES[state.option].getRequiredMaterials());
+            tile.addBuilding(state.option);
+            state.needsupdate = true;
           }
-        } else if (game.gamestate === 'buying') {
+        } else if (state.gamestate === 'buying') {
           // --------------- REQUIREMENTS FOR BUYING ---------------
           // You do not own the tile
           // The land is close enough to your base
           // You can afford to buy the land
           if (!tile.purchased &&
             tile.distance <= Tile.buildDistance &&
-            game.materialContainer.materials.get(MATERIALS.Food) >= 10*Math.pow(1.4, tile.distance)) {
-            game.materialContainer.materials.subtract(MATERIALS.Food, 10*Math.pow(1.4, tile.distance));
+            state.materialContainer.materials.get(MATERIALS.Food) >= 10*Math.pow(1.4, tile.distance)) {
+            state.materialContainer.materials.subtract(MATERIALS.Food, 10*Math.pow(1.4, tile.distance));
             tile.purchase();
-            game.needsupdate = true;
+            state.needsupdate = true;
           }
         }
       });

@@ -1,4 +1,4 @@
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 import { Updateable } from '../Interfaces';
 
 /** No documentation available */
@@ -9,15 +9,17 @@ export abstract class Menu implements Updateable {
 
   protected content:Phaser.Group;
 
-  protected game:MainGame;
+  protected state:GameState;
+  protected game:Phaser.Game;
 
   /** No documentation available */
-  constructor(game:MainGame, x:number, y:number, textureKey:string, textureName:string) {
-    this.game = game;
-    this.game.menus.push(this);
-    this.group = this.game.add.group();
-    this.background = this.game.add.sprite(0, 0, textureKey, textureName, this.group);
-    this.content = this.game.add.group(this.group);
+  constructor(state:GameState, x:number, y:number, textureKey:string, textureName:string) {
+    this.state = state;
+    this.game = state.game;
+    this.state.menus.push(this);
+    this.group = this.state.add.group();
+    this.background = this.state.add.sprite(0, 0, textureKey, textureName, this.group);
+    this.content = this.state.add.group(this.group);
     this.group.x = x;
     this.group.y = y;
   }

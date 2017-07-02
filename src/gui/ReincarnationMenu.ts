@@ -1,4 +1,4 @@
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 import { Button } from './Button';
 import { geneTree } from '../GeneTree';
 
@@ -10,13 +10,13 @@ export class ReincarnationMenu {
   private readonly modalGroup:Phaser.Group;
   private readonly foregroundGroup:Phaser.Group;
   private readonly backgroundGroup:Phaser.Group;
-  private readonly mainGame:MainGame;
+  private readonly mainGame:GameState;
   private readonly game:Phaser.Game;
   private readonly offsetHeight:number;
   private readonly offsetWidth:number;
 
   /** No documentation available */
-  constructor(mainGame:MainGame) {
+  constructor(mainGame:GameState) {
     this.mainGame = mainGame;
     this.game = mainGame.game;
     this.modalGroup = this.game.add.group();

@@ -1,6 +1,6 @@
 import { toReadableString } from '../util';
 import { Menu } from './Menu';
-import { MainGame } from '../MainGame';
+import { GameState } from '../GameState';
 import { Button } from './Button';
 import { MATERIALS, BUILDINGS, BUILDINGCLASSES, CONSTRUCTIONS, CONSTRUCTIONCLASSES } from '../Constants';
 import { TechList } from '../TechTree';
@@ -18,8 +18,8 @@ export class TopMenu extends Menu {
   private static readonly yPosition:number = 0;
 
   /** No documentation available */
-  constructor(game:MainGame) {
-    super(game, TopMenu.xPosition, TopMenu.yPosition, 'menu', 'leftpanel.png');
+  constructor(state:GameState) {
+    super(state, TopMenu.xPosition, TopMenu.yPosition, 'menu', 'leftpanel.png');
 
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
     const basicStyle = { font: '14px Arial', fill: '#000000', align: 'left' };
@@ -47,48 +47,48 @@ export class TopMenu extends Menu {
 
   /** No documentation available */
   private createTopBar(style:Phaser.PhaserTextStyle, bGroup:Phaser.Group, cGroup:Phaser.Group, rGroup:Phaser.Group):void {
-    const group = this.game.add.group();
-    const buildings = new Button(this.game.game, 0, 0, 'menu', 'Buildings', 'button.png', style);
-    const constructions = new Button(this.game.game, 112, 0, 'menu', 'Town buildings', 'button.png', style);
-    const research = new Button(this.game.game, 224, 0, 'menu', 'Research', 'button.png', style);
+    const group = this.state.add.group();
+    const buildings = new Button(this.game, 0, 0, 'menu', 'Buildings', 'button.png', style);
+    const constructions = new Button(this.game, 112, 0, 'menu', 'Town buildings', 'button.png', style);
+    const research = new Button(this.game, 224, 0, 'menu', 'Research', 'button.png', style);
     group.add(buildings.group);
     group.add(constructions.group);
     group.add(research.group);
     this.content.add(group);
 
     buildings.onClick(Button.REGULAR, () =>  {
-      this.game.needsupdate = true;
-      if (this.game.gamestate !== 'building') {
-        this.game.option = -1;
-        this.game.gamestate = '';
+      this.state.needsupdate = true;
+      if (this.state.gamestate !== 'building') {
+        this.state.option = -1;
+        this.state.gamestate = '';
       }
       cGroup.visible = false;
       rGroup.visible = false;
       bGroup.visible = true;
     });
     constructions.onClick(Button.REGULAR, () =>  {
-      this.game.needsupdate = true;
-      if (this.game.gamestate !== 'construction') {
-        this.game.option = -1;
-        this.game.gamestate = '';
+      this.state.needsupdate = true;
+      if (this.state.gamestate !== 'construction') {
+        this.state.option = -1;
+        this.state.gamestate = '';
       }
       bGroup.visible = false;
       rGroup.visible = false;
       cGroup.visible = true;
-      for (const button of this.game.allButtons) {
+      for (const button of this.state.allButtons) {
         button.unToggle();
       }
     });
     research.onClick(Button.REGULAR, () =>  {
-      this.game.needsupdate = true;
-      if (this.game.gamestate !== 'research') {
-        this.game.option = -1;
-        this.game.gamestate = '';
+      this.state.needsupdate = true;
+      if (this.state.gamestate !== 'research') {
+        this.state.option = -1;
+        this.state.gamestate = '';
       }
       bGroup.visible = false;
       cGroup.visible = false;
       rGroup.visible = true;
-      for (const button of this.game.allButtons) {
+      for (const button of this.state.allButtons) {
         button.unToggle();
       }
     });
@@ -97,31 +97,31 @@ export class TopMenu extends Menu {
   /** No documentation available */
   private createBuildings(style:Phaser.PhaserTextStyle):Phaser.Group {
     let startingButtons = 0;
-    const group = this.game.game.add.group();
+    const group = this.game.add.group();
     this.content.add(group);
     for (let index = 0; index < BUILDINGS.Length; index++) {
       const b = BUILDINGCLASSES[index];
-      const building:Button = new Button(this.game.game, 0, 0, 'menu', b.title, 'button2.png', style, {'toggleAble': true, 'disableAble': false, 'toggledImage': 'button2clicked.png'});
+      const building:Button = new Button(this.game, 0, 0, 'menu', b.title, 'button2.png', style, {'toggleAble': true, 'disableAble': false, 'toggledImage': 'button2clicked.png'});
       this.buttons.push(building);
       building.hide();
       building.onClick(Button.REGULAR, () => {
-        this.game.needsupdate = true;
-        for (const button of this.game.allButtons) {
+        this.state.needsupdate = true;
+        for (const button of this.state.allButtons) {
           button.unToggle();
         }
-        this.game.option = index;
-        this.game.gamestate = 'building';
+        this.state.option = index;
+        this.state.gamestate = 'building';
       });
       building.onClick(Button.TOGGLED, () => {
-        this.game.needsupdate = true;
-        this.game.option = -1;
-        this.game.gamestate = '';
+        this.state.needsupdate = true;
+        this.state.option = -1;
+        this.state.gamestate = '';
       });
       building.setToolTip(Button.REGULAR, toReadableString(b.getRequiredMaterials()));
       building.setToolTip(Button.TOGGLED, toReadableString(b.getRequiredMaterials()));
       building.addUpdate(() => {
         if (b.enabled) {
-          if (this.game.gamestate !== 'building' || this.game.option !== index) {
+          if (this.state.gamestate !== 'building' || this.state.option !== index) {
             building.unToggle();
           }
           building.show();
@@ -150,19 +150,19 @@ export class TopMenu extends Menu {
   /** No documentation available */
   private createConstructions(style:Phaser.PhaserTextStyle):Phaser.Group {
     let startingButtons = 0;
-    const group = this.game.game.add.group();
+    const group = this.game.add.group();
     group.visible = false;
     this.content.add(group);
     for (let index = 0; index < CONSTRUCTIONS.Length; index++) {
       const c = CONSTRUCTIONCLASSES[index];
-      const construction:Button = new Button(this.game.game, 0, 0, 'menu', c.title + ' ' + c.amount, 'button2.png', style, {'disableAble': true, 'disabledImage': 'button2disabled.png'});
+      const construction:Button = new Button(this.game, 0, 0, 'menu', c.title + ' ' + c.amount, 'button2.png', style, {'disableAble': true, 'disabledImage': 'button2disabled.png'});
       this.buttons.push(construction);
       construction.hide();
       construction.onClick(Button.REGULAR, () => {
-        const canAfford = this.game.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
+        const canAfford = this.state.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
         if (canAfford) {
-          this.game.needsupdate = true;
-          CONSTRUCTIONCLASSES[index].build(this.game);
+          this.state.needsupdate = true;
+          CONSTRUCTIONCLASSES[index].build(this.state);
         }
       });
       construction.addUpdate(() => {
@@ -178,7 +178,7 @@ export class TopMenu extends Menu {
         } else {
           construction.hide();
         }
-        const canAfford = this.game.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
+        const canAfford = this.state.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
         if(canAfford){
           construction.enable();
         }
@@ -200,19 +200,19 @@ export class TopMenu extends Menu {
   /** No documentation available */
   private createResearch(style:Phaser.PhaserTextStyle):Phaser.Group {
     let startingButtons = 0;
-    const group = this.game.game.add.group();
+    const group = this.game.add.group();
     group.visible = false;
     this.content.add(group);
     for(const r of TechList){
-      const research:Button = new Button(this.game.game, 0, 0, 'menu', r.name, 'button2.png', style, {'disableAble': true, 'disabledImage': 'button2disabled.png'});
+      const research:Button = new Button(this.game, 0, 0, 'menu', r.name, 'button2.png', style, {'disableAble': true, 'disabledImage': 'button2disabled.png'});
       this.buttons.push(research);
       research.hide();
       research.onClick(Button.REGULAR, () => {
-        const canAfford = this.game.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
+        const canAfford = this.state.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
         if (canAfford) {
-          this.game.needsupdate = true;
-          r.research(this.game);
-          this.game.materialContainer.materials.subtract(MATERIALS.Research, r.researchPointCost);
+          this.state.needsupdate = true;
+          r.research(this.state);
+          this.state.materialContainer.materials.subtract(MATERIALS.Research, r.researchPointCost);
         }
       });
       research.setToolTip(Button.REGULAR, r.description);
@@ -226,7 +226,7 @@ export class TopMenu extends Menu {
         } else {
           research.hide();
         }
-        const canAfford = this.game.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
+        const canAfford = this.state.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
         if(canAfford){
           research.enable();
         }

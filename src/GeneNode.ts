@@ -1,4 +1,4 @@
-import { MainGame } from './MainGame';
+import { GameState } from './GameState';
 
 /** No documentation available */
 export class GeneNode {
@@ -8,10 +8,10 @@ export class GeneNode {
   maxLevel:number;
   requires:[GeneNode, number][];
   evolutionPointCost:number;
-  effect: (game:MainGame) => void;
+  effect: (state:GameState) => void;
 
   /** No documentation available */
-  constructor(name:string, description:string, requires:[GeneNode, number][], evolutionPointCost:number, effect: (game:MainGame) => void) {
+  constructor(name:string, description:string, requires:[GeneNode, number][], evolutionPointCost:number, effect: (state:GameState) => void) {
     this.name = name;
     this.description = description;
     this.requires = requires;
@@ -31,10 +31,10 @@ export class GeneNode {
   }
 
   /** No documentation available */
-  buy(game:MainGame):void {
-    game.evolutionPoints -= this.evolutionPointCost;
+  buy(state:GameState):void {
+    state.evolutionPoints -= this.evolutionPointCost;
     this.level += 1;
-    this.effect(game);
+    this.effect(state);
   }
 
 }
