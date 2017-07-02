@@ -4,7 +4,10 @@ import { Tile } from './Tile';
 import { Board } from './Board';
 import { shuffle } from '../util';
 
-/** Generate the tiles with a distance of 1 to the base */
+/**
+ * Generate the tiles with a distance of 1 to the base
+ * @returns {Array<[LAND, number]>} - Returns a list of predetermined tiles in a random order
+ */
 function constantLayer():Array<[LAND, number]> {
   const tiles:Array<[LAND, number]> = [
     [LAND.Forest, RESOURCES.Stone],
@@ -18,7 +21,10 @@ function constantLayer():Array<[LAND, number]> {
   return tiles;
 }
 
-/** Generate the tiles with a distance of 2 or 3 to the base */
+/**
+ * Generate the tiles with a distance of 2 or 3 to the base
+ * @returns {Array<[LAND, number]>} - Returns a list of predetermined tiles in a random order
+ */
 function pseudoLayer():Array<[LAND, number]> {
   const tiles:Array<[LAND, number]> = [];
 
@@ -62,7 +68,10 @@ function pseudoLayer():Array<[LAND, number]> {
   return tiles;
 }
 
-/** Generate all tiles with a distance of more than 2 to the base */
+/**
+ * Generate all tiles with a distance of more than 3 to the base
+ * @returns {Array<[LAND, number]>} - Returns a list of containing enough random tiles to fill the remainder of the board after filling the inner 4 layers
+ */
 function randomLayer():Array<[LAND, number]> {
   const tiles:Array<[LAND, number]> = [];
   for (let i = 0; i < Board.WIDTH * Board.HEIGHT - (1+6+12+18); i++) {
@@ -92,7 +101,10 @@ function randomLayer():Array<[LAND, number]> {
   return tiles;
 }
 
-/** Perform a BFS to determine each tile's distance to the base */
+/**
+ * Perform a BFS to determine each tile's distance to the base
+ * @param centerHex {Tile} - The tile containing the base
+ */
 function calculateDistances(centerHex:Tile):void {
   let distance = 0;
   let currentTiles = centerHex.setDistance(distance);
@@ -109,7 +121,10 @@ function calculateDistances(centerHex:Tile):void {
   }
 }
 
-/** Set the neighbours of each tile */
+/**
+ * Set the neighbours of each tile
+ * @param board {Array<Array<Tile>>} - The matrix containing all the tiles
+ */
 function linkAllHexes(board:Array<Array<Tile>>):void {
   for (let y = 0; y < Board.HEIGHT; y++) {
     for (let x = 0; x < Board.WIDTH; x++) {
@@ -121,7 +136,12 @@ function linkAllHexes(board:Array<Array<Tile>>):void {
   }
 }
 
-/** Help-function of linkAllHexes */
+/**
+ * Help-function of linkAllHexes which sets the neighbour properties of the two tiles
+ * @param tile {Tile} - The southern tile
+ * @param otherTile {Tile} - The northern tile
+ * @param location {DIRECTIONS} - The location of the northern tile compared to the southern tile
+ */
 function linkHexes(tile:Tile, otherTile:Tile, location:DIRECTIONS):void {
   if (otherTile !== undefined) {
     tile.setNeighbour(location, otherTile);
@@ -129,7 +149,12 @@ function linkHexes(tile:Tile, otherTile:Tile, location:DIRECTIONS):void {
   }
 }
 
-/** Generate a new board. DOES NOT set the content of the tiles. */
+/**
+ * Generate a new board. DOES NOT set the content of the tiles
+ * @param game {MainGame} - The main game object of the game
+ * @param parent {Phaser.Group} - The parent group which the tiles should be added to
+ * @returns {Array<Array<Tile>>} - Returns a matrix containing new tiles which have not been assigned any data yet
+ */
 export function boardSkeleton(game:MainGame, parent:Phaser.Group):Array<Array<Tile>> {
   const board:Array<Array<Tile>> = [];
   for (let y = 0; y < Board.HEIGHT; y++) {
@@ -177,7 +202,10 @@ export function boardSkeleton(game:MainGame, parent:Phaser.Group):Array<Array<Ti
   return board;
 }
 
-/** Generates content for the given board */
+/**
+ * Generates content for the given board
+ * @param board {Array<Array<Tile>>} - The matrix containing the tiles that are to be assigned data
+ */
 export function newContent(board:Array<Array<Tile>>):void {
   const layer1:Array<[LAND, number]> = constantLayer();
   const layer2:Array<[LAND, number]> = pseudoLayer();

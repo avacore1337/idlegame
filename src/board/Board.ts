@@ -6,14 +6,19 @@ import { Updateable } from '../Interfaces';
 import { loadGame } from '../SaveHandler';
 import { MATERIALS, BUILDINGCLASSES } from '../Constants';
 
-/** No documentation available */
 export class Board implements Updateable {
 
+  /** The amount of tiles on the x-axis of the board */
   public static readonly WIDTH:number = 16;
+  /** The amount of tiles on the y-axis of the board */
   public static readonly HEIGHT:number = 16;
 
   private board:Array<Array<Tile>>;
 
+  /**
+   * Board handle everything related to the main game-board
+   * @param game {MainGame} - The main game object of the game
+  */
   constructor(game:MainGame) {
     const group:Phaser.Group = game.add.group();
     this.board = boardSkeleton(game, group);
