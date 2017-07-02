@@ -10,13 +10,16 @@ export class TopMenu extends Menu {
 
   private buttons:Array<Button>;
 
-  visibleTechs:number;
-  visibleBuildings:number;
-  visibleConstructions:number;
+  private visibleTechs:number;
+  private visibleBuildings:number;
+  private visibleConstructions:number;
+
+  private static readonly xPosition:number = 0;
+  private static readonly yPosition:number = 0;
 
   /** No documentation available */
   constructor(game:MainGame) {
-    super(game, 0, 0, 'menu', 'leftpanel.png');
+    super(game, TopMenu.xPosition, TopMenu.yPosition, 'menu', 'leftpanel.png');
 
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
     const basicStyle = { font: '14px Arial', fill: '#000000', align: 'left' };
@@ -44,7 +47,6 @@ export class TopMenu extends Menu {
 
   /** No documentation available */
   private createTopBar(style:Phaser.PhaserTextStyle, bGroup:Phaser.Group, cGroup:Phaser.Group, rGroup:Phaser.Group):void {
-    const self = this;
     const group = this.game.add.group();
     const buildings = new Button(this.game.game, 0, 0, 'menu', 'Buildings', 'button.png', style);
     const constructions = new Button(this.game.game, 112, 0, 'menu', 'Town buildings', 'button.png', style);
@@ -54,39 +56,39 @@ export class TopMenu extends Menu {
     group.add(research.group);
     this.content.add(group);
 
-    buildings.onClick(Button.REGULAR, function() {
-      self.game.needsupdate = true;
-      if (self.game.gamestate !== 'building') {
-        self.game.option = -1;
-        self.game.gamestate = '';
+    buildings.onClick(Button.REGULAR, () =>  {
+      this.game.needsupdate = true;
+      if (this.game.gamestate !== 'building') {
+        this.game.option = -1;
+        this.game.gamestate = '';
       }
       cGroup.visible = false;
       rGroup.visible = false;
       bGroup.visible = true;
     });
-    constructions.onClick(Button.REGULAR, function() {
-      self.game.needsupdate = true;
-      if (self.game.gamestate !== 'construction') {
-        self.game.option = -1;
-        self.game.gamestate = '';
+    constructions.onClick(Button.REGULAR, () =>  {
+      this.game.needsupdate = true;
+      if (this.game.gamestate !== 'construction') {
+        this.game.option = -1;
+        this.game.gamestate = '';
       }
       bGroup.visible = false;
       rGroup.visible = false;
       cGroup.visible = true;
-      for (const button of self.game.allButtons) {
+      for (const button of this.game.allButtons) {
         button.unToggle();
       }
     });
-    research.onClick(Button.REGULAR, function() {
-      self.game.needsupdate = true;
-      if (self.game.gamestate !== 'research') {
-        self.game.option = -1;
-        self.game.gamestate = '';
+    research.onClick(Button.REGULAR, () =>  {
+      this.game.needsupdate = true;
+      if (this.game.gamestate !== 'research') {
+        this.game.option = -1;
+        this.game.gamestate = '';
       }
       bGroup.visible = false;
       cGroup.visible = false;
       rGroup.visible = true;
-      for (const button of self.game.allButtons) {
+      for (const button of this.game.allButtons) {
         button.unToggle();
       }
     });
@@ -94,7 +96,6 @@ export class TopMenu extends Menu {
 
   /** No documentation available */
   private createBuildings(style:Phaser.PhaserTextStyle):Phaser.Group {
-    const self = this;
     let startingButtons = 0;
     const group = this.game.game.add.group();
     this.content.add(group);
@@ -103,30 +104,30 @@ export class TopMenu extends Menu {
       const building:Button = new Button(this.game.game, 0, 0, 'menu', b.title, 'button2.png', style, {'toggleAble': true, 'disableAble': false, 'toggledImage': 'button2clicked.png'});
       this.buttons.push(building);
       building.hide();
-      building.onClick(Button.REGULAR, function():void {
-        self.game.needsupdate = true;
-        for (const button of self.game.allButtons) {
+      building.onClick(Button.REGULAR, () => {
+        this.game.needsupdate = true;
+        for (const button of this.game.allButtons) {
           button.unToggle();
         }
-        self.game.option = index;
-        self.game.gamestate = 'building';
+        this.game.option = index;
+        this.game.gamestate = 'building';
       });
-      building.onClick(Button.TOGGLED, function():void {
-        self.game.needsupdate = true;
-        self.game.option = -1;
-        self.game.gamestate = '';
+      building.onClick(Button.TOGGLED, () => {
+        this.game.needsupdate = true;
+        this.game.option = -1;
+        this.game.gamestate = '';
       });
       building.setToolTip(Button.REGULAR, toReadableString(b.getRequiredMaterials()));
       building.setToolTip(Button.TOGGLED, toReadableString(b.getRequiredMaterials()));
-      building.addUpdate(function():void {
+      building.addUpdate(() => {
         if (b.isEnabled()) {
-          if (self.game.gamestate !== 'building' || self.game.option !== index) {
+          if (this.game.gamestate !== 'building' || this.game.option !== index) {
             building.unToggle();
           }
           building.show();
-          self.visibleBuildings += 1;
-          building.group.y = 25 * self.visibleBuildings;
-          building.labelGroup.y = 25 * self.visibleBuildings;
+          this.visibleBuildings += 1;
+          building.group.y = 25 * this.visibleBuildings;
+          building.labelGroup.y = 25 * this.visibleBuildings;
         } else {
           building.hide();
         }
@@ -148,7 +149,6 @@ export class TopMenu extends Menu {
 
   /** No documentation available */
   private createConstructions(style:Phaser.PhaserTextStyle):Phaser.Group {
-    const self = this;
     let startingButtons = 0;
     const group = this.game.game.add.group();
     group.visible = false;
@@ -158,27 +158,27 @@ export class TopMenu extends Menu {
       const construction:Button = new Button(this.game.game, 0, 0, 'menu', c.title + ' ' + c.amount, 'button2.png', style, {'disableAble': true, 'disabledImage': 'button2disabled.png'});
       this.buttons.push(construction);
       construction.hide();
-      construction.onClick(Button.REGULAR, function():void {
-        const canAfford = self.game.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
+      construction.onClick(Button.REGULAR, () => {
+        const canAfford = this.game.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
         if (canAfford) {
-          self.game.needsupdate = true;
-          CONSTRUCTIONCLASSES[index].build(self.game);
+          this.game.needsupdate = true;
+          CONSTRUCTIONCLASSES[index].build(this.game);
         }
       });
-      construction.addUpdate(function():void {
+      construction.addUpdate(() => {
         construction.setToolTip(Button.REGULAR, toReadableString(c.getRequiredMaterials()));
         construction.setToolTip(Button.DISABLED, toReadableString(c.getRequiredMaterials()));
         construction.setText(Button.REGULAR, c.title + ' ' + c.amount);
         construction.setText(Button.DISABLED, c.title + ' ' + c.amount);
         if (c.isEnabled()) {
           construction.show();
-          self.visibleConstructions += 1;
-          construction.group.y = 25 * self.visibleConstructions;
-          construction.labelGroup.y = 25 * self.visibleConstructions;
+          this.visibleConstructions += 1;
+          construction.group.y = 25 * this.visibleConstructions;
+          construction.labelGroup.y = 25 * this.visibleConstructions;
         } else {
           construction.hide();
         }
-        const canAfford = self.game.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
+        const canAfford = this.game.materialContainer.materials.isSubset(CONSTRUCTIONCLASSES[index].getRequiredMaterials());
         if(canAfford){
           construction.enable();
         }
@@ -199,7 +199,6 @@ export class TopMenu extends Menu {
 
   /** No documentation available */
   private createResearch(style:Phaser.PhaserTextStyle):Phaser.Group {
-    const self = this;
     let startingButtons = 0;
     const group = this.game.game.add.group();
     group.visible = false;
@@ -208,26 +207,26 @@ export class TopMenu extends Menu {
       const research:Button = new Button(this.game.game, 0, 0, 'menu', r.name, 'button2.png', style, {'disableAble': true, 'disabledImage': 'button2disabled.png'});
       this.buttons.push(research);
       research.hide();
-      research.onClick(Button.REGULAR, function():void {
-        const canAfford = self.game.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
+      research.onClick(Button.REGULAR, () => {
+        const canAfford = this.game.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
         if (canAfford) {
-          self.game.needsupdate = true;
-          r.research(self.game);
-          self.game.materialContainer.materials.subtract(MATERIALS.Research, r.researchPointCost);
+          this.game.needsupdate = true;
+          r.research(this.game);
+          this.game.materialContainer.materials.subtract(MATERIALS.Research, r.researchPointCost);
         }
       });
       research.setToolTip(Button.REGULAR, r.description);
       research.setToolTip(Button.DISABLED, r.description);
-      research.addUpdate(function():void {
+      research.addUpdate(() => {
         if (r.researchable()) {
           research.show();
-          self.visibleTechs++;
-          research.group.y = 25 * self.visibleTechs;
-          research.labelGroup.y = 25 * self.visibleTechs;
+          this.visibleTechs++;
+          research.group.y = 25 * this.visibleTechs;
+          research.labelGroup.y = 25 * this.visibleTechs;
         } else {
           research.hide();
         }
-        const canAfford = self.game.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
+        const canAfford = this.game.materialContainer.materials.get(MATERIALS.Research) >= r.researchPointCost;
         if(canAfford){
           research.enable();
         }

@@ -27,7 +27,6 @@ export class Button implements Updateable {
 
   /** No documentation available */
   constructor(game:Phaser.Game, x:number, y:number, key:any, text:string, image:string, style:Phaser.PhaserTextStyle, options?:any) {
-    const self = this;
     this.game = game;
     this.buttons = [];
     this.toggled = false;
@@ -153,13 +152,12 @@ export class Button implements Updateable {
       return false;
     }
 
-    const self = this;
-    this.buttons[button][Button.SPRITE].events.onInputUp.add(function() {
-      const toggled:boolean = self.toggled; // Since the callBack might change the toggle state
+    this.buttons[button][Button.SPRITE].events.onInputUp.add(() => {
+      const toggled:boolean = this.toggled; // Since the callBack might change the toggle state
       callBack();
-      if(!self.disabled && self.toggleAble) {
-        self.toggled = !self.toggled;
-        self.draw();
+      if(!this.disabled && this.toggleAble) {
+        this.toggled = !this.toggled;
+        this.draw();
       }
     });
     return true;

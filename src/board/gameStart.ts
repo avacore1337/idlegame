@@ -162,7 +162,7 @@ export function boardSkeleton(game:MainGame, parent:Phaser.Group):Array<Array<Ti
     for (let x = 0; x < Board.WIDTH; x++) {
       const tile:Tile = new Tile(game, Tile.WIDTH * (x + 1/2* (y % 2)), (Tile.HEIGHT / 4 * 3) * y, parent);
       board[y].push(tile);
-      tile.onclick(function():void {
+      tile.onclick(() => {
         if (game.gamestate === 'building') {
           // -------------- REQUIREMENTS FOR BUILDING --------------
           // You own the tile

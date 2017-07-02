@@ -55,7 +55,7 @@ export class Tile implements Updateable, Clickable {
     this.center = undefined;
     this.buildingSprite = undefined;
     this.revealed = false;
-    this.effect = function():void {return;};
+    this.effect = () => {return;};
 
     this.content = game.add.group(parent);
     this.content.x = x;
@@ -86,10 +86,9 @@ export class Tile implements Updateable, Clickable {
   public setTile(data:[LAND, RESOURCES]):void {
     this.type = data[0];
 
-    const self = this;
     const background = this.game.game.add.sprite(0, 0, 'tiles', LANDSTRINGLIST[data[0]] + '.png', this.content);
     background.inputEnabled = true;
-    background.events.onInputUp.add(function() {self.click();});
+    background.events.onInputUp.add(() => {this.click();});
     background.input.pixelPerfectClick = true;
 
     if (data[1] !== -1) {

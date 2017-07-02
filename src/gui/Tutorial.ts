@@ -9,7 +9,6 @@ export class Tutorial {
 
   /** No documentation available */
   constructor(game:MainGame) {
-    const self = this;
     this.slides = game.modal;
 
     const messages = [
@@ -39,8 +38,8 @@ export class Tutorial {
           offsetX: 500,
           offsetY: 240,
           contentScale: 0.4,
-          callback: function() {
-            self.next();
+          callback: () => {
+            this.next();
           }
         },
         {

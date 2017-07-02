@@ -15,17 +15,16 @@ export class MainMenu extends Phaser.State {
   }
 
   /** No documentation available */
-  create():void {
-    const self = this;
+  public create():void {
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
     const newGame:Button = new Button(this.game, 535, 260, 'menu', 'New Game', 'button.png', headerStyle);
-    newGame.onClick(Button.REGULAR, function(){
+    newGame.onClick(Button.REGULAR, () => {
       resetSave();
-      self.state.start('mainGame', true, false);
+      this.state.start('mainGame', true, false);
     });
     const load:Button = new Button(this.game, 535, 300, 'menu', 'Load Game', 'button.png', headerStyle, {disableAble:true, disabledImage: 'buttondisabled.png'});
-    load.onClick(Button.REGULAR, function(){
-      self.state.start('mainGame', true, false);
+    load.onClick(Button.REGULAR, () => {
+      this.state.start('mainGame', true, false);
     });
     if(typeof(Storage) === 'undefined' || localStorage.getItem('map') === null) {
       load.disable();

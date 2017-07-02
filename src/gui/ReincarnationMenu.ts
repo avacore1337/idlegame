@@ -60,15 +60,14 @@ export class ReincarnationMenu {
 
   /** No documentation available */
   private generateBackground():void {
-    const self = this;
     const background = this.game.add.graphics(0, 0, this.backgroundGroup);
     background.beginFill(this.backgroundColor, this.backgroundOpacity);
     background.x = 0;
     background.y = 0;
     background.drawRect(0, 0, this.game.width, this.game.height);
     background.inputEnabled = true;
-    background.events.onInputDown.add(function() {
-      self.hide();
+    background.events.onInputDown.add(() => {
+      this.hide();
     });
   }
 
@@ -82,7 +81,6 @@ export class ReincarnationMenu {
 
   /** No documentation available */
   private generateButtons():void {
-    const self = this;
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
     const sectionWidth = Math.round((this.game.width - this.offsetWidth*2)/geneTree.length);
     let leftmost = true;
@@ -115,11 +113,11 @@ export class ReincarnationMenu {
           const gene = tier[k];
           const button:Button = new Button(this.game, i*sectionWidth + 111*k + padding*(k*2 + 1), 100*j, 'menu', gene.name, 'button.png', headerStyle, {disableAble:true, disabledImage: 'buttondisabled.png'});
           button.setToolTip(Button.REGULAR, gene.description);
-          button.onClick(Button.REGULAR, function(){
-            gene.buy(self.mainGame);
+          button.onClick(Button.REGULAR, () => {
+            gene.buy(this.mainGame);
           });
-          button.addUpdate(function(){
-            const affordable = gene.evolutionPointCost <= self.mainGame.evolutionPoints;
+          button.addUpdate(() => {
+            const affordable = gene.evolutionPointCost <= this.mainGame.evolutionPoints;
             if(gene.buyable() && affordable){
               button.enable();
             }
