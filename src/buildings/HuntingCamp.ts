@@ -20,11 +20,6 @@ export class HuntingCamp extends Building {
   }
 
   /** No documentation available */
-  static isEnabled():boolean{
-    return HuntingCamp.enabled;
-  }
-
-  /** No documentation available */
   generateMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Food, 0.1);

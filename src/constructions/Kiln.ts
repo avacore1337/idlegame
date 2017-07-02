@@ -1,22 +1,12 @@
-import { Construction } from './Construction';
 import { MATERIALS, EXPONENTS } from '../Constants';
 import { Counter } from '../Counter';
 import { MainGame } from '../MainGame';
 
 /** No documentation available */
-export class Kiln extends Construction {
+export class Kiln{
   static enabled:boolean = false;
   static title:string = 'Kiln';
   static amount:number = 0;
-
-  constructor(){
-    super();
-  }
-
-  /** No documentation available */
-  static isEnabled():boolean{
-    return Kiln.enabled;
-  }
 
   /** No documentation available */
   static doThing(game:MainGame):void {

@@ -20,11 +20,6 @@ export class Lumbermill extends Building {
   }
 
   /** No documentation available */
-  static isEnabled():boolean{
-    return Lumbermill.enabled;
-  }
-
-  /** No documentation available */
   generateMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     counter.add(MATERIALS.Wood, 1);

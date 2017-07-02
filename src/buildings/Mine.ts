@@ -20,11 +20,6 @@ export class Mine extends Building {
   }
 
   /** No documentation available */
-  static isEnabled():boolean{
-    return Mine.enabled;
-  }
-
-  /** No documentation available */
   generateMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     if(this.tile.resource === RESOURCES.Copper){

@@ -120,7 +120,7 @@ export class TopMenu extends Menu {
       building.setToolTip(Button.REGULAR, toReadableString(b.getRequiredMaterials()));
       building.setToolTip(Button.TOGGLED, toReadableString(b.getRequiredMaterials()));
       building.addUpdate(() => {
-        if (b.isEnabled()) {
+        if (b.enabled) {
           if (this.game.gamestate !== 'building' || this.game.option !== index) {
             building.unToggle();
           }
@@ -137,7 +137,7 @@ export class TopMenu extends Menu {
       });
       group.add(building.group);
       group.add(building.labelGroup);
-      if (b.isEnabled()) {
+      if (b.enabled) {
         building.show();
         startingButtons++;
         building.group.y = 25 * startingButtons;
@@ -170,7 +170,7 @@ export class TopMenu extends Menu {
         construction.setToolTip(Button.DISABLED, toReadableString(c.getRequiredMaterials()));
         construction.setText(Button.REGULAR, c.title + ' ' + c.amount);
         construction.setText(Button.DISABLED, c.title + ' ' + c.amount);
-        if (c.isEnabled()) {
+        if (c.enabled) {
           construction.show();
           this.visibleConstructions += 1;
           construction.group.y = 25 * this.visibleConstructions;
@@ -188,7 +188,7 @@ export class TopMenu extends Menu {
       });
       group.add(construction.group);
       group.add(construction.labelGroup);
-      if (c.isEnabled()) {
+      if (c.enabled) {
         construction.show();
         startingButtons++;
         construction.group.y = 25 * startingButtons;

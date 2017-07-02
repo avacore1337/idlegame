@@ -17,10 +17,6 @@ export class Base extends Building {
     this.type = BUILDINGS.Base;
   }
 
-  static isEnabled():boolean {
-    return Base.enabled;
-  }
-
   generateMaterials():Counter<MATERIALS> {
     const counter:Counter<MATERIALS> = new Counter<MATERIALS>();
     return counter;
