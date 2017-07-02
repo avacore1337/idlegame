@@ -1,11 +1,13 @@
 import { GameState } from '../GameState';
 import { Updateable } from '../Interfaces';
 
-/** No documentation available */
 export class Button implements Updateable {
 
+  /** The regular button is found through buttons[Button.REGULAR] */
   public static readonly REGULAR:number = 0;
+  /** The toggled button is found through buttons[Button.TOGGLED] */
   public static readonly TOGGLED:number = 1;
+  /** The disabled button is found through buttons[Button.DISABLED] */
   public static readonly DISABLED:number = 2;
 
   private static readonly GROUP:number = 0;
@@ -13,20 +15,50 @@ export class Button implements Updateable {
   private static readonly TOOLTIP:number = 2;
   private static readonly TEXT:number = 3;
 
-  game:Phaser.Game;
+  /** The main game object of the game */
+  public game:Phaser.Game;
 
-  buttons:Array<Array<any>>;
+  /** An array containing the three states of the button */
+  public buttons:Array<Array<any>>;
 
-  toggled:boolean;
-  disabled:boolean;
-  toggleAble:boolean;
-  disableAble:boolean;
-  group:Phaser.Group;
-  labelGroup:Phaser.Group;
-  updateCallback: () => void;
+  /** Whether the button is currently toggled */
+  public toggled:boolean;
+  /** Whether the button is currently disabled */
+  public disabled:boolean;
+  /** Whether the button is a toggleAble button */
+  public toggleAble:boolean;
+  /** Whether the button is a disableAble button */
+  public disableAble:boolean;
+  /** The group for the graphics of this button */
+  public group:Phaser.Group;
+  /** The group for the tooltip of this button */
+  public labelGroup:Phaser.Group;
+  /** The function to be called when the button needs to update */
+  public updateCallback: () => void;
 
-  /** No documentation available */
-  constructor(game:Phaser.Game, x:number, y:number, key:any, text:string, image:string, style:Phaser.PhaserTextStyle, options?:any) {
+  /**
+   * A button with up to 3 different states, regular, toggled and disabled.
+   * The button is not clickable until the onClick function has been called.
+   * @param game {Phaser.Game} - The main game object of the game
+   * @param x {number} - The x coordinate of the button
+   * @param y {number} - The y coordinate of the button
+   * @param key {string} - The key used to register the image of the button in the atlasJSONHash
+   * @param text {string} - The text to display on the button
+   * @param image {string} - The value used to register the image of the button in the atlasJSONHash
+   * @param style {Phaser.PhaserTextStyle} - An object containing the configuration of the style of the text on the button
+   * @param options {any} - An object containing data about the optional states toggled and disabled. May contain any of: {
+   *                                                                                                  toggleAble:boolean,
+   *                                                                                                  disableAble:boolean,
+   *                                                                                                  toggledImage:string,
+   *                                                                                                  toggledText:string,
+   *                                                                                                  toggledStyle:Phaser.PhaserTextStyle,
+   *                                                                                                  disabledImage:string,
+   *                                                                                                  disabledText:string,
+   *                                                                                                  disabledStyle:Phaser.PhaserTextStyle
+   *                                                                                                  }
+   * But if toggleAble = false the 'toggle' properties are redundant and the same applies for disableAble.
+   */
+  constructor(game:Phaser.Game, x:number, y:number, key:string, text:string, image:string, style:Phaser.PhaserTextStyle, options?:any) {
     this.game = game;
     this.buttons = [];
     this.toggled = false;
@@ -146,8 +178,12 @@ export class Button implements Updateable {
     this.labelGroup.y = y;
   }
 
-  /** No documentation available */
-  onClick(button:number, callBack: () => void):boolean {
+  /**
+   * Register an event that should be triggered if the given version of the button is clicked
+   * @param button {number} - The type of the button. Should be either Button.REGULAR, Button.TOGGLED or Button.DISABLED
+   * @param callback {() => void} - The function to call if the tile is pressed
+   */
+  public onClick(button:number, callBack: () => void):boolean {
     if(this.buttons[button] === undefined) {
       return false;
     }
@@ -163,36 +199,45 @@ export class Button implements Updateable {
     return true;
   }
 
-  /** No documentation available */
-  unToggle():void {
-    this.toggled = false;
-    this.draw();
+  /** Un-toggle the button */
+  public unToggle():void {
+    if (this.toggleAble && !this.disabled) {
+      this.toggled = false;
+      this.draw();
+    }
   }
 
-  /** No documentation available */
-  disable():void {
-    this.disabled = true;
-    this.draw();
+  /** Disable the button, this is not the same as hiding it */
+  public disable():void {
+    if (this.disableAble && !this.disabled) {
+      this.disabled = true;
+      this.draw();
+    }
   }
 
-  /** No documentation available */
-  enable():void {
-    this.disabled = false;
-    this.draw();
+  /** Enable the button, this is not the same as showing it */
+  public enable():void {
+    if (this.disableAble && this.disabled) {
+      this.disabled = false;
+      this.draw();
+    }
   }
 
-  /** No documentation available */
-  addUpdate(callBack: () => void):void {
+  /**
+   * Register a function to call when the button needs to be updated
+   * @param callBack {() => void} - The function to call when the button needs to be updated
+   */
+  public addUpdate(callBack: () => void):void {
     this.updateCallback = callBack;
   }
 
-  /** No documentation available */
-  update():void {
+  /** Call the function registered through the addUpdate-function */
+  public update():void {
     this.updateCallback();
   }
 
-  /** No documentation available */
-  draw():void {
+  /** Draw the correct version of the button on the screen */
+  public draw():void {
     if(this.disabled) {
       this.buttons[Button.REGULAR][Button.GROUP].visible = false;
       if(this.toggleAble) {
@@ -216,15 +261,23 @@ export class Button implements Updateable {
     }
   }
 
-  /** No documentation available */
-  setText(button:number, content:string):void {
+  /**
+   * Set the text of the given button
+   * @param button {number} - The type of the button. Should be either Button.REGULAR, Button.TOGGLED or Button.DISABLED
+   * @param content {string} - The text to set on the button
+   */
+  public setText(button:number, content:string):void {
     const text = this.buttons[button][Button.TEXT];
     text.text = content;
     text.updateText();
   }
 
-  /** No documentation available */
-  setToolTip(button:number, content:string):void {
+  /**
+   * Set the text of the given button's tooltip
+   * @param button {number} - The type of the button. Should be either Button.REGULAR, Button.TOGGLED or Button.DISABLED
+   * @param content {string} - The text to set on the button's tooltip
+   */
+  public setToolTip(button:number, content:string):void {
     if(this.buttons[button] !== undefined) {
       if(this.buttons[button][Button.TOOLTIP] === undefined) {
         this.buttons[button][Button.TOOLTIP] = new Phasetips(this.game, {
@@ -239,13 +292,13 @@ export class Button implements Updateable {
     }
   }
 
-  /** No documentation available */
-  hide():void {
+  /** Hide the button so that it can not be seen */
+  public hide():void {
     this.group.visible = false;
   }
 
-  /** No documentation available */
-  show():void {
+  /** Show the button to the user, notice that it won't be clickable before registering a function through the onClick function */
+  public show():void {
     this.group.visible = true;
   }
 }
