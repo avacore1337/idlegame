@@ -71,11 +71,7 @@ export class MainGame extends Phaser.State {
       for (let i = 0; i < MATERIALSTRINGLIST.length; i++) {
           resourceGain.add(i, 0);
       }
-      for (const row of this.board.board) {
-        for (const tile of row) {
-          resourceGain = resourceGain.addOther(tile.generateMaterials());
-        }
-      }
+      resourceGain = resourceGain.addOther(this.board.generateMaterials());
       for (const c of CONSTRUCTIONCLASSES) {
         resourceGain = resourceGain.addOther(c.generateMaterials());
       }

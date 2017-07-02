@@ -178,7 +178,7 @@ export function boardSkeleton(game:MainGame, parent:Phaser.Group):Array<Array<Ti
 }
 
 /** Generates content for the given board */
-export function assignContent(board:Array<Array<Tile>>):void {
+export function newContent(board:Array<Array<Tile>>):void {
   const layer1:Array<[LAND, number]> = constantLayer();
   const layer2:Array<[LAND, number]> = pseudoLayer();
   const layer3:Array<[LAND, number]> = randomLayer();

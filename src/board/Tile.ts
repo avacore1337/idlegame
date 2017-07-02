@@ -178,7 +178,7 @@ export class Tile implements Updateable, Clickable {
   }
 
   /** No documentation available */
-  public setFromJSON(data:any):void {
+  public fromJSON(data:any):void {
     console.log('Loading game, can a(n) ' + (typeof data.resourceType) + ' be interpreted as an integer?');
     this.setTile([data.TILEType, data.resourceType]);
     this.addBuilding(data.buildingType);

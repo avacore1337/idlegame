@@ -1,7 +1,7 @@
 import { MainGame } from './MainGame';
 import { Board } from './board/Board';
 import { Tile } from './board/Tile';
-import { assignContent } from './board/gameStart';
+import { newContent } from './board/gameStart';
 import { MaterialContainer } from './MaterialContainer';
 import { TechList, EraList } from './TechTree';
 import { geneList } from './GeneTree';
@@ -18,7 +18,7 @@ export function loadGame(game:MainGame):void {
 
       if (restarting) {
         console.log('Restarting');
-        assignContent(game.board.board);
+        game.board.requestNewContent();
         loadRebirth(game);
       } else {
         console.log('Loading old game');
@@ -28,7 +28,7 @@ export function loadGame(game:MainGame):void {
       }
       loadGenes(game);
     } else {
-      assignContent(game.board.board);
+      game.board.requestNewContent();
     }
     loadMaterials(game, restarting);
   } else {
@@ -52,11 +52,7 @@ function loadMap(board:Board):void {
   const map = localStorage.getItem('map');
   if (map !== null) {
     const tmp:Array<Array<object>> = JSON.parse(map);
-    for (let y = 0; y < tmp.length; y++) {
-      for (let x = 0; x < tmp[y].length; x++) {
-        board.board[y][x].setFromJSON(tmp[y][x]);
-      }
-    }
+    board.fromJSON(tmp);
   }
 }
 
