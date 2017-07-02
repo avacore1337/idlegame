@@ -1,13 +1,15 @@
 import { GameState } from '../GameState';
 
-/** No documentation available */
 export class Tutorial {
 
   private slides:gameModal;
   private current:number = -1;
   private length:number = 0;
 
-  /** No documentation available */
+  /**
+   * Instantiates a tutorial which can then be played at any time by calling the tutorial.run() function
+   * @param state {GameState} - The main game object of the game
+   */
   constructor(state:GameState) {
     this.slides = state.modal;
 
@@ -53,7 +55,7 @@ export class Tutorial {
     }
   }
 
-  /** No documentation available */
+  /** Runs the tutorial */
   public run():void {
     for (let i:number = 0; i < this.length; i++) {
       this.slides.hideModal('tutorial' + i);
@@ -62,12 +64,12 @@ export class Tutorial {
     this.slides.showModal('tutorial0');
   }
 
-  /** No documentation available */
+  /** Returns true if the last slide is being displayed */
   private done():boolean {
     return this.current === this.length;
   }
 
-  /** No documentation available */
+  /** Display the next slide */
   private next():void {
     this.slides.hideModal('tutorial' + this.current++);
     if (!this.done()) {
