@@ -2,7 +2,6 @@ import { GameState } from '../GameState';
 import { Button } from './Button';
 import { geneTree } from '../GeneTree';
 
-/** No documentation available */
 export class ReincarnationMenu {
   private readonly backgroundColor:number;
   private readonly foregroundColor:number;
@@ -15,7 +14,10 @@ export class ReincarnationMenu {
   private readonly offsetHeight:number;
   private readonly offsetWidth:number;
 
-  /** No documentation available */
+  /**
+   * TODO : avacore1337 (explain what the ReincarnationMenu-class does)
+   * @param mainGame {GameState} - The main game object of the game
+   */
   constructor(mainGame:GameState) {
     this.mainGame = mainGame;
     this.game = mainGame.game;
@@ -39,26 +41,26 @@ export class ReincarnationMenu {
 
   }
 
-  /** No documentation available */
+  /** TODO : avacore1337 (comment what this function is used for) */
   public show():void {
     this.game.world.bringToTop(this.modalGroup);
     this.modalGroup.visible = true;
     // you can add animation here
   }
 
-  /** No documentation available */
+  /** TODO : avacore1337 (comment what this function is used for) */
   public hide():void {
     this.modalGroup.visible = false;
   }
 
-  /** No documentation available */
+  /** TODO : avacore1337 (comment what this function is used for) */
   private generate():void {
     this.generateBackground();
     this.generateForeground();
     this.generateButtons();
   }
 
-  /** No documentation available */
+  /** TODO : avacore1337 (comment what this function is used for) */
   private generateBackground():void {
     const background = this.game.add.graphics(0, 0, this.backgroundGroup);
     background.beginFill(this.backgroundColor, this.backgroundOpacity);
@@ -71,7 +73,7 @@ export class ReincarnationMenu {
     });
   }
 
-  /** No documentation available */
+  /** TODO : avacore1337 (comment what this function is used for) */
   private generateForeground():void {
     const foreground = this.game.add.graphics(0,0, this.foregroundGroup);
     foreground.beginFill(this.foregroundColor, 1);
@@ -79,7 +81,7 @@ export class ReincarnationMenu {
     foreground.inputEnabled = true;
   }
 
-  /** No documentation available */
+  /** TODO : avacore1337 (comment what this function is used for) */
   private generateButtons():void {
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
     const sectionWidth = Math.round((this.game.width - this.offsetWidth*2)/geneTree.length);

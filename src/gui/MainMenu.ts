@@ -1,11 +1,10 @@
 import { Button } from './Button';
 import { resetSave } from '../SaveHandler';
 
-/** No documentation available */
 export class MainMenu extends Phaser.State {
 
-  /** No documentation available */
-  preload():void {
+  /** Load all the images used in the game */
+  public preload():void {
     this.game.load.enableParallel = true;
     this.game.load.atlasJSONHash('tiles', 'assets/tiles.png', 'assets/tiles.json');
     this.game.load.atlasJSONHash('resources', 'assets/resources.png', 'assets/resources.json');
@@ -14,7 +13,7 @@ export class MainMenu extends Phaser.State {
     this.game.load.atlasJSONHash('tutorial', 'assets/tutorial.png', 'assets/tutorial.json');
   }
 
-  /** No documentation available */
+  /** Render the start-menu */
   public create():void {
     const headerStyle = { font: '14px Arial', fill: '#000000', align: 'center' };
     const newGame:Button = new Button(this.game, 535, 260, 'menu', 'New Game', 'button.png', headerStyle);
